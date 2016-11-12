@@ -1,0 +1,25 @@
+sudo: false
+language: cpp
+
+os:
+  - linux
+
+compiler:
+  - gcc
+
+git:
+  depth: 1
+  submodules: false
+
+install:
+  - mkdir cestra_build
+  - cd cestra_build
+  - cmake ../ -DCMAKE_BUILD_TYPE=Release
+
+before_script:
+  - ${CXX} --version
+  - ${CC} --version
+  - cmake --version
+
+script:
+  - make
