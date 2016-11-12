@@ -26,6 +26,8 @@ class Master
         ~Master();
 
         bool Initialize();
+
+        void PrintWelcomeMessage();
 };
 
 #endif // MASTER_HPP

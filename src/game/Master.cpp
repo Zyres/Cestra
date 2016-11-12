@@ -24,11 +24,7 @@ Master::~Master() {}
 
 bool Master::Initialize()
 {
-    std::cout << "Welcome to Cestra!" << std::endl;
-    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
-
-    //\todo print some basic information
-    // e.g. header/welcome message
+    PrintWelcomeMessage();
 
     //\todo load configs
 
@@ -37,4 +33,13 @@ bool Master::Initialize()
     //connect to realm
 
     return true;
+}
+
+void Master::PrintWelcomeMessage()
+{
+    //print some basic information
+    //e.g. header/welcome message
+
+    std::cout << "Welcome to Cestra!" << std::endl;
+    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
 }
