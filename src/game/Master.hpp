@@ -18,4 +18,14 @@
 #ifndef MASTER_HPP
 #define MASTER_HPP
 
+class Master
+{
+    public:
+
+        Master();
+        ~Master();
+
+        bool Initialize();
+};
+
 #endif // MASTER_HPP

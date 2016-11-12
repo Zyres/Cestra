@@ -16,3 +16,18 @@
  */
 
 #include "stdafx.hpp"
+
+Master::Master() {}
+Master::~Master() {}
+
+bool Master::Initialize()
+{
+    //\todo print some basic information
+    // e.g. header/welcome message
+
+    //\todo load configs
+
+    //check db connection
+    //load other data
+    //connect to realm
+}
