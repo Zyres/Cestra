@@ -16,11 +16,15 @@
  */
 
 #include "stdafx.hpp"
+#include <iostream>
 
 int main()
 {
     Master master;
     master.Initialize();
+
+    int wait = 0;
+    std::cin >> wait;
 
     return 0;
 }
