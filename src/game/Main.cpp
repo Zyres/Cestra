@@ -15,12 +15,12 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <string>
+#include "stdafx.hpp"
 
 int main()
 {
-    std::cout << "Welcome to Cestra!" << std::endl;
+    Master master;
+    master.Initialize();
 
     return 0;
 }

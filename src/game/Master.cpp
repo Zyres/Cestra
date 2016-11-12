@@ -17,11 +17,16 @@
 
 #include "stdafx.hpp"
 
+#include <iostream>
+
 Master::Master() {}
 Master::~Master() {}
 
 bool Master::Initialize()
 {
+    std::cout << "Welcome to Cestra!" << std::endl;
+    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
+
     //\todo print some basic information
     // e.g. header/welcome message
 
@@ -30,4 +35,6 @@ bool Master::Initialize()
     //check db connection
     //load other data
     //connect to realm
+
+    return true;
 }
