@@ -3,6 +3,8 @@ project(game CXX)
 set(sources
     Main.cpp
     Main.hpp
+	Master.cpp
+	Master.hpp
     stdafx.cpp
     stdafx.hpp
     )

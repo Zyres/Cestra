@@ -15,9 +15,4 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef STDAFX_HPP
-#define STDAFX_HPP
-
-#include "Master.hpp"
-
-#endif // STDAFX_HPP
+#include "stdafx.hpp"
