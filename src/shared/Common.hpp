@@ -19,6 +19,7 @@
 #define COMMON_HPP
 
 #include <cstdint>
+#include <cstring>
 
 typedef int64_t int64;
 typedef int32_t int32;
@@ -43,6 +44,10 @@ typedef uint8_t uint8;
     #else
         #define EOL_SIZE 1
     #endif
+#endif
+
+#ifndef WIN32
+    #define strnicmp strncasecmp
 #endif
 
 #endif // COMMON_HPP
