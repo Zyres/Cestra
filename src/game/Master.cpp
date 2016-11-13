@@ -26,13 +26,33 @@ bool Master::Initialize()
 {
     PrintWelcomeMessage();
 
-    //\todo load configs
-    char* game_conf = "configs/game.conf";
+    LoadConfiguration();
+    
+    //check db connection
+    //load other data
+    //connect to realm
 
+    return true;
+}
+
+void Master::PrintWelcomeMessage()
+{
+    //print some basic information
+    //e.g. header/welcome message
+
+    std::cout << "Welcome to Cestra!" << std::endl;
+    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
+}
+
+void Master::LoadConfiguration()
+{
+    std::cout << "Start loading game.conf..." << std::endl;
+
+    char* game_conf = "configs/game.conf";
     if (!Config.GameConfig.SetSource(game_conf))
     {
-        std::cout << "MainConf can not be opened!" << std::endl;
-        return false;
+        std::cout << "game.conf not found in configs/ folder!" << std::endl;
+        return;
     }
 
     //define var
@@ -58,18 +78,5 @@ bool Master::Initialize()
     std::cout << "ConfigUInt:" << generic_uint << std::endl;
     std::cout << "ConfigInt:" << generic_int << std::endl;
 
-    //check db connection
-    //load other data
-    //connect to realm
-
-    return true;
-}
-
-void Master::PrintWelcomeMessage()
-{
-    //print some basic information
-    //e.g. header/welcome message
-
-    std::cout << "Welcome to Cestra!" << std::endl;
-    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
+    std::cout << "game.conf successfully loaded" << std::endl;
 }

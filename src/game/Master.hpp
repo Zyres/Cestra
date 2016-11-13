@@ -28,6 +28,7 @@ class Master
         bool Initialize();
 
         void PrintWelcomeMessage();
+        void LoadConfiguration();
 };
 
 #endif // MASTER_HPP

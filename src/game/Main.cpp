@@ -21,7 +21,10 @@
 int main()
 {
     Master master;
-    master.Initialize();
+    if (master.Initialize())
+        std::cout << "Gameserver successfully initialized!" << std::endl;
+    else
+        std::cout << "Gameserver could not be initialized!" << std::endl;
 
     int wait = 0;
     std::cin >> wait;
