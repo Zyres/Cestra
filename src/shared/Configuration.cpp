@@ -19,16 +19,12 @@
 #include <cstdint>
 #include <cstring>
 
-#pragma warning (disable : 4996)
-
 ConfigurationManager Config;
 
-Configuration::Configuration()
-{ }
 
+Configuration::Configuration() {}
 
-Configuration::~Configuration()
-{ }
+Configuration::~Configuration() {}
 
 bool Configuration::SetSource(const char* file, bool ignorecase)
 {
@@ -37,7 +33,8 @@ bool Configuration::SetSource(const char* file, bool ignorecase)
     if (file != 0)
     {
 #ifdef WIN32
-        FILE* configFile = fopen(file, "rb");
+        FILE* configFile;
+        fopen_s(&configFile, file, "rb");
 #else
         FILE* configFile = fopen(file, "r");
 #endif

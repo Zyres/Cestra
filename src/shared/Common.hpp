@@ -48,6 +48,8 @@ typedef uint8_t uint8;
 
 #ifndef WIN32
     #define strnicmp strncasecmp
+#else
+    #define strnicmp _strnicmp
 #endif
 
 #endif // COMMON_HPP
