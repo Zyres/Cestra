@@ -45,7 +45,7 @@ bool Configuration::SetSource(const char* file, bool ignorecase)
 
         if (!configFile)
         {
-            //sLog.outError("Could not open %s.", file);
+            //config file not available
             return false;
         }
 
@@ -254,7 +254,7 @@ bool Configuration::SetSource(const char* file, bool ignorecase)
     return false;
 }
 
-Configuration::ConfigSetting* Configuration::GetSetting(const char* conf_block, const char* conf_name)
+ConfigSetting* Configuration::GetSetting(const char* conf_block, const char* conf_name)
 {
     uint32 block_hash = ahash(conf_block);
     uint32 setting_hash = ahash(conf_name);

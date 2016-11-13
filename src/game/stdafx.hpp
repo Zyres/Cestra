@@ -19,6 +19,8 @@
 #define STDAFX_HPP
 
 #include "Master.hpp"
+
+//shared
 #include "Configuration.hpp"
 
 #endif // STDAFX_HPP

@@ -23,23 +23,23 @@
 #include <map>
 #include <cstdint>
 
+struct ConfigSetting
+{
+    std::string stringValue;
+    bool boolValue;
+    int intValue;
+    uint32 uIntValue;
+    float floatValue;
+};
+
+typedef std::map<uint32, ConfigSetting> ConfigSettingsMap;
+
 class Configuration
 {
     public:
 
         Configuration();
         ~Configuration();
-
-        struct ConfigSetting
-        {
-            std::string stringValue;
-            bool boolValue;
-            int intValue;
-            uint32 uIntValue;
-            float floatValue;
-        };
-
-        typedef std::map<uint32, ConfigSetting> ConfigSettingsMap;
 
         bool SetSource(const char* file, bool ignorecase = true);
         ConfigSetting* GetSetting(const char* conf_block, const char* conf_name);
