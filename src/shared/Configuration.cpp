@@ -16,6 +16,8 @@
  */
 
 #include "Configuration.hpp"
+#include <cstdint>
+
 #pragma warning (disable : 4996)
 
 ConfigurationManager Config;
