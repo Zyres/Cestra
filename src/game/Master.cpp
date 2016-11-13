@@ -30,7 +30,10 @@ bool Master::Initialize()
     
     //check db connection
     //load other data
+    //packet handler
     //connect to realm
+    //listen to socket
+
 
     return true;
 }
@@ -39,9 +42,23 @@ void Master::PrintWelcomeMessage()
 {
     //print some basic information
     //e.g. header/welcome message
-
-    std::cout << "Welcome to Cestra!" << std::endl;
-    std::cout << "This is the development version, do not expect anything ;)" << std::endl;
+    std::cout << "                                                                                                    " << std::endl;
+    std::cout << "           `.-.`                                                                                    " << std::endl;
+    std::cout << "         -+oooo: `                                                                                  " << std::endl;
+    std::cout << "       `/oooo:`./o/`         Welcome to Cestra!                                                     " << std::endl;
+    std::cout << "      ..`.:-`./oooo+.                                              -++                              " << std::endl;
+    std::cout << "     -ooo`   .ooooooo.          `.--.`      `.--.`      `.--..`  `./oo...  `..  `.. ``..-..`        " << std::endl;
+    std::cout << "    .ooo/``.-`.+ooooo+`      `/oo+///+:   :oo///+o+.  .+oo+++++  .+ooo++/` -oo/+++- /+////+o+.      " << std::endl;
+    std::cout << "    +oo/ -oooo:`.+oooo/     `oo/`        /o+     .oo` :oo-`        /oo     -oo-`           /o+      " << std::endl;
+    std::cout << "   `+/: -oooooo+- :oooo`    -oo.         +o+//////oo.  -/oo+/:.    /oo     -oo.    ./+ooooooo+      " << std::endl;
+    std::cout << "   ``   `::///+++.  `--`    .oo:         +o+````````      `.:oo:   /oo     -oo.   `oo:     /o+      " << std::endl;
+    std::cout << "   :+  .:::----.-.   ./-     :oo/-...--  .+o/-....-.  .:----:oo/   -oo:..` -oo.   `+o/...-:oo+      " << std::endl;
+    std::cout << "   -: :ooooooooo+``/.`+.      `-:////:.    .::////:.  `://///:.     .:///. .::`    `-:///:.-/:      " << std::endl;
+    std::cout << "    ``ooooooooo+`.oo+``                                                                             " << std::endl;
+    std::cout << "     .ooooooooo``+ooo-                                                                              " << std::endl;
+    std::cout << "      `:+ooooo. +o+:`                                                                               " << std::endl;
+    std::cout << "         `.-:- `.`                  This is the development version, do not expect anything ;)      " << std::endl;
+    std::cout << "                                                                                                    " << std::endl;
 }
 
 void Master::LoadConfiguration()
