@@ -30,20 +30,15 @@ typedef uint32_t uint32;
 typedef uint16_t uint16;
 typedef uint8_t uint8;
 
-#ifndef EOL
-    #ifdef WIN32
-        #define EOL "\r\n"
-    #else
-        #define EOL "\n"
-    #endif
-#endif
-
-#ifndef EOL_SIZE
-    #ifdef WIN32
-        #define EOL_SIZE 2
-    #else
-        #define EOL_SIZE 1
-    #endif
+// file reading defines
+#ifdef WIN32
+    #define EOL "\r\n"
+    #define EOL_SIZE 2
+    #define FILE_MODE "rb"
+#else
+    #define EOL "\n"
+    #define EOL_SIZE 1
+    #define FILE_MODE "r"
 #endif
 
 #ifndef WIN32

@@ -34,9 +34,9 @@ bool Configuration::SetSource(const char* file, bool ignorecase)
     {
 #ifdef WIN32
         FILE* configFile;
-        fopen_s(&configFile, file, "rb");
+        fopen_s(&configFile, file, FILE_MODE);
 #else
-        FILE* configFile = fopen(file, "r");
+        FILE* configFile = fopen(file, FILE_MODE);
 #endif
         char* fileBuffer;
         uint32 fileLength;
