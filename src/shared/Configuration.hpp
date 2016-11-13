@@ -41,7 +41,7 @@ class Configuration
         Configuration();
         ~Configuration();
 
-        bool SetSource(const char* file, bool ignorecase = true);
+        bool SetSource(const char* file_path_name);
         ConfigSetting* GetSetting(const char* conf_block, const char* conf_name);
 
         bool GetString(const char* conf_block, const char* conf_name, std::string* conf_value);

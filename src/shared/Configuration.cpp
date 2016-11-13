@@ -26,17 +26,17 @@ Configuration::Configuration() {}
 
 Configuration::~Configuration() {}
 
-bool Configuration::SetSource(const char* file, bool ignorecase)
+bool Configuration::SetSource(const char* file_path_name)
 {
     m_settings.clear();
 
-    if (file != 0)
+    if (file_path_name != 0)
     {
 #ifdef WIN32
         FILE* configFile;
-        fopen_s(&configFile, file, FILE_MODE);
+        fopen_s(&configFile, file_path_name, FILE_MODE);
 #else
-        FILE* configFile = fopen(file, FILE_MODE);
+        FILE* configFile = fopen(file_path_name, FILE_MODE);
 #endif
         char* fileBuffer;
         uint32 fileLength;
