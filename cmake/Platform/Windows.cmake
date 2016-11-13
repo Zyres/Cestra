@@ -1,0 +1,5 @@
+if(MSVC)
+    include(${CMAKE_SOURCE_DIR}/cmake/Compilers/msvc.cmake)
+else()
+    message(FATAL_ERROR "Compiler not supported")
+endif()
