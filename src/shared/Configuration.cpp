@@ -17,6 +17,7 @@
 
 #include "Configuration.hpp"
 #include <cstdint>
+#include <cstring>
 
 #pragma warning (disable : 4996)
 
