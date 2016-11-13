@@ -27,6 +27,36 @@ bool Master::Initialize()
     PrintWelcomeMessage();
 
     //\todo load configs
+    char* game_conf = "configs/game.conf";
+
+    if (!Config.GameConfig.SetSource(game_conf))
+    {
+        std::cout << "MainConf can not be opened!" << std::endl;
+        return false;
+    }
+
+    //define var
+    std::string version, note;
+    bool generic_boolean;
+    float generic_float;
+    uint32 generic_uint;
+    int generic_int;
+
+    //get value from config
+    Config.GameConfig.GetString("Configs", "ConfigVersion", &version);
+    Config.GameConfig.GetString("Configs", "ConfigNote", &note);
+    Config.GameConfig.GetBool("Configs", "ConfigFalse", &generic_boolean);
+    Config.GameConfig.GetFloat("Configs", "ConfigFloat", &generic_float);
+    Config.GameConfig.GetUInt("Configs", "ConfigUInt", &generic_uint);
+    Config.GameConfig.GetInt("Configs", "ConfigInt", &generic_int);
+
+    //print value
+    std::cout << "ConfigVersion:" << version << std::endl;
+    std::cout << "ConfigNote:" << note << std::endl;
+    std::cout << "ConfigFalse:" << generic_boolean << std::endl;
+    std::cout << "ConfigFloat:" << generic_float << std::endl;
+    std::cout << "ConfigUInt:" << generic_uint << std::endl;
+    std::cout << "ConfigInt:" << generic_int << std::endl;
 
     //check db connection
     //load other data
