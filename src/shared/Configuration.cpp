@@ -386,12 +386,12 @@ void Configuration::ApplySetting(std::string& str, ConfigSetting& setting)
 
     if (str.length() > 1)
     {
-        if (str.size() >= 3 && !_strnicmp("yes", str.c_str(), 3))
+        if (str.size() >= 3 && !strnicmp("yes", str.c_str(), 3))
         {
             setting.boolValue = true;
             setting.intValue = 1;
         }
-        else if (str.size() >= 2 && !_strnicmp("no", str.c_str(), 2))
+        else if (str.size() >= 2 && !strnicmp("no", str.c_str(), 2))
         {
             setting.boolValue = false;
             setting.intValue = 0;
