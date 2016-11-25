@@ -29,6 +29,7 @@ class Master
 
         void PrintWelcomeMessage();
         void LoadConfiguration();
+        bool ConnectToGameDB();
 };
 
 #endif // MASTER_HPP
