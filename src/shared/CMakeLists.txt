@@ -7,7 +7,6 @@ set(sources
     )
 
 include_directories(
-    ${BOOST_INCLUDE_DIR}
     ${MYSQL_INCLUDE_DIR}
 )
 	

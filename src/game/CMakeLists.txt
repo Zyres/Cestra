@@ -10,7 +10,8 @@ set(sources
     )
 
 include_directories(
-   ${CMAKE_SOURCE_DIR}/src/shared
+    ${CMAKE_SOURCE_DIR}/src/shared
+    ${MYSQL_INCLUDE_DIR}
 )
 add_executable(${PROJECT_NAME} ${sources})
 
