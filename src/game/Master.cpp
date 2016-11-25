@@ -84,35 +84,46 @@ void Master::LoadConfiguration()
     }
 
     //define var
-    std::string version, note;
-    bool generic_boolean;
-    float generic_float;
-    uint32 generic_uint;
-    int generic_int;
+    //std::string version, note;
+    //bool generic_boolean;
+    //float generic_float;
+    //uint32 generic_uint;
+    //int generic_int;
 
-    //get value from config
-    Config.GameConfig.GetString("Configs", "ConfigVersion", &version);
-    Config.GameConfig.GetString("Configs", "ConfigNote", &note);
-    Config.GameConfig.GetBool("Configs", "ConfigFalse", &generic_boolean);
-    Config.GameConfig.GetFloat("Configs", "ConfigFloat", &generic_float);
-    Config.GameConfig.GetUInt("Configs", "ConfigUInt", &generic_uint);
-    Config.GameConfig.GetInt("Configs", "ConfigInt", &generic_int);
+    ////get value from config
+    //Config.GameConfig.GetString("Configs", "ConfigVersion", &version);
+    //Config.GameConfig.GetString("Configs", "ConfigNote", &note);
+    //Config.GameConfig.GetBool("Configs", "ConfigFalse", &generic_boolean);
+    //Config.GameConfig.GetFloat("Configs", "ConfigFloat", &generic_float);
+    //Config.GameConfig.GetUInt("Configs", "ConfigUInt", &generic_uint);
+    //Config.GameConfig.GetInt("Configs", "ConfigInt", &generic_int);
 
-    //print value
-    std::cout << "ConfigVersion:" << version << std::endl;
-    std::cout << "ConfigNote:" << note << std::endl;
-    std::cout << "ConfigFalse:" << generic_boolean << std::endl;
-    std::cout << "ConfigFloat:" << generic_float << std::endl;
-    std::cout << "ConfigUInt:" << generic_uint << std::endl;
-    std::cout << "ConfigInt:" << generic_int << std::endl;
+    ////print value
+    //std::cout << "ConfigVersion:" << version << std::endl;
+    //std::cout << "ConfigNote:" << note << std::endl;
+    //std::cout << "ConfigFalse:" << generic_boolean << std::endl;
+    //std::cout << "ConfigFloat:" << generic_float << std::endl;
+    //std::cout << "ConfigUInt:" << generic_uint << std::endl;
+    //std::cout << "ConfigInt:" << generic_int << std::endl;
 
     std::cout << "game.conf successfully loaded" << std::endl;
 }
 
 bool Master::ConnectToGameDB()
 {
+    //define var
+    std::string db_ip, db_port, db_user, db_password, db_name;
+
+    //get value from config
+    Config.GameConfig.GetString("GameDatabase", "DB_IP", &db_ip);
+    Config.GameConfig.GetString("GameDatabase", "DB_Port", &db_port);
+    Config.GameConfig.GetString("GameDatabase", "DB_User", &db_user);
+    Config.GameConfig.GetString("GameDatabase", "DB_Password", &db_password);
+    Config.GameConfig.GetString("GameDatabase", "DB_Name", &db_name);
+
+
     std::cout << std::endl;
-    std::cout << "Running 'SELECT 'Hello World!' AS _message'..." << std::endl;
+    std::cout << "Try to connect to game database (" << db_name  << ")" << std::endl;
 
     try
     {
@@ -121,14 +132,16 @@ bool Master::ConnectToGameDB()
         sql::Statement* stmt;
         sql::ResultSet* res;
 
+        std::string db_connection = "tcp://" + db_ip + ":" + db_port;
+
         /* Create a connection */
         driver = get_driver_instance();
-        con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+        con = driver->connect(db_connection, db_user, db_password);
         /* Connect to the MySQL test database */
-        con->setSchema("test");
+        con->setSchema(db_name);
 
         stmt = con->createStatement();
-        res = stmt->executeQuery("SELECT 'Hello World!' AS _message"); // replace with your statement
+        res = stmt->executeQuery("SELECT * FROM `account_data`"); // replace with your statement
         while (res->next())
         {
             std::cout << "\t... MySQL replies: ";
