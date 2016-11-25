@@ -8,3 +8,7 @@ endif()
 include(${CMAKE_SOURCE_DIR}/cmake/Platform.cmake)
 
 add_subdirectory(src)
+
+if(WIN32)
+    install(FILES ${INSTALL_DEPS} DESTINATION .)
+endif()

@@ -1,0 +1,9 @@
+Opensource software in this folder:
+
+Folder: boost
+   Web: http://www.boost.org/users/history/version_1_62_0.html
+   Version 1.62.0
+   
+Folder: mysql-connector
+   Web: https://dev.mysql.com/downloads/connector/cpp/
+   Version: 1.1.7
