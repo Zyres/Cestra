@@ -22,11 +22,19 @@ addons:
       - george-edison55-precise-backports
       - ubuntu-toolchain-r-test
       - llvm-toolchain-precise-3.6
+      - boost-latest
     packages:
       - cmake
       - cmake-data
       - gcc-5
       - g++-5
+      - libboost1.62-dev
+      - libboost-thread1.62-dev
+      - libboost-filesystem1.62-dev
+      - libboost-system1.62-dev
+      - libboost-program-options1.62-dev
+      - libboost-iostreams1.62-dev
+      - libboost-regex1.62-dev
 
 install:
   - mkdir cestra_build
