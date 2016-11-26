@@ -76,7 +76,7 @@ void Master::LoadConfiguration()
 {
     std::cout << "Start loading game.conf..." << std::endl;
 
-    char* game_conf = "configs/game.conf";
+    const char* game_conf = "configs/game.conf";
     if (!Config.GameConfig.SetSource(game_conf))
     {
         std::cout << "game.conf not found in configs/ folder!" << std::endl;
