@@ -4,8 +4,6 @@ else()
     set(MYSQL_LIBS ${CMAKE_SOURCE_DIR}/dep/mysql-connector/win32/lib/mysqlcppconn.lib CACHE INTERNAL "MySQL libs." FORCE)
 endif()
 
-set(BOOST_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dep/boost CACHE INTERNAL "Boost dir." FORCE)
-
 if(IS_64BIT)
     set(MYSQL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dep/mysql-connector/win64/include CACHE INTERNAL "MySQL dir." FORCE)
 else()

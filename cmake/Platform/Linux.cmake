@@ -1,3 +1,9 @@
+if(IS_64BIT)
+    set(MYSQL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dep/mysql-connector/win64/include CACHE INTERNAL "MySQL dir." FORCE)
+else()
+    set(MYSQL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dep/mysql-connector/win32/include CACHE INTERNAL "MySQL dir." FORCE)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX)
     include(${CMAKE_SOURCE_DIR}/cmake/Compilers/gcc.cmake)
 else()
