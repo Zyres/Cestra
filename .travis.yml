@@ -26,6 +26,8 @@ addons:
     packages:
       - cmake
       - cmake-data
+      - libmysqlclient-dev
+      - libmysql++-dev
       - gcc-5
       - g++-5
       - libboost1.55-dev
