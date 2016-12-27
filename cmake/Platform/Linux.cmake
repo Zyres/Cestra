@@ -1,5 +1,3 @@
-include(${CMAKE_SOURCE_DIR}/cmake/Modules/FindMySQL.cmake)
-
 find_package(MySQL REQUIRED)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
