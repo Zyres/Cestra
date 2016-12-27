@@ -21,7 +21,7 @@ set(CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/cmake/Modules
 )
 
-find_package(FindBoost REQUIRED)
+find_package(Boost REQUIRED)
 
 add_definitions(-DBOOST_ALL_NO_LIB)
 set(Boost_USE_STATIC_LIBS        ON)
