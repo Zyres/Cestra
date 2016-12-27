@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include <mysql.h>
 
 
 Master::Master() {}
