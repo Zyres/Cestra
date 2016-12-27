@@ -20,12 +20,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "mysql_connection.h"
-
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
 
 Master::Master() {}
 Master::~Master() {}
@@ -112,11 +106,12 @@ void Master::LoadConfiguration()
 bool Master::ConnectToGameDB()
 {
     //define var
-    std::string db_ip, db_port, db_user, db_password, db_name;
+    std::string db_ip, db_user, db_password, db_name;
+    uint32 db_port;
 
     //get value from config
     Config.GameConfig.GetString("GameDatabase", "DB_IP", &db_ip);
-    Config.GameConfig.GetString("GameDatabase", "DB_Port", &db_port);
+    Config.GameConfig.GetUInt("GameDatabase", "DB_Port", &db_port);
     Config.GameConfig.GetString("GameDatabase", "DB_User", &db_user);
     Config.GameConfig.GetString("GameDatabase", "DB_Password", &db_password);
     Config.GameConfig.GetString("GameDatabase", "DB_Name", &db_name);
@@ -125,48 +120,51 @@ bool Master::ConnectToGameDB()
     std::cout << std::endl;
     std::cout << "Try to connect to game database (" << db_name  << ")" << std::endl;
 
-    try
+    mysql_game_connection = mysql_init(NULL);
+    mysql_real_connect(mysql_game_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
+
+
+    //display data using mysql_query() method
+    MYSQL_RES* result;
+    mysql_query(mysql_game_connection, "SELECT 1");
+    result = mysql_store_result(mysql_game_connection);
+    if (result != nullptr)
     {
-        sql::Driver* driver;
-        sql::Connection* con;
-        sql::Statement* stmt;
-        sql::ResultSet* res;
-
-        std::string db_connection = "tcp://" + db_ip + ":" + db_port;
-
-        /* Create a connection */
-        driver = get_driver_instance();
-        con = driver->connect(db_connection, db_user, db_password);
-        /* Connect to the MySQL test database */
-        con->setSchema(db_name);
-
-        stmt = con->createStatement();
-        res = stmt->executeQuery("SELECT * FROM `account_data`"); // replace with your statement
-        while (res->next())
-        {
-            std::cout << "\t... MySQL replies: ";
-            /* Access column data by alias or column name */
-            std::cout << res->getString("_message") << std::endl;
-            std::cout << "\t... MySQL says it again: ";
-            /* Access column fata by numeric offset, 1 is the first column */
-            std::cout << res->getString(1) << std::endl;
-        }
-        delete res;
-        delete stmt;
-        delete con;
-
+        std::cout << "Succesful connected to game database " << db_name << "." << std::endl;
+        mysql_free_result(result);
     }
-
-    catch (sql::SQLException &e)
+    else
     {
-        std::cout << "# ERR: SQLException in " << __FILE__;
-        std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
-        std::cout << "# ERR: " << e.what();
-        std::cout << " (MySQL error code: " << e.getErrorCode() << " )" << std::endl;
+        std::cout << "Not able to game database " << db_name << "!" << std::endl;
+        mysql_free_result(result);
         return false;
     }
 
-    std::cout << std::endl;
+    //display data using mysql_query() method
+    MYSQL_ROW row;
+    uint32 num_fields;
+    uint32 num_rows;
+    int i;
+
+    //retrieve and display data
+    mysql_query(mysql_game_connection, "SELECT * FROM account_data");
+    result = mysql_store_result(mysql_game_connection);
+    num_fields = mysql_num_fields(result);
+    num_rows = mysql_num_rows(result);
+
+    /* display table content
+    while ((row = mysql_fetch_row(result)))
+    {
+        for (i = 0; i < num_fields; ++i)
+        {
+            std::cout << row[i] << "\t";
+
+        }
+        std::cout << "\n";
+    }
+    mysql_free_result(result);*/
+
+    std::cout << "MySQL : Table `account_data` has "<< num_fields <<" fields and " << num_rows << " rows."  << std::endl;
 
     return true;
 }

@@ -15,6 +15,8 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <mysql.h>
+
 #ifndef MASTER_HPP
 #define MASTER_HPP
 
@@ -30,6 +32,8 @@ class Master
         void PrintWelcomeMessage();
         void LoadConfiguration();
         bool ConnectToGameDB();
+
+        MYSQL* mysql_game_connection;
 };
 
 #endif // MASTER_HPP

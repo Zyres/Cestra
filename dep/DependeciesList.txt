@@ -1,5 +1,6 @@
 Opensource software in this folder:
    
-Folder: mysql-connector
-   Web: https://dev.mysql.com/downloads/connector/cpp/
-   Version: 1.1.7
+Folder: mysql (dll/lib)
+   Name: MySQL Community Server (files)
+   Web: https://dev.mysql.com/downloads
+   Version: 5.7.17
