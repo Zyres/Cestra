@@ -31,8 +31,8 @@ Master::~Master() {}
 bool Master::Initialize()
 {
     // log file
-    console_log = "game-console.log";
-    Log.InitializeLogFile(console_log, LOG_GAME);
+    console_log = "realm-console.log";
+    Log.InitializeLogFile(console_log, LOG_REALM);
 
     PrintWelcomeMessage();
 
@@ -58,7 +58,7 @@ void Master::PrintWelcomeMessage()
     std::cout << "                                                                                                    " << std::endl;
     std::cout << "           `.-.`                                                                                    " << std::endl;
     std::cout << "         -+oooo: `                                                                                  " << std::endl;
-    std::cout << "       `/oooo:`./o/`         Welcome to Cestra GameServer!                                          " << std::endl;
+    std::cout << "       `/oooo:`./o/`         Welcome to Cestra RealmServer!                                         " << std::endl;
     std::cout << "      ..`.:-`./oooo+.                                              -++                              " << std::endl;
     std::cout << "     -ooo`   .ooooooo.          `.--.`      `.--.`      `.--..`  `./oo...  `..  `.. ``..-..`        " << std::endl;
     std::cout << "    .ooo/``.-`.+ooooo+`      `/oo+///+:   :oo///+o+.  .+oo+++++  .+ooo++/` -oo/+++- /+////+o+.      " << std::endl;
@@ -76,16 +76,16 @@ void Master::PrintWelcomeMessage()
 
 void Master::LoadConfiguration()
 {
-    LogInfo("Start loading game.conf");
+    LogInfo("Start loading realm.conf");
 
-    const char* game_conf = "configs/game.conf";
-    if (!Config.GameConfig.SetSource(game_conf))
+    const char* realm_conf = "configs/realm.conf";
+    if (!Config.GameConfig.SetSource(realm_conf))
     {
-        LogError("game.conf not found in configs/ folder!");
+        LogError("realm.conf not found in configs/ folder!");
         return;
     }
 
-    LogDefault("game.conf successfully loaded");
+    LogDefault("realm.conf successfully loaded");
 }
 
 bool Master::ConnectToGameDB()
@@ -95,32 +95,32 @@ bool Master::ConnectToGameDB()
     uint32 db_port;
 
     //get value from config
-    Config.GameConfig.GetString("GameDatabase", "DB_IP", &db_ip);
-    Config.GameConfig.GetUInt("GameDatabase", "DB_Port", &db_port);
-    Config.GameConfig.GetString("GameDatabase", "DB_User", &db_user);
-    Config.GameConfig.GetString("GameDatabase", "DB_Password", &db_password);
-    Config.GameConfig.GetString("GameDatabase", "DB_Name", &db_name);
+    Config.GameConfig.GetString("RealmDatabase", "DB_IP", &db_ip);
+    Config.GameConfig.GetUInt("RealmDatabase", "DB_Port", &db_port);
+    Config.GameConfig.GetString("RealmDatabase", "DB_User", &db_user);
+    Config.GameConfig.GetString("RealmDatabase", "DB_Password", &db_password);
+    Config.GameConfig.GetString("RealmDatabase", "DB_Name", &db_name);
 
 
     std::cout << std::endl;
-    LogInfo("Try to connect to game database (%s)", db_name.c_str());
+    LogInfo("Try to connect to realm database (%s)", db_name.c_str());
 
-    mysql_game_connection = mysql_init(NULL);
-    mysql_real_connect(mysql_game_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
+    mysql_realm_connection = mysql_init(NULL);
+    mysql_real_connect(mysql_realm_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
 
 
     //display data using mysql_query() method
     MYSQL_RES* result;
-    mysql_query(mysql_game_connection, "SELECT 1");
-    result = mysql_store_result(mysql_game_connection);
+    mysql_query(mysql_realm_connection, "SELECT 1");
+    result = mysql_store_result(mysql_realm_connection);
     if (result != nullptr)
     {
-        LogDefault("Succesful connected to game database %s.", db_name.c_str());
+        LogDefault("Succesful connected to realm database %s.", db_name.c_str());
         mysql_free_result(result);
     }
     else
     {
-        LogError("Not able to game database %s!", db_name.c_str());
+        LogError("Not able to realm database %s!", db_name.c_str());
         mysql_free_result(result);
         return false;
     }
@@ -129,12 +129,12 @@ bool Master::ConnectToGameDB()
     uint32 num_rows;
 
     //retrieve and display data
-    mysql_query(mysql_game_connection, "SELECT * FROM account_data");
-    result = mysql_store_result(mysql_game_connection);
+    mysql_query(mysql_realm_connection, "SELECT * FROM accounts");
+    result = mysql_store_result(mysql_realm_connection);
     num_fields = mysql_num_fields(result);
     num_rows = (uint32)mysql_num_rows(result);
 
-    LogInfo("Table `account_data` has %u fields and %u rows.", num_fields, num_rows);
+    LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
 
     return true;
 }
