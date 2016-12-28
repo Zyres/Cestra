@@ -18,15 +18,22 @@
 #include "stdafx.hpp"
 
 #include <stdlib.h>
+#include <ctime>
 #include <iostream>
 #include <mysql.h>
 
 
-Master::Master() {}
+Master::Master() : console_log("")
+{}
+
 Master::~Master() {}
 
 bool Master::Initialize()
 {
+    // log file
+    console_log = "game-console.log";
+    Log.InitializeLogFile(console_log, LOG_GAME);
+
     PrintWelcomeMessage();
 
     LoadConfiguration();
@@ -69,39 +76,16 @@ void Master::PrintWelcomeMessage()
 
 void Master::LoadConfiguration()
 {
-    std::cout << "Start loading game.conf..." << std::endl;
+    LogInfo("Start loading game.conf");
 
     const char* game_conf = "configs/game.conf";
     if (!Config.GameConfig.SetSource(game_conf))
     {
-        std::cout << "game.conf not found in configs/ folder!" << std::endl;
+        LogError("game.conf not found in configs/ folder!");
         return;
     }
 
-    //define var
-    //std::string version, note;
-    //bool generic_boolean;
-    //float generic_float;
-    //uint32 generic_uint;
-    //int generic_int;
-
-    ////get value from config
-    //Config.GameConfig.GetString("Configs", "ConfigVersion", &version);
-    //Config.GameConfig.GetString("Configs", "ConfigNote", &note);
-    //Config.GameConfig.GetBool("Configs", "ConfigFalse", &generic_boolean);
-    //Config.GameConfig.GetFloat("Configs", "ConfigFloat", &generic_float);
-    //Config.GameConfig.GetUInt("Configs", "ConfigUInt", &generic_uint);
-    //Config.GameConfig.GetInt("Configs", "ConfigInt", &generic_int);
-
-    ////print value
-    //std::cout << "ConfigVersion:" << version << std::endl;
-    //std::cout << "ConfigNote:" << note << std::endl;
-    //std::cout << "ConfigFalse:" << generic_boolean << std::endl;
-    //std::cout << "ConfigFloat:" << generic_float << std::endl;
-    //std::cout << "ConfigUInt:" << generic_uint << std::endl;
-    //std::cout << "ConfigInt:" << generic_int << std::endl;
-
-    std::cout << "game.conf successfully loaded" << std::endl;
+    LogDefault("game.conf successfully loaded");
 }
 
 bool Master::ConnectToGameDB()
@@ -119,7 +103,7 @@ bool Master::ConnectToGameDB()
 
 
     std::cout << std::endl;
-    std::cout << "Try to connect to game database (" << db_name  << ")" << std::endl;
+    LogError("Try to connect to game database (%s)", db_name.c_str());
 
     mysql_game_connection = mysql_init(NULL);
     mysql_real_connect(mysql_game_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
@@ -131,41 +115,26 @@ bool Master::ConnectToGameDB()
     result = mysql_store_result(mysql_game_connection);
     if (result != nullptr)
     {
-        std::cout << "Succesful connected to game database " << db_name << "." << std::endl;
+        LogDefault("Succesful connected to game database %s.", db_name.c_str());
         mysql_free_result(result);
     }
     else
     {
-        std::cout << "Not able to game database " << db_name << "!" << std::endl;
+        LogError("Not able to game database %s!", db_name.c_str());
         mysql_free_result(result);
         return false;
     }
 
-    //display data using mysql_query() method
-    MYSQL_ROW row;
     uint32 num_fields;
     uint32 num_rows;
-    int i;
 
     //retrieve and display data
     mysql_query(mysql_game_connection, "SELECT * FROM account_data");
     result = mysql_store_result(mysql_game_connection);
     num_fields = mysql_num_fields(result);
-    num_rows = mysql_num_rows(result);
+    num_rows = (uint32)mysql_num_rows(result);
 
-    /* display table content
-    while ((row = mysql_fetch_row(result)))
-    {
-        for (i = 0; i < num_fields; ++i)
-        {
-            std::cout << row[i] << "\t";
-
-        }
-        std::cout << "\n";
-    }
-    mysql_free_result(result);*/
-
-    std::cout << "MySQL : Table `account_data` has "<< num_fields <<" fields and " << num_rows << " rows."  << std::endl;
+    LogInfo("Table `account_data` has %u fields and %u rows.", num_fields, num_rows);
 
     return true;
 }

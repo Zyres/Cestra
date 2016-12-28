@@ -16,15 +16,17 @@
  */
 
 #include "stdafx.hpp"
+
 #include <iostream>
+#include <ctime>
 
 int main()
 {
     Master master;
     if (master.Initialize())
-        std::cout << "Gameserver successfully initialized!" << std::endl;
+        std::cout << "GameServer successfully initialized!" << std::endl;
     else
-        std::cout << "Gameserver could not be initialized!" << std::endl;
+        std::cout << "GameServer could not be initialized!" << std::endl;
 
     int wait = 0;
     std::cin >> wait;

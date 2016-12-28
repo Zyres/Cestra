@@ -16,6 +16,7 @@
  */
 
 #include <mysql.h>
+#include <iostream>
 
 #ifndef MASTER_HPP
 #define MASTER_HPP
@@ -32,6 +33,10 @@ class Master
         void PrintWelcomeMessage();
         void LoadConfiguration();
         bool ConnectToGameDB();
+
+        std::string console_log;
+
+    private:
 
         MYSQL* mysql_game_connection;
 };

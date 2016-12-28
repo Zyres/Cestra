@@ -22,5 +22,6 @@
 
 //shared
 #include "Configuration.hpp"
+#include "FileLog.hpp"
 
 #endif // STDAFX_HPP
