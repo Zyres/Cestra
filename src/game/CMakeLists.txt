@@ -9,6 +9,10 @@ set(sources
     stdafx.hpp
     )
 
+if(WIN32)
+   set(sources ${sources} ${CMAKE_CURRENT_SOURCE_DIR}/resources.rc)
+endif()
+
 include_directories(
     ${CMAKE_SOURCE_DIR}/src/shared
     ${MYSQL_INCLUDE_DIR}
