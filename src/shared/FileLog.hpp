@@ -55,7 +55,7 @@ class FileLog
         void InitLogFileHeader(const char* message_string, ...);
 
 #ifndef _WIN32
-        void SetConsoleColor(const char* color)
+        void SetConsoleColor(const char* color);
 #else
         void SetConsoleColor(int color);
 #endif

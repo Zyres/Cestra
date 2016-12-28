@@ -86,7 +86,7 @@ void FileLog::WriteToLogFile(FILE* log_file, char* message, const char* source)
 #ifndef _WIN32
 void FileLog::SetConsoleColor(const char* color)
 {
-    fputs(colorstrings[color], stdout);
+    fputs(color, stdout);
 }
 
 #else
