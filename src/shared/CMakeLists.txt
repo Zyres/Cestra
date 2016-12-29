@@ -18,4 +18,4 @@ include_directories(
 add_library(${PROJECT_NAME} STATIC ${sources})
 
 link_directories(${Boost_LIBRARY_DIR})
-target_link_libraries(${PROJECT_NAME} ${MYSQL_LIBS} ${Boost_LIBRARIES} ${Boost_FILESYSTEM_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${MYSQL_LIBS})
