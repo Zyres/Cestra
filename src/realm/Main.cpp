@@ -39,35 +39,19 @@ int main()
     std::cout << "Type help to see all available commands. You can shut down this programm with command: end " << std::endl;
 
 
-    ////socket
+    // socket
     SocketMgr* socket = new SocketMgr;
-
     std::thread t(&SocketMgr::InitializeSocketListener, socket);
-
     std::cout << "thread " << t.get_id() << " created!" << std::endl;
 
-    std::string option = "";
-    std::string end = "end";
-    while (true)
-    {
-        std::getline(std::cin, option);
-        if (end.compare(option) == 0)
-        {
-            std::cout << "command end was executed! Leaving the loop!" << std::endl;
-            break;
-        }
-        std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
-    }
 
-    if (socket->ShutdownSocketMgr())
-        std::cout << "Shutdown SocketMgr is set to true." << std::endl;
+    // console
+    // now we have to type "end" in our console to shut it down!
+    RealmConsole* console = new RealmConsole;
+    console->StartCosnoleListener();
 
 
-    // uhh... call it for death.
-    //socket->InitializeSocketListener();
-
-    ////// socket end
-
+    // RealmConsole has left the loop, initiate shut down.
     for (int i = 5; i > 0; i--)
     {
         Sleep(1000);
@@ -75,9 +59,9 @@ int main()
     }
     std::cout << "Process shutdown." << std::endl;
 
-    ///////////////////////////////////////////
-    // Shutdown here
-    ///////////////////////////////////////////
+    // Shutdown here everything we created
+    if (socket->ShutdownSocketMgr())
+        std::cout << "Shutdown SocketMgr is set to true." << std::endl;
 
     socket->~SocketMgr();
 

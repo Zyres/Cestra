@@ -19,10 +19,12 @@
 #define STDAFX_HPP
 
 #include "Master.hpp"
+#include "RealmConsole.hpp"
 
 //shared
 #include "Configuration.hpp"
 #include "FileLog.hpp"
 #include "SocketMgr.hpp"
+
 
 #endif // STDAFX_HPP
