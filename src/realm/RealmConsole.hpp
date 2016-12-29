@@ -36,6 +36,7 @@ class RealmConsole
         void HandleConsoleCommands(std::string command);
 
         //commands
+        void ShowHelpRealmConsole();
         void StopRealmConsole();
 
     private:

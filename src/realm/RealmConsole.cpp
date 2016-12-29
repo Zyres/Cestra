@@ -65,6 +65,7 @@ void RealmConsole::HandleConsoleCommands(std::string command)
 
     ConsoleCommandList ConsoleCommands[] =
     {
+        { "help", &RealmConsole::ShowHelpRealmConsole },
         { "end", &RealmConsole::StopRealmConsole }
     };
 
@@ -87,6 +88,15 @@ void RealmConsole::HandleConsoleCommands(std::string command)
 }
 
 //command handlers
+void RealmConsole::ShowHelpRealmConsole()
+{
+    std::cout << ":::::::::::::::::::::::::::::::::: H E L P :::::::::::::::::::::::::::::::::: " << std::endl;
+    std::cout << "Available commands:" << std::endl;
+    std::cout << "    'help'       Will show available commands." << std::endl;
+    std::cout << "    'end'        Will shutdown Cestra." << std::endl;
+    std::cout << "::::::::::::::::::::::::::::::::::: E N D ::::::::::::::::::::::::::::::::::: " << std::endl;
+}
+
 void RealmConsole::StopRealmConsole()
 {
     std::cout << "RealmConsole is now stopped." << std::endl;
