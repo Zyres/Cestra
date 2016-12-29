@@ -31,10 +31,12 @@ class RealmConsole
 
         void StartConsoleListener();
         bool IsRealmConsoleStopped();
-        void StopRealmConsole();
-
         void ListenConsoleListener();
 
+        void HandleConsoleCommands(std::string command);
+
+        //commands
+        void StopRealmConsole();
 
     private:
 

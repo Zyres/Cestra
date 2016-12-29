@@ -17,6 +17,8 @@
 
 #include "stdafx.hpp"
 
+#include <algorithm>
+#include <string>
 
 RealmConsole::RealmConsole() : stop_realm_console(false) {}
 
@@ -41,24 +43,52 @@ bool RealmConsole::IsRealmConsoleStopped()
     }
 }
 
+void RealmConsole::ListenConsoleListener()
+{
+    std::string option = "";
+    while (!stop_realm_console)
+    {
+        std::getline(std::cin, option);
+        HandleConsoleCommands(option);
+    }
+}
+
+void RealmConsole::HandleConsoleCommands(std::string command)
+{
+    typedef void (RealmConsole::*HandleConsoleCommand_Function)();
+
+    struct ConsoleCommandList
+    {
+        std::string command;
+        HandleConsoleCommand_Function command_handler;
+    };
+
+    ConsoleCommandList ConsoleCommands[] =
+    {
+        { "end", &RealmConsole::StopRealmConsole }
+    };
+
+    std::string processed_command = command;
+
+    //prepare input for comparison
+    std::transform(processed_command.begin(), processed_command.end(), processed_command.begin(), ::tolower);
+
+    //compare input with available commands
+    for (uint8 i = 0; i < sizeof(ConsoleCommands) / sizeof(ConsoleCommandList); ++i)
+    {
+        if (processed_command.compare(ConsoleCommands[i].command) == 0)
+        {
+            (this->*(ConsoleCommands[i].command_handler))();
+            return;
+        }
+    }
+
+    std::cout << "'" << command << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
+}
+
+//command handlers
 void RealmConsole::StopRealmConsole()
 {
     std::cout << "RealmConsole is now stopped." << std::endl;
     stop_realm_console = true;
-}
-
-void RealmConsole::ListenConsoleListener()
-{
-    std::string option = "";
-    std::string end = "end";
-    while (!stop_realm_console)
-    {
-        std::getline(std::cin, option);
-        if (end.compare(option) == 0)
-        {
-            std::cout << "command end was executed! Leaving the loop!" << std::endl;
-            break;
-        }
-        std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
-    }
 }
