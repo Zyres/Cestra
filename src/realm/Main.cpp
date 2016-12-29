@@ -18,6 +18,8 @@
 #include "stdafx.hpp"
 
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <ctime>
 
 int main()
@@ -28,8 +30,18 @@ int main()
     else
         std::cout << "RealmServer could not be initialized!" << std::endl;
 
-    int wait = 0;
-    std::cin >> wait;
+    std::cout << "Type help to see all available commands. You can shut down this programm with command: end " << std::endl;
 
+    std::string option = "";
+    std::string end = "end";
+    while (true)
+    {
+        std::getline(std::cin, option);
+        if (end.compare(option) == 0)
+            break;
+        std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
+    }
+
+    //shutdown
     return 0;
 }
