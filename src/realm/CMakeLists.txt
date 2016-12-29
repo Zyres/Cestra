@@ -5,6 +5,8 @@ set(sources
     Main.hpp
 	Master.cpp
 	Master.hpp
+    RealmConsole.cpp
+    RealmConsole.hpp
     stdafx.cpp
     stdafx.hpp
     )
