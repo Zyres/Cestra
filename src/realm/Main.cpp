@@ -21,16 +21,30 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include <thread>
+#include <time.h>
+#include <stdio.h>
+
 
 int main()
 {
-    Master master;
-    if (master.Initialize())
+    bool shutdown = false;
+
+    Master master1;
+    if (master1.Initialize())
         std::cout << "RealmServer successfully initialized!" << std::endl;
     else
         std::cout << "RealmServer could not be initialized!" << std::endl;
 
     std::cout << "Type help to see all available commands. You can shut down this programm with command: end " << std::endl;
+
+
+    ////socket
+    SocketMgr* socket = new SocketMgr;
+
+    std::thread t(&SocketMgr::InitializeSocketListener, socket);
+
+    std::cout << "thread " << t.get_id() << " created!" << std::endl;
 
     std::string option = "";
     std::string end = "end";
@@ -38,10 +52,34 @@ int main()
     {
         std::getline(std::cin, option);
         if (end.compare(option) == 0)
+        {
+            std::cout << "command end was executed! Leaving the loop!" << std::endl;
             break;
+        }
         std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
     }
 
-    //shutdown
+    if (socket->ShutdownSocketMgr())
+        std::cout << "Shutdown SocketMgr is set to true." << std::endl;
+
+
+    // uhh... call it for death.
+    //socket->InitializeSocketListener();
+
+    ////// socket end
+
+    for (int i = 5; i > 0; i--)
+    {
+        Sleep(1000);
+        std::cout <<"Shutdown in " << i <<" seconds." << std::endl;
+    }
+    std::cout << "Process shutdown." << std::endl;
+
+    ///////////////////////////////////////////
+    // Shutdown here
+    ///////////////////////////////////////////
+
+    socket->~SocketMgr();
+
     return 0;
 }

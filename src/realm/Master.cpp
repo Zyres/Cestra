@@ -47,7 +47,6 @@ bool Master::Initialize()
     //connect to realm
     //listen to socket
 
-
     return true;
 }
 

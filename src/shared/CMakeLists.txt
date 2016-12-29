@@ -6,6 +6,8 @@ set(sources
     Configuration.hpp
     FileLog.cpp
     FileLog.hpp
+    SocketMgr.cpp
+    SocketMgr.hpp
     )
 
 include_directories(

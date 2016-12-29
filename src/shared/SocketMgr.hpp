@@ -15,14 +15,30 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef STDAFX_HPP
-#define STDAFX_HPP
+#ifndef SOCKET_MGR_HPP
+#define SOCKET_MGR_HPP
 
-#include "Master.hpp"
+#include <thread>
 
-//shared
-#include "Configuration.hpp"
-#include "FileLog.hpp"
-#include "SocketMgr.hpp"
+class SocketMgr
+{
+    public:
 
-#endif // STDAFX_HPP
+        SocketMgr() : shutdown(false)
+        {
+        }
+
+        ~SocketMgr()
+        {            
+        }
+
+        bool ShutdownSocketMgr();
+
+        void InitializeSocketListener();
+
+     private:
+
+         bool shutdown;
+};
+
+#endif // SOCKET_MGR_HPP
