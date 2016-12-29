@@ -29,9 +29,11 @@ class RealmConsole
 
         RealmConsole();
 
-        void StartCosnoleListener();
+        void StartConsoleListener();
         bool IsRealmConsoleStopped();
         void StopRealmConsole();
+
+        void ListenConsoleListener();
 
 
     private:

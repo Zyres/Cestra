@@ -20,20 +20,11 @@
 
 RealmConsole::RealmConsole() : stop_realm_console(false) {}
 
-void RealmConsole::StartCosnoleListener()
+void RealmConsole::StartConsoleListener()
 {
-    std::string option = "";
-    std::string end = "end";
-    while (!stop_realm_console)
-    {
-        std::getline(std::cin, option);
-        if (end.compare(option) == 0)
-        {
-            std::cout << "command end was executed! Leaving the loop!" << std::endl;
-            break;
-        }
-        std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
-    }
+    std::cout << "Type help to see all available commands. You can shut down this programm with command: end " << std::endl;
+
+    ListenConsoleListener();
 }
 
 bool RealmConsole::IsRealmConsoleStopped()
@@ -54,4 +45,20 @@ void RealmConsole::StopRealmConsole()
 {
     std::cout << "RealmConsole is now stopped." << std::endl;
     stop_realm_console = true;
+}
+
+void RealmConsole::ListenConsoleListener()
+{
+    std::string option = "";
+    std::string end = "end";
+    while (!stop_realm_console)
+    {
+        std::getline(std::cin, option);
+        if (end.compare(option) == 0)
+        {
+            std::cout << "command end was executed! Leaving the loop!" << std::endl;
+            break;
+        }
+        std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
+    }
 }

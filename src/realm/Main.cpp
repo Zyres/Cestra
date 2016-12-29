@@ -36,9 +36,6 @@ int main()
     else
         std::cout << "RealmServer could not be initialized!" << std::endl;
 
-    std::cout << "Type help to see all available commands. You can shut down this programm with command: end " << std::endl;
-
-
     // socket
     SocketMgr* socket = new SocketMgr;
     std::thread t(&SocketMgr::InitializeSocketListener, socket);
@@ -48,7 +45,7 @@ int main()
     // console
     // now we have to type "end" in our console to shut it down!
     RealmConsole* console = new RealmConsole;
-    console->StartCosnoleListener();
+    console->StartConsoleListener();
 
 
     // RealmConsole has left the loop, initiate shut down.
