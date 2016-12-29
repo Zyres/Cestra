@@ -27,43 +27,12 @@ class RealmConsole
 {
     public:
 
-        RealmConsole() : stop_realm_console(false) {}
+        RealmConsole();
 
-        void StartCosnoleListener()
-        {
-            std::string option = "";
-            std::string end = "end";
-            while (!stop_realm_console)
-            {
-                std::getline(std::cin, option);
-                if (end.compare(option) == 0)
-                {
-                    std::cout << "command end was executed! Leaving the loop!" << std::endl;
-                    break;
-                }
-                std::cout << "'" << option << "' is not a valid command! Type help to get a list with all available commands." << std::endl;
-            }
-        }
+        void StartCosnoleListener();
+        bool IsRealmConsoleStopped();
+        void StopRealmConsole();
 
-        bool IsRealmConsoleStopped()
-        {
-            if (stop_realm_console)
-            {
-                std::cout << "RealmConsole is not stopped." << std::endl;
-                return false;
-            }
-            else
-            {
-                std::cout << "RealmConsole is already stopped." << std::endl;
-                return true;
-            }
-        }
-
-        void StopRealmConsole()
-        {
-            std::cout << "RealmConsole is now stopped." << std::endl;
-            stop_realm_console = true;
-        }
 
     private:
 
