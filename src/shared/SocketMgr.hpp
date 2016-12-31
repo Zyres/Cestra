@@ -24,21 +24,9 @@ class SocketMgr
 {
     public:
 
-        SocketMgr() : shutdown(false)
+        SocketMgr()
         {
         }
-
-        ~SocketMgr()
-        {            
-        }
-
-        bool ShutdownSocketMgr();
-
-        void InitializeSocketListener();
-
-     private:
-
-         bool shutdown;
 };
 
 #endif // SOCKET_MGR_HPP

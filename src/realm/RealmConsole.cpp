@@ -33,12 +33,12 @@ bool RealmConsole::IsRealmConsoleStopped()
 {
     if (stop_realm_console)
     {
-        std::cout << "RealmConsole is not stopped." << std::endl;
+        //std::cout << "RealmConsole is not stopped." << std::endl;
         return false;
     }
     else
     {
-        std::cout << "RealmConsole is already stopped." << std::endl;
+        //std::cout << "RealmConsole is already stopped." << std::endl;
         return true;
     }
 }
@@ -102,3 +102,4 @@ void RealmConsole::StopRealmConsole()
     std::cout << "RealmConsole is now stopped." << std::endl;
     stop_realm_console = true;
 }
+

@@ -15,6 +15,7 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <boost/asio.hpp>
 #include "stdafx.hpp"
 
 #include <iostream>
@@ -25,6 +26,43 @@
 #include <time.h>
 #include <stdio.h>
 
+#include <boost/thread.hpp>
+
+#define realm_hello_port 13
+
+using boost::asio::ip::tcp;
+
+void StartListenSocket()
+{
+    try
+    {
+        boost::asio::io_service io_service;
+        //create socket
+        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), realm_hello_port));
+
+        //listen for connection
+        for (;;)
+        {
+            tcp::socket socket(io_service);
+            acceptor.accept(socket);
+
+            //write message
+            std::string message = "Hello from RealmServer";
+
+            boost::system::error_code ignored_error;
+            boost::asio::write(socket, boost::asio::buffer(message),
+                               boost::asio::transfer_all(), ignored_error);
+
+            //print connection information
+            std::string s = socket.remote_endpoint().address().to_string();
+            unsigned short remote_port = socket.remote_endpoint().port();
+            std::cout << "GameServer connection accepted from " << s << ":" << remote_port << std::endl;
+        }
+    } catch (std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+}
 
 int main()
 {
@@ -37,16 +75,19 @@ int main()
         std::cout << "RealmServer could not be initialized!" << std::endl;
 
     // socket
-    SocketMgr* socket = new SocketMgr;
-    std::thread t(&SocketMgr::InitializeSocketListener, socket);
-    std::cout << "thread " << t.get_id() << " created!" << std::endl;
+    boost::thread realm_socket(&StartListenSocket);
 
 
-    // console
-    // now we have to type "end" in our console to shut it down!
-    RealmConsole* console = new RealmConsole;
-    console->StartConsoleListener();
+    //console
+    RealmConsole console;
+    boost::thread realm_console(&RealmConsole::StartConsoleListener, &console);
 
+    //keep it alive
+    while (true)
+    {
+        if (!console.IsRealmConsoleStopped())
+            break;
+    }
 
     // RealmConsole has left the loop, initiate shut down.
     for (int i = 5; i > 0; i--)
@@ -55,12 +96,6 @@ int main()
         std::cout <<"Shutdown in " << i <<" seconds." << std::endl;
     }
     std::cout << "Process shutdown." << std::endl;
-
-    // Shutdown here everything we created
-    if (socket->ShutdownSocketMgr())
-        std::cout << "Shutdown SocketMgr is set to true." << std::endl;
-
-    socket->~SocketMgr();
 
     return 0;
 }
