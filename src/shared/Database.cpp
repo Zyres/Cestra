@@ -37,15 +37,32 @@ Database* Database::InitializeDatabaseConnection(std::string db_ip, std::string 
         mysql_free_result(result);
         return nullptr;
     }
+}
 
-    uint32 num_fields;
-    uint32 num_rows;
 
-    //retrieve and display data
-    mysql_query(mysql_connection, "SELECT * FROM accounts");
+QueryResult* Database::Query(const char* query_tring, ...)
+{
+    // printf to char
+    char query_buffer[32768];
+    va_list ap;
+    va_start(ap, query_tring);
+    vsnprintf(query_buffer, 32768, query_tring, ap);
+    va_end(ap);
+
+    //result
+    QueryResult* query_result = nullptr;
+
+    uint32 num_fields;  //move to class
+    uint32 num_rows;    //move to class
+
+    mysql_query(mysql_connection, query_buffer);
     MYSQL_RES* result2 = mysql_store_result(mysql_connection);
     num_fields = mysql_num_fields(result2);
     num_rows = (uint32)mysql_num_rows(result2);
 
     LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
+
+    return query_result;
 }
+
+// QueryResult

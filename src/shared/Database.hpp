@@ -23,11 +23,17 @@
 
 #include "Common.hpp"
 
+class QueryResult
+{
+
+};
+
 class Database
 {
     public:
 
         Database* InitializeDatabaseConnection(std::string db_ip, std::string db_user, std::string db_password, std::string db_name, uint32 db_port);
+        QueryResult* Query(const char* QueryString, ...);
 
     private:
 
