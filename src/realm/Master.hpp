@@ -18,6 +18,8 @@
 #include <mysql.h>
 #include <iostream>
 
+#include "Database.hpp"
+
 #ifndef MASTER_HPP
 #define MASTER_HPP
 
@@ -37,6 +39,8 @@ class Master
         std::string console_log;
 
     private:
+
+        Database* realm_db_connection;
 
         MYSQL* mysql_realm_connection;
 };

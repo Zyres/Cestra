@@ -18,5 +18,21 @@
 #ifndef DATABASE_HPP
 #define DATABASE_HPP
 
+#include <mysql.h>
+#include <string>
+
+#include "Common.hpp"
+
+class Database
+{
+    public:
+
+        Database* InitializeDatabaseConnection(std::string db_ip, std::string db_user, std::string db_password, std::string db_name, uint32 db_port);
+
+    private:
+
+        MYSQL* mysql_connection;
+
+};
 
 #endif // DATABASE_HPP

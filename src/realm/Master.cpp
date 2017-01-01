@@ -104,36 +104,39 @@ bool Master::ConnectToGameDB()
     std::cout << std::endl;
     LogInfo("Try to connect to realm database (%s)", db_name.c_str());
 
-    mysql_realm_connection = mysql_init(NULL);
-    mysql_real_connect(mysql_realm_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
+    Database db_realm;
+    realm_db_connection = db_realm.InitializeDatabaseConnection(db_ip, db_user, db_password, db_name, db_port);
+
+    //mysql_realm_connection = mysql_init(NULL);
+    //mysql_real_connect(mysql_realm_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
 
 
-    //display data using mysql_query() method
-    MYSQL_RES* result;
-    mysql_query(mysql_realm_connection, "SELECT 1");
-    result = mysql_store_result(mysql_realm_connection);
-    if (result != nullptr)
-    {
-        LogDefault("Succesful connected to realm database %s.", db_name.c_str());
-        mysql_free_result(result);
-    }
-    else
-    {
-        LogError("Not able to realm database %s!", db_name.c_str());
-        mysql_free_result(result);
-        return false;
-    }
+    ////display data using mysql_query() method
+    //MYSQL_RES* result;
+    //mysql_query(mysql_realm_connection, "SELECT 1");
+    //result = mysql_store_result(mysql_realm_connection);
+    //if (result != nullptr)
+    //{
+    //    LogDefault("Succesful connected to realm database %s.", db_name.c_str());
+    //    mysql_free_result(result);
+    //}
+    //else
+    //{
+    //    LogError("Not able to realm database %s!", db_name.c_str());
+    //    mysql_free_result(result);
+    //    return false;
+    //}
 
-    uint32 num_fields;
-    uint32 num_rows;
+    //uint32 num_fields;
+    //uint32 num_rows;
 
-    //retrieve and display data
-    mysql_query(mysql_realm_connection, "SELECT * FROM accounts");
-    result = mysql_store_result(mysql_realm_connection);
-    num_fields = mysql_num_fields(result);
-    num_rows = (uint32)mysql_num_rows(result);
+    ////retrieve and display data
+    //mysql_query(mysql_realm_connection, "SELECT * FROM accounts");
+    //result = mysql_store_result(mysql_realm_connection);
+    //num_fields = mysql_num_fields(result);
+    //num_rows = (uint32)mysql_num_rows(result);
 
-    LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
+    //LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
 
     return true;
 }
