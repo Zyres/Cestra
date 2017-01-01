@@ -4,6 +4,8 @@ set(sources
     Common.hpp
     Configuration.cpp
     Configuration.hpp
+    Database.cpp
+    Database.hpp
     FileLog.cpp
     FileLog.hpp
     SocketMgr.cpp
