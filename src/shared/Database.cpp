@@ -33,36 +33,84 @@ Database* Database::InitializeDatabaseConnection(std::string db_ip, std::string 
     }
     else
     {
-        LogError("Not able to realm database %s!", db_name.c_str());
+        LogError("Not able to connect to realm database %s!", db_name.c_str());
         mysql_free_result(result);
         return nullptr;
     }
 }
 
-
-QueryResult* Database::Query(const char* query_tring, ...)
+QueryResult* Database::Query(const char* query_string, ...)
 {
-    // printf to char
     char query_buffer[32768];
+
     va_list ap;
-    va_start(ap, query_tring);
-    vsnprintf(query_buffer, 32768, query_tring, ap);
+    va_start(ap, query_string);
+    vsnprintf(query_buffer, 32768, query_string, ap);
     va_end(ap);
 
-    //result
     QueryResult* query_result = nullptr;
 
-    uint32 num_fields;  //move to class
-    uint32 num_rows;    //move to class
-
-    mysql_query(mysql_connection, query_buffer);
-    MYSQL_RES* result2 = mysql_store_result(mysql_connection);
-    num_fields = mysql_num_fields(result2);
-    num_rows = (uint32)mysql_num_rows(result2);
-
-    LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
+    if (IsValidQuery(query_buffer, false))
+        query_result = GetQueryResult();
 
     return query_result;
+}
+
+QueryResult* Database::GetQueryResult()
+{
+    MYSQL_RES* mysql_res = mysql_store_result(mysql_connection);
+
+    uint32 num_fields = (uint32)mysql_field_count(mysql_connection);
+    uint32 num_rows = (uint32)mysql_affected_rows(mysql_connection);
+
+    if (num_rows == 0 || num_fields == 0 || mysql_res == nullptr)
+    {
+        if (mysql_res != nullptr)
+            mysql_free_result(mysql_res);
+
+        return nullptr;
+    }
+
+    QueryResult* query_result = new QueryResult(mysql_res, num_fields, num_rows);
+    query_result->NextRow();
+
+    return query_result;
+}
+
+bool Database::IsValidQuery(const char* query_string, bool retry)
+{
+    mysql_query(mysql_connection, query_string); //connect to db and run query
+    
+    uint32 handle_number = HandleMySQLError(mysql_errno(mysql_connection));
+
+    if (retry == false && handle_number == 1)
+    {
+        IsValidQuery(query_string, true);
+    }
+    else if (handle_number != 0)
+    {
+        LogError("MySQL error code %u query failed due to [%s]", mysql_errno(mysql_connection), mysql_error(mysql_connection));
+        return false;
+    }
+
+    return true;
+}
+
+uint32 Database::HandleMySQLError(uint32 mysql_error_number)
+{
+    if (mysql_error_number == 0)
+        return 0;
+
+    uint32 error_number = mysql_error_number;
+
+    switch (mysql_error_number)
+    {
+        case 2006:
+            return 1;   // retry (reconnect to mysql)
+            break;
+        default:
+            return error_number;    // return error number
+    }
 }
 
 // QueryResult

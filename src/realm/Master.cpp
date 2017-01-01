@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <ctime>
 #include <iostream>
-#include <mysql.h>
 
 
 Master::Master() : console_log("")
@@ -100,25 +99,41 @@ bool Master::ConnectToGameDB()
     Config.GameConfig.GetString("RealmDatabase", "DB_Password", &db_password);
     Config.GameConfig.GetString("RealmDatabase", "DB_Name", &db_name);
 
-
-    std::cout << std::endl;
     LogInfo("Try to connect to realm database (%s)", db_name.c_str());
 
     Database db_realm;
     realm_db_connection = db_realm.InitializeDatabaseConnection(db_ip, db_user, db_password, db_name, db_port);
+    if (realm_db_connection == nullptr)
+        return false;
 
-    realm_db_connection->Query("SELECT * FROM accounts");
+    QueryResult* query_result = realm_db_connection->Query("SELECT * FROM accounts");
+    if (query_result != nullptr)
+    {
+        uint32 count = 0;
+        do
+        {
+            QueryField* fields = query_result->Fetch();
 
-    //uint32 num_fields;
-    //uint32 num_rows;
+            uint32 guid = fields[0].GetUInt32();
+            std::string account = fields[1].GetString();
+            std::string e_mail = fields[5].GetString();
 
-    ////retrieve and display data
-    //mysql_query(mysql_connection, "SELECT * FROM accounts");
-    //MYSQL_RES* result2 = mysql_store_result(mysql_connection);
-    //num_fields = mysql_num_fields(result2);
-    //num_rows = (uint32)mysql_num_rows(result2);
+            LogInfo("Account %s (%u) with E-Mail: %s loaded from table 'accounts'.", account.c_str(), guid, e_mail.c_str());
 
-    //LogInfo("Table `accounts` has %u fields and %u rows.", num_fields, num_rows);
+            ++count;
+
+        }
+        while (query_result->NextRow());
+
+        delete query_result;
+
+        LogInfo("%u accounts loaded from  table 'accounts'", count);
+    }
+    else
+    {
+        LogError("Failed to load data from table 'accounts'!");
+        return false;
+    }
 
     return true;
 }

@@ -15,13 +15,12 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <mysql.h>
-#include <iostream>
-
-#include "Database.hpp"
-
 #ifndef MASTER_HPP
 #define MASTER_HPP
+
+#include <iostream>
+#include "Database.hpp"
+
 
 class Master
 {
@@ -41,8 +40,6 @@ class Master
     private:
 
         Database* realm_db_connection;
-
-        MYSQL* mysql_realm_connection;
 };
 
 #endif // MASTER_HPP
