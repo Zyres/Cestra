@@ -1,4 +1,4 @@
-# ![logo](https://github.com/Cestra/Cestra/blob/readme/dep/media/cestra_logo.png?raw=true)
+# ![logo](https://github.com/Cestra/Cestra/blob/master/dep/media/cestra_logo.png?raw=true)
 
 TravisBuild
 
