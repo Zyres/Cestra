@@ -15,11 +15,11 @@
  * along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <mysql.h>
-#include <iostream>
-
 #ifndef MASTER_HPP
 #define MASTER_HPP
+
+#include <iostream>
+#include "Database.hpp"
 
 class Master
 {
@@ -38,7 +38,7 @@ class Master
 
     private:
 
-        MYSQL* mysql_game_connection;
+        Database* game_db_connection;
 };
 
 #endif // MASTER_HPP

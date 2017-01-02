@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <ctime>
 #include <iostream>
-#include <mysql.h>
 
 
 Master::Master() : console_log("")
@@ -105,36 +104,37 @@ bool Master::ConnectToGameDB()
     std::cout << std::endl;
     LogInfo("Try to connect to game database (%s)", db_name.c_str());
 
-    mysql_game_connection = mysql_init(NULL);
-    mysql_real_connect(mysql_game_connection, db_ip.c_str(), db_user.c_str(), db_password.c_str(), db_name.c_str(), db_port, NULL, 0);
+    Database db_game;
+    game_db_connection = db_game.InitializeDatabaseConnection(db_ip, db_user, db_password, db_name, db_port);
+    if (game_db_connection == nullptr)
+        return false;
 
-
-    //display data using mysql_query() method
-    MYSQL_RES* result;
-    mysql_query(mysql_game_connection, "SELECT 1");
-    result = mysql_store_result(mysql_game_connection);
-    if (result != nullptr)
+    QueryResult* query_result = game_db_connection->Query("SELECT * FROM account_data");
+    if (query_result != nullptr)
     {
-        LogDefault("Succesful connected to game database %s.", db_name.c_str());
-        mysql_free_result(result);
+        uint32 count = 0;
+        do
+        {
+            QueryField* fields = query_result->Fetch();
+
+            uint32 guid = fields[0].GetUInt32();
+            uint32 friend_count = fields[1].GetUInt32();
+
+            LogInfo("Account guid %u with friends: %u loaded from table 'account_data'.", guid, friend_count);
+
+            ++count;
+
+        } while (query_result->NextRow());
+
+        delete query_result;
+
+        LogInfo("%u accounts loaded from  table 'account_data'", count);
     }
     else
     {
-        LogError("Not able to game database %s!", db_name.c_str());
-        mysql_free_result(result);
+        LogError("Failed to load data from table 'account_data'!");
         return false;
     }
-
-    uint32 num_fields;
-    uint32 num_rows;
-
-    //retrieve and display data
-    mysql_query(mysql_game_connection, "SELECT * FROM account_data");
-    result = mysql_store_result(mysql_game_connection);
-    num_fields = mysql_num_fields(result);
-    num_rows = (uint32)mysql_num_rows(result);
-
-    LogInfo("Table `account_data` has %u fields and %u rows.", num_fields, num_rows);
 
     return true;
 }
