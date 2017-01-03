@@ -56,7 +56,7 @@ int main()
     // RealmConsole has left the loop, initiate shut down.
     for (int i = 5; i > 0; i--)
     {
-        Sleep(1000);
+        sleep(1000);
         std::cout <<"Shutdown in " << i <<" seconds." << std::endl;
     }
     std::cout << "Process shutdown." << std::endl;

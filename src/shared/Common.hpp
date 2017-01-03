@@ -21,6 +21,13 @@
 #include <cstdint>
 #include <cstring>
 
+#ifdef WIN32
+#include <time.h>
+#else
+#include <unistd.h>
+#endif
+
+
 typedef int64_t int64;
 typedef int32_t int32;
 typedef int16_t int16;
@@ -45,6 +52,12 @@ typedef uint8_t uint8;
     #define strnicmp strncasecmp
 #else
     #define strnicmp _strnicmp
+#endif
+
+#ifdef WIN32
+#define sleep(x) Sleep(x)
+#else
+#define sleep(x) usleep(x)
 #endif
 
 #endif // COMMON_HPP
