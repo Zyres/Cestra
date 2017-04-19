@@ -1,6 +1,0 @@
-Opensource software in this folder:
-   
-Folder: mysql (dll/lib)
-   Name: MySQL Community Server (files)
-   Web: https://dev.mysql.com/downloads
-   Version: 5.7.17
