@@ -3,3 +3,7 @@
 /src/communication/.gitignore
 /src/game/.gitignore
 /src/objects/.gitignore
+/Error_logs/
+/Game_logs/
+/Shop_logs/
+/Gms_logs/
