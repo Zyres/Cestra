@@ -19,6 +19,7 @@ public class Ancestra
 	public static String REALM_VERSION = "0.3";
 	public static int REALM_PORT = -1;
 	public static int REALM_COM_PORT = -1;
+	public static int REALM_TIME_DATA = 0;
 	public static String REALM_DB_HOST = null;
 	public static String REALM_DB_USER = null;
 	public static String REALM_DB_PASSWORD = null;
@@ -198,6 +199,20 @@ public class Ancestra
 	}
 	
 	public synchronized static void addToRealmLog(String str) 
+	{
+		try
+		{
+			String date = Calendar.HOUR_OF_DAY+":"+Calendar.MINUTE+":"+Calendar.SECOND;
+			Ancestra.Log_Realm.write(date+": "+str);
+			Ancestra.Log_Realm.newLine();
+			Ancestra.Log_Realm.flush();
+		}catch(Exception e)
+		{
+			System.out.println("L'ecriture des logs a echouee !");
+		}
+	}
+	
+	public synchronized static void addToRealmSockLog(String str) 
 	{
 		try
 		{

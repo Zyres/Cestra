@@ -1,0 +1,5 @@
+/bin/
+/src/common/.gitignore
+/src/communication/.gitignore
+/src/game/.gitignore
+/src/objects/.gitignore
