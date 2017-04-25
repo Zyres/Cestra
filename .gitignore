@@ -1,1 +1,15 @@
-/bin/
+# gitignore global
+*.txt
+# gitignore @ \Cestra\game
+/game/bin
+/game/Ancestra.jar
+/game/Error_logs
+/game/Game_logs
+/game/Gms_logs
+/game/Shop_logs
+# gitignore @ \Cestra\realm
+/realm/bin
+/realm/AncestraRealm.jar
+/realm/Com_logs
+/realm/Error_logs
+/realm/Realm_logs
