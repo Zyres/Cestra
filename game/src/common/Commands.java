@@ -1868,7 +1868,10 @@ public class Commands {
 		{
 			try
 			{
-				if(Ancestra.NOTINHDV.contains(curTemp.getID())) continue;
+				if(Ancestra.NOTINHDV.contains(curTemp.getID()))
+				{
+					continue;
+				}
 				
 				for (int j = 0; j < ofEachTemplate; j++)//Ajouter plusieur fois le template
 				{

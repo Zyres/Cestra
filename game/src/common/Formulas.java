@@ -704,7 +704,10 @@ public class Formulas {
 
 		}
 		
-		if(totalLevelWin-totalLevelLoose > Ancestra.CONFIG_LVL_PVP) return 0;
+		if(totalLevelWin-totalLevelLoose > Ancestra.CONFIG_LVL_PVP)
+		{
+			return 0;
+		}
 
 		int base = (int)(100 * (float)(totalGradeLoose/totalGradeWin))/winners.size();
 		if(loosers.contains(F))base = -base;

@@ -29,7 +29,6 @@ public class Ancestra {
 	private static final String CONFIG_FILE = "Game_Config.txt";
 	public static boolean CONFIG_USE_IP = false;
 	public static String IP = "127.0.0.1";
-	public static boolean CONFIG_IP_LOOPBACK = true;
 	public static String GAMESERVER_IP;
 	public static int CONFIG_GAME_PORT 	= 5555;
 	public static boolean isInit = false;
@@ -77,7 +76,7 @@ public class Ancestra {
 	//BDD
 	public static int CONFIG_DB_COMMIT = 30*1000;
 	//Inactivité
-	public static int CONFIG_MAX_IDLE_TIME = 1800000;//En millisecondes
+	public static int CONFIG_MAX_IDLE_TIME = 1800000; //in milliseconds
 	//HDV
 	public static ArrayList<Integer> NOTINHDV = new ArrayList<Integer>();
 	//Abonnement
@@ -184,19 +183,27 @@ public class Ancestra {
 				// config value e.g. 127.0.0.1
 				String value = line.split("=")[1].trim();
 				
-				if(param.equalsIgnoreCase("REALM_IP"))
+				if(param.equalsIgnoreCase("LogonServer.Ip"))
 				{
 					Ancestra.REALM_IP = value;
 				}
-				else if(param.equalsIgnoreCase("REALM_DB_HOST"))
+				else if(param.equalsIgnoreCase("LogonServer.Port"))
+				{
+					Ancestra.COM_PORT = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("LogonServer.Key"))
+				{
+					Ancestra.AUTH_KEY = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBHost"))
 				{
 					Ancestra.REALM_DB_HOST = value;
 				}
-				else if(param.equalsIgnoreCase("REALM_DB_USER"))
+				else if(param.equalsIgnoreCase("LogonServer.DBUser"))
 				{
 					Ancestra.REALM_DB_USER = value;
 				}
-				else if(param.equalsIgnoreCase("REALM_DB_PASS"))
+				else if(param.equalsIgnoreCase("LogonServer.DBPass"))
 				{
 					if(value == null)
 					{
@@ -205,18 +212,18 @@ public class Ancestra {
 					
 					Ancestra.REALM_DB_PASS = value;
 				}
-				else if(param.equalsIgnoreCase("REALM_DB_NAME"))
+				else if(param.equalsIgnoreCase("LogonServer.DBName"))
 				{
 					Ancestra.REALM_DB_NAME = value;
 				}
-				else if(param.equalsIgnoreCase("DEBUG"))
+				else if(param.equalsIgnoreCase("EnableDebug"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
 						Ancestra.CONFIG_DEBUG = true;
 					}
 				}
-				else if(param.equalsIgnoreCase("LOG"))
+				else if(param.equalsIgnoreCase("EnableLog"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
@@ -230,34 +237,40 @@ public class Ancestra {
 						Ancestra.CONFIG_USE_IP = true;
 					}
 				}
-				else if(param.equalsIgnoreCase("HOST_IP"))
+				else if(param.equalsIgnoreCase("GameServer.Ip"))
 				{
 					Ancestra.IP = value;
 				}
-				else if(param.equalsIgnoreCase("LOCALIP_LOOPBACK"))
-				{
-					if(value.equalsIgnoreCase("true"))
-					{
-						Ancestra.CONFIG_IP_LOOPBACK = true;
-					}
-				}
-				else if(param.equalsIgnoreCase("AUTH_KEY"))
-				{
-					Ancestra.AUTH_KEY = value;
-				}
-				else if(param.equalsIgnoreCase("GAME_PORT"))
+				else if(param.equalsIgnoreCase("GameServer.Port"))
 				{
 					Ancestra.CONFIG_GAME_PORT = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("COM_PORT"))
+				else if(param.equalsIgnoreCase("GameServer.DBHost"))
 				{
-					Ancestra.COM_PORT = Integer.parseInt(value);
+					Ancestra.DB_HOST = value;
 				}
-				else if(param.equalsIgnoreCase("MOTD"))
+				else if(param.equalsIgnoreCase("GameServer.DBUser"))
+				{
+					Ancestra.DB_USER = value;
+				}
+				else if(param.equalsIgnoreCase("GameServer.DBPass"))
+				{
+					if(value == null)
+					{
+						value = "";
+					}
+					
+					Ancestra.DB_PASS = value;
+				}
+				else if(param.equalsIgnoreCase("GameServer.DBName"))
+				{
+					Ancestra.DB_NAME = value;
+				}
+				else if(param.equalsIgnoreCase("Motd.HtmlString "))
 				{
 					Ancestra.CONFIG_MOTD = line.split("=",2)[1];
 				}
-				else if(param.equalsIgnoreCase("MOTD_COLOR"))
+				else if(param.equalsIgnoreCase("Motd.HtmlColorCode"))
 				{
 					Ancestra.CONFIG_MOTD_COLOR = value;
 				}
@@ -273,26 +286,88 @@ public class Ancestra {
 				{
 					Ancestra.CONFIG_SAVE_TIME = (Integer.parseInt(value)*60000);
 				}
-				else if(param.equalsIgnoreCase("DB_HOST"))
+				else if (param.equalsIgnoreCase("ALLOW_MULTI_ACCOUNT"))
 				{
-					Ancestra.DB_HOST = value;
+					Ancestra.CONFIG_ALLOW_MULTI = value.equalsIgnoreCase("true");
 				}
-				else if(param.equalsIgnoreCase("DB_USER"))
+				else if(param.equalsIgnoreCase("MAX_PERSO_PAR_COMPTE"))
 				{
-					Ancestra.DB_USER = value;
+					Ancestra.CONFIG_MAX_PERSOS = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("DB_PASS"))
+				else if (param.equalsIgnoreCase("USE_MOBS"))
 				{
-					if(value == null)
+					Ancestra.CONFIG_USE_MOBS = value.equalsIgnoreCase("true");
+				}
+				else if(param.equalsIgnoreCase("PlayerStart.EnableCustom"))
+				{
+					if(value.equalsIgnoreCase("true"))
 					{
-						value = "";
+						Ancestra.CONFIG_CUSTOM_STARTMAP = true;
+					}
+				}
+				else if(param.equalsIgnoreCase("PlayerStart.Map"))
+				{
+					Ancestra.CONFIG_START_MAP = Short.parseShort(value);
+				}
+				else if(param.equalsIgnoreCase("PlayerStart.Cell"))
+				{
+					Ancestra.CONFIG_START_CELL = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("PlayerStart.Level"))
+				{
+					Ancestra.CONFIG_START_LEVEL = Integer.parseInt(value);
+					if(Ancestra.CONFIG_START_LEVEL < 1)
+					{
+						Ancestra.CONFIG_START_LEVEL = 1;
 					}
 					
-					Ancestra.DB_PASS = value;
+					if(Ancestra.CONFIG_START_LEVEL > 200)
+					{
+						Ancestra.CONFIG_START_LEVEL = 200;
+					}
 				}
-				else if(param.equalsIgnoreCase("DB_NAME"))
+				else if(param.equalsIgnoreCase("PlayerStart.Kamas"))
 				{
-					Ancestra.DB_NAME = value;
+					Ancestra.CONFIG_START_KAMAS = Integer.parseInt(value);
+					if(Ancestra.CONFIG_START_KAMAS < 0)
+					{
+						Ancestra.CONFIG_START_KAMAS = 0;
+					}
+					
+					if(Ancestra.CONFIG_START_KAMAS > 1000000000)
+					{
+						Ancestra.CONFIG_START_KAMAS = 1000000000;
+					}
+				}
+				else if(param.equalsIgnoreCase("General.EnableAllZaap"))
+				{
+					if(value.equalsIgnoreCase("true"))
+					{
+						Ancestra.CONFIG_ZAAP = true;
+					}
+				}
+				else if(param.equalsIgnoreCase("General.MaxLvlDiffForPvpHonor"))
+				{
+					Ancestra.CONFIG_LVL_PVP = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("General.EnableSameIpAggress"))
+				{
+					Ancestra.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
+				}
+				else if (param.equalsIgnoreCase("General.DisplayLvlAura"))
+				{
+					Ancestra.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
+				}
+				else if (param.equalsIgnoreCase("General.IdleTimeInMinBeforeKick"))
+				{
+					Ancestra.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
+				}
+				else if (param.equalsIgnoreCase("General.BannedItemsForAuction"))
+				{
+					for(String curID : value.split(","))
+					{
+						Ancestra.NOTINHDV.add(Integer.parseInt(curID));
+					}
 				}
 				else if(param.equalsIgnoreCase("XP_PVP"))
 				{
@@ -317,89 +392,6 @@ public class Ancestra {
 				else if(param.equalsIgnoreCase("HONOR"))
 				{
 					Ancestra.RATE_HONOR = Integer.parseInt(value);
-				}
-				else if (param.equalsIgnoreCase("ALLOW_MULTI_ACCOUNT"))
-				{
-					Ancestra.CONFIG_ALLOW_MULTI = value.equalsIgnoreCase("true");
-				}
-				else if(param.equalsIgnoreCase("MAX_PERSO_PAR_COMPTE"))
-				{
-					Ancestra.CONFIG_MAX_PERSOS = Integer.parseInt(value);
-				}
-				else if (param.equalsIgnoreCase("USE_MOBS"))
-				{
-					Ancestra.CONFIG_USE_MOBS = value.equalsIgnoreCase("true");
-				}
-				else if(param.equalsIgnoreCase("USE_CUSTOM_START"))
-				{
-					if(value.equalsIgnoreCase("true"))
-					{
-						Ancestra.CONFIG_CUSTOM_STARTMAP = true;
-					}
-				}
-				else if(param.equalsIgnoreCase("START_MAP"))
-				{
-					Ancestra.CONFIG_START_MAP = Short.parseShort(value);
-				}
-				else if(param.equalsIgnoreCase("START_CELL"))
-				{
-					Ancestra.CONFIG_START_CELL = Integer.parseInt(value);
-				}
-				else if(param.equalsIgnoreCase("START_LEVEL"))
-				{
-					Ancestra.CONFIG_START_LEVEL = Integer.parseInt(value);
-					if(Ancestra.CONFIG_START_LEVEL < 1)
-					{
-						Ancestra.CONFIG_START_LEVEL = 1;
-					}
-					
-					if(Ancestra.CONFIG_START_LEVEL > 200)
-					{
-						Ancestra.CONFIG_START_LEVEL = 200;
-					}
-				}
-				else if(param.equalsIgnoreCase("START_KAMAS"))
-				{
-					Ancestra.CONFIG_START_KAMAS = Integer.parseInt(value);
-					if(Ancestra.CONFIG_START_KAMAS < 0)
-					{
-						Ancestra.CONFIG_START_KAMAS = 0;
-					}
-					
-					if(Ancestra.CONFIG_START_KAMAS > 1000000000)
-					{
-						Ancestra.CONFIG_START_KAMAS = 1000000000;
-					}
-				}
-				else if(param.equalsIgnoreCase("ZAAP"))
-				{
-					if(value.equalsIgnoreCase("true"))
-					{
-						Ancestra.CONFIG_ZAAP = true;
-					}
-				}
-				else if(param.equalsIgnoreCase("LVL_PVP"))
-				{
-					Ancestra.CONFIG_LVL_PVP = Integer.parseInt(value);
-				}
-				else if(param.equalsIgnoreCase("ALLOW_MULE_PVP"))
-				{
-					Ancestra.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
-				}
-				else if (param.equalsIgnoreCase("AURA_SYSTEM"))
-				{
-					Ancestra.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
-				}
-				else if (param.equalsIgnoreCase("MAX_IDLE_TIME"))
-				{
-					Ancestra.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
-				}
-				else if (param.equalsIgnoreCase("NOT_IN_HDV"))
-				{
-					for(String curID : value.split(","))
-					{
-						Ancestra.NOTINHDV.add(Integer.parseInt(curID));
-					}
 				}
 				else if (param.equalsIgnoreCase("ARENA_MAP"))
 				{

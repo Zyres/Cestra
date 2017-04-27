@@ -517,31 +517,57 @@ public class Constants
 	
 	//Methodes
 	public static short getStartMap(int classID)
-	{
-		short pos = 10298;
-		switch(classID)
-		{
-			//TODO
-		}
+	{	
 		if(Ancestra.CONFIG_CUSTOM_STARTMAP)
 		{
 			return Ancestra.CONFIG_START_MAP;
 		}
-		return pos;
+		//TODO
+		switch(classID)
+		{
+			case CLASS_FECA:
+			case CLASS_OSAMODAS:
+			case CLASS_ENUTROF:
+			case CLASS_SRAM:
+			case CLASS_XELOR:
+			case CLASS_ECAFLIP:
+			case CLASS_ENIRIPSA:
+			case CLASS_IOP:
+			case CLASS_CRA:
+			case CLASS_SADIDA:
+				return 10279;
+			case CLASS_SACRIEUR:
+			case CLASS_PANDAWA:
+			default:
+				return Ancestra.CONFIG_START_MAP;
+		}
 	}
 	
 	public static int getStartCell(int classID)
 	{
-		int pos = 314;
-		switch(classID)
-		{
-		//TODO
-		}
 		if(Ancestra.CONFIG_CUSTOM_STARTMAP)
 		{
 			return Ancestra.CONFIG_START_CELL;
 		}
-		return pos;
+		//TODO
+		switch(classID)
+		{
+			case CLASS_FECA:
+			case CLASS_OSAMODAS:
+			case CLASS_ENUTROF:
+			case CLASS_SRAM:
+			case CLASS_XELOR:
+			case CLASS_ECAFLIP:
+			case CLASS_ENIRIPSA:
+			case CLASS_IOP:
+			case CLASS_CRA:
+			case CLASS_SADIDA:
+				return 284;
+			case CLASS_SACRIEUR:
+			case CLASS_PANDAWA:
+			default:
+				return Ancestra.CONFIG_START_CELL;
+		}
 	}
 	
 	public static short getClassStatueMap(int classID)
