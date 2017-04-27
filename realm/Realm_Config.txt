@@ -3,7 +3,7 @@
 # AR - REALM
 
 # Port du serveur
-REALM_PORT = 444
+REALM_PORT = 434
 REALM_COM_PORT = 489
 
 # Version 1.29.1
@@ -13,8 +13,8 @@ REALM_IGNORE_VERSION = false
 # Base de donnée
 REALM_DB_HOST = 127.0.0.1
 REALM_DB_USER = root
-REALM_DB_PASSWORD = 
-REALM_DB_NAME = ancestra_realm
+REALM_DB_PASSWORD = root
+REALM_DB_NAME = cestra_realm
 REALM_DB_COMMIT = 3000
 
 # DEBUG (DEBUG = See on console)

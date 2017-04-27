@@ -8,8 +8,8 @@ REALM_IP = 127.0.0.1
 #Configuration de la base de donnée du serveur de connexion
 REALM_DB_HOST = 127.0.0.1
 REALM_DB_USER = root
-REALM_DB_PASS = 
-REALM_DB_NAME = ancestra_realm
+REALM_DB_PASS = root
+REALM_DB_NAME = cestra_realm
 
 # AR - GAME
 
@@ -40,8 +40,8 @@ SAVE_TIME = 30
 # Configuration de la base de donnée
 DB_HOST = 127.0.0.1
 DB_USER = root
-DB_PASS = 
-DB_NAME = ancestra_game
+DB_PASS = root
+DB_NAME = cestra_game
 
 # Rates
 XP_PVP = 1
