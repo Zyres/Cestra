@@ -17,12 +17,16 @@ import java.util.Map.Entry;
 import common.*;
 import common.World.*;
 
-public class Carte {
+public class Carte
+{
 	private short _id;
 	private String _date;
+	
 	private byte _w;
 	private byte _h;
+	
 	private String _key;
+	
 	private String _placesStr;
 	private Map<Integer,Case> 		_cases 			= new TreeMap<Integer,Case>();
 	private Map<Integer,Fight> 		_fights 		= new TreeMap<Integer,Fight>();
@@ -69,73 +73,96 @@ public class Carte {
 				{
 					String[] secondCut = firstCut.split(",");
 					Dragodinde DD = World.getDragoByID(Integer.parseInt(secondCut[1]));
-					if(DD == null) continue;
+					if(DD == null)
+						continue;
+					
 					MountParkDATA.put(Integer.parseInt(secondCut[1]), Integer.parseInt(secondCut[0]));
-				}catch(Exception E){};
+				}
+				catch(Exception E)
+				{};
 			}
 		}
 
-		public int get_owner() {
+		public int get_owner()
+		{
 			return _owner;
 		}
 		
-		public void set_owner(int AccID) {
+		public void set_owner(int AccID)
+		{
 			_owner = AccID;
 		}
 		
-		public InteractiveObject get_door() {
+		public InteractiveObject get_door()
+		{
 			return _door;
 		}
 
-		public int get_size() {
+		public int get_size()
+		{
 			return _size;
 		}
 
-		public Guild get_guild() {
+		public Guild get_guild()
+		{
 			return _guild;
 		}
 		
-		public void set_guild(Guild guild) {
+		public void set_guild(Guild guild)
+		{
 			_guild = guild;
 		}
 
-		public Carte get_map() {
+		public Carte get_map()
+		{
 			return _map;
 		}
 		
-		public int get_cellid() {
+		public int get_cellid()
+		{
 			return _cellid;
 		}
 
-		public int get_price() {
+		public int get_price()
+		{
 			return _price;
 		}
 		
-		public void set_price(int price) {
+		public void set_price(int price)
+		{
 			_price = price;
 		}
 
 		public int getObjectNumb()
 		{
 			int n = 0;
-			for(Case C : _cases)if(C.getObject() != null)n++;
+			for(Case C : _cases)
+				if(C.getObject() != null)
+					n++;
+			
 			return n;
 		}
 
 		public String parseData(int PID, boolean isPublic)
 		{
-			if(MountParkDATA.isEmpty())return "~";
+			if(MountParkDATA.isEmpty())
+				return "~";
 			
 			StringBuilder packet = new StringBuilder();
 			for(Entry<Integer, Integer> MPdata : MountParkDATA.entrySet())
 			{
 				if(MPdata.getValue() == PID && isPublic)//Montrer que ses montures uniquement en public
 				{
-					if(packet.length() > 0)packet.append(";");
+					if(packet.length() > 0)
+						packet.append(";");
+					
 					packet.append(World.getDragoByID(MPdata.getKey()).parse());
-				}else
+				}
+				else
 				{
-					if(packet.length() > 0)packet.append(";");
+					if(packet.length() > 0)
+						packet.append(";");
+					
 					packet.append(World.getDragoByID(MPdata.getKey()).parse());
 				}
 			}
@@ -145,11 +172,13 @@ public class Carte {
 		public String parseDBData()
 		{
 			StringBuilder str = new StringBuilder();
-			if(MountParkDATA.isEmpty())return "";
+			if(MountParkDATA.isEmpty())
+				return "";
 			
 			for(Entry<Integer, Integer> MPdata : MountParkDATA.entrySet())
 			{
-				if(str.length() > 0)str.append(";");
+				if(str.length() > 0)
+					str.append(";");
 				str.append(MPdata.getValue()).append(",").append(World.getDragoByID(MPdata.getKey()).get_id());
 			}
 			return str.toString();
@@ -1412,6 +1441,7 @@ public class Carte {
 	{
 		return _mountPark;
 	}
+	
 	public Carte(short id, String date, byte w, byte h, String key, String places)
 	{
 		_id = id;

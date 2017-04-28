@@ -527,8 +527,7 @@ public class Constants
 			case CLASS_FECA:
 				return 10300;
 			case CLASS_OSAMODAS:
-				//TODO  Map ID 10284
-				return Ancestra.CONFIG_START_MAP;
+				return 10284;
 			case CLASS_ENUTROF:
 				return 10299;
 			case CLASS_SRAM:
@@ -565,8 +564,7 @@ public class Constants
 			case CLASS_FECA:
 				return 337;
 			case CLASS_OSAMODAS:
-				//TODO  CellID 386
-				return Ancestra.CONFIG_START_CELL;
+				return 386;
 			case CLASS_ENUTROF:
 				return 300;
 			case CLASS_SRAM:

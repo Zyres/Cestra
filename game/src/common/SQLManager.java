@@ -978,13 +978,15 @@ public class SQLManager {
 			}
 			closeResultSet(RS);
 			return nbr;
-		}catch(SQLException e)
+		}
+		catch(SQLException e)
 		{
 			System.out.println("Game: SQL ERROR: "+e.getMessage());
 			System.exit(1);
 		}
 		return 0;
 	}
+
 	public static void LOAD_MAPS()
 	{
 		try
@@ -1010,21 +1012,32 @@ public class SQLManager {
 							));
 			}
 			SQLManager.closeResultSet(RS);
+			
 			RS = SQLManager.executeQuery("SELECT  * from mobgroups_fix;",Ancestra.DB_NAME);
 			while(RS.next())
 			{
 					Carte c = World.getCarte(RS.getShort("mapid"));
-					if(c == null)continue;
-					if(c.getCase(RS.getInt("cellid")) == null)continue;
+					if(c == null)
+					{
+						continue;
+					}
+					
+					if(c.getCase(RS.getInt("cellid")) == null)
+					{
+						continue;
+					}
+					
 					c.addStaticGroup(RS.getInt("cellid"), RS.getString("groupData"));
 			}
 			SQLManager.closeResultSet(RS);
-		}catch(SQLException e)
+		}
+		catch(SQLException e)
 		{
 			System.out.println("Game: SQL ERROR: "+e.getMessage());
 			System.exit(1);
 		}
 	}
+
 	public static void SAVE_PERSONNAGE(Personnage _perso, boolean saveAll)
 	{
 		String baseQuery = "UPDATE `personnages` SET "+

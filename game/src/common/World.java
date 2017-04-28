@@ -676,57 +676,74 @@ public class World {
 		System.out.print("Chargement des sous-zone: ");
 		SQLManager.LOAD_SUBAREA();
 		System.out.println(SubAreas.size()+" sous-zones ont ete chargees");
+		
 		System.out.print("Chargement des template d'objet interactifs: ");
 		SQLManager.LOAD_IOTEMPLATE();
 		System.out.println(IOTemplate.size()+" template d'IO ont ete charges");
-		System.out.print("Chargement des recettes: ");
+		
+		System.out.print("Loading crafts: ");
 		SQLManager.LOAD_CRAFTS();
-		System.out.println(Crafts.size()+" recettes ont ete chargses");
-		System.out.print("Chargement des metiers: ");
+		System.out.println(Crafts.size()+" crafts loaded");
+		
+		System.out.print("Loading jobs: ");
 		SQLManager.LOAD_JOBS();
-		System.out.println(Jobs.size()+" metiers ont ete charges");
-		System.out.print("Chargement des panolies: ");
+		System.out.println(Jobs.size()+" jobs loaded");
+		
+		System.out.print("Loading itemsets: ");
 		SQLManager.LOAD_ITEMSETS();
-		System.out.println(ItemSets.size()+" panoplies ont ete chargees");
-		System.out.print("Chargement des maps: ");
+		System.out.println(ItemSets.size()+" itemsets loaded");
+		
+		System.out.print("Loading map data: ");
 		SQLManager.LOAD_MAPS();
-		System.out.println(Cartes.size()+" maps ont ete chargees");
-		System.out.print("Chargement des Triggers: ");
+		System.out.println(Cartes.size()+" maps loaded");
+		
+		System.out.print("Loading triggers: ");
 		int nbr = SQLManager.LOAD_TRIGGERS();
-		System.out.println(nbr+" triggers ont ete charges");
-		System.out.print("Chargement des actions de fin de combat: ");
+		System.out.println(nbr+" triggers loaded");
+		
+		System.out.print("Loading endfight actions: ");
 		nbr = SQLManager.LOAD_ENDFIGHT_ACTIONS();
-		System.out.println(nbr+" actions ont ete charges");
-		System.out.print("Chargement des npcs: ");
+		System.out.println(nbr+" actions loaded");
+		
+		System.out.print("Loading npcs: ");
 		nbr = SQLManager.LOAD_NPCS();
-		System.out.println(nbr+" npcs ont ete charges");
-		System.out.print("Chargement des actions des objets: ");
+		System.out.println(nbr+" npcs loaded");
+		
+		System.out.print("Loading items: ");
 		nbr = SQLManager.LOAD_ITEM_ACTIONS();
-		System.out.println(nbr+" actions ont ete chargees");
-		System.out.print("Chargement des Drops: ");
+		System.out.println(nbr+" item loaded");
+		
+		System.out.print("Loading drops: ");
 		nbr = SQLManager.LOAD_DROPS();
-		System.out.println(nbr+" drops ont ete charges");
-		System.out.print("Chargement des Animations: ");
+		System.out.println(nbr+" drops loaded");
+		
+		System.out.print("Loading animations: ");
 		SQLManager.LOAD_ANIMATIONS();
-		System.out.println(Animations.size() + " animations ont ete charges");
-		System.out.print("Chargement des zaaps: ");
+		System.out.println(Animations.size() + " animations loaded");
+		
+		System.out.print("Loading zaaps: ");
 		nbr = SQLManager.LOAD_ZAAPS();
-		System.out.println(nbr+" zaaps charges");
-		System.out.print("Chargement des zaapis: ");
+		System.out.println(nbr+" zaaps loaded");
+		
+		System.out.print("Loading zaapis: ");
 		nbr = SQLManager.LOAD_ZAAPIS();
-		System.out.println(nbr+" zaapis charges");
-		System.out.print("Chargement des hdvs: ");
+		System.out.println(nbr+" zaapis loaded");
+		
+		System.out.print("Loading hdvs: ");
 		nbr = SQLManager.LOAD_HDVS();
-		System.out.println(nbr+" hdvs charges");
-		System.out.print("Chargement des pets: ");
+		System.out.println(nbr+" hdvs loaded");
+		
+		System.out.print("Loading pets: ");
 		nbr = SQLManager.LOAD_PETS();
-		System.out.println(nbr+" pets charges");
-		System.out.print("Chargement des challenges: ");
+		System.out.println(nbr+" pets loaded");
+		
+		System.out.print("Loading challenges: ");
 		nbr = SQLManager.LOAD_CHALLENGES();
-		System.out.println(nbr+" challenges charges");
-		System.out.println("Chargement des cadeaux: ");
+		System.out.println(nbr+" challenges loading");
+		
+		System.out.println("Loading gifts: ");
 		nbr = SQLManager.LOAD_GIFTS();
-		System.out.println(nbr+" cadeaux charges");
+		System.out.println(nbr+" gifts loaded");
 		
 		System.out.println("====>Donnees dynamique<====");
 		System.out.print("Chargement des items: ");
@@ -848,7 +865,7 @@ public class World {
 		return Cartes.get(id);
 	}
 	
-	public static  void addCarte(Carte map)
+	public static void addCarte(Carte map)
 	{
 		if(!Cartes.containsKey(map.get_id()))
 			Cartes.put(map.get_id(),map);
