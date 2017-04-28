@@ -30,7 +30,7 @@ public class Ancestra {
 	public static boolean CONFIG_USE_IP = false;
 	public static String IP = "127.0.0.1";
 	public static String GAMESERVER_IP;
-	public static int CONFIG_GAME_PORT 	= 5555;
+	public static int CONFIG_GAME_PORT = 5555;
 	public static boolean isInit = false;
 	public static boolean isRunning = false;
 	public static boolean isSaving = false;
@@ -56,7 +56,6 @@ public class Ancestra {
 	public static int CONFIG_START_CELL = 314;
 	public static int CONFIG_START_LEVEL = 1;
 	public static int CONFIG_START_KAMAS = 0;
-	public static boolean CONFIG_ALLOW_MULTI = false;
 	public static boolean CONFIG_ALLOW_MULE_PVP = false;
 	public static boolean CONFIG_AURA_SYSTEM = false;
 	public static boolean CONFIG_ZAAP = false;
@@ -76,7 +75,7 @@ public class Ancestra {
 	//BDD
 	public static int CONFIG_DB_COMMIT = 30*1000;
 	//Inactivité
-	public static int CONFIG_MAX_IDLE_TIME = 1800000; //in milliseconds
+	public static int CONFIG_MAX_IDLE_TIME = 1800000;//in milliseconds
 	//HDV
 	public static ArrayList<Integer> NOTINHDV = new ArrayList<Integer>();
 	//Abonnement
@@ -143,19 +142,26 @@ public class Ancestra {
 		try
 		{
 			Ip = InetAddress.getLocalHost().getHostAddress();
-		}catch(Exception e)
+		}
+		catch(Exception e)
 		{
 			System.out.println(e.getMessage());
-			try {
+			try
+			{
 				Thread.sleep(10000);
-			} catch (InterruptedException e1) {}
+			}
+			catch (InterruptedException e1)
+			{
+				
+			}
 			System.exit(1);
 		}
 		
 		Ip = IP;
 		gameServer = new GameServer(Ip);
 		System.out.println(" : GameServer OK!");
-		if(CONFIG_USE_IP) System.out.println("Ip du serveur "+IP+" crypt "+GAMESERVER_IP);
+		if(CONFIG_USE_IP)
+			System.out.println("Ip du serveur "+IP+" crypt "+GAMESERVER_IP);
 		
 		System.out.print("Creation du ComServer sur le port "+Ancestra.COM_PORT);
 		comServer = new ComServer();
@@ -187,7 +193,7 @@ public class Ancestra {
 				{
 					Ancestra.REALM_IP = value;
 				}
-				else if(param.equalsIgnoreCase("LogonServer.Port"))
+				else if(param.equalsIgnoreCase("LogonServer.GameServerComPort"))
 				{
 					Ancestra.COM_PORT = Integer.parseInt(value);
 				}
@@ -230,16 +236,16 @@ public class Ancestra {
 						log = true;
 					}
 				}
-				else if(param.equalsIgnoreCase("USE_IP"))
+				else if(param.equalsIgnoreCase("GameServer.Ip"))
+				{
+					Ancestra.IP = value;
+				}
+				else if(param.equalsIgnoreCase("GameServer.PrintIpHash"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
 						Ancestra.CONFIG_USE_IP = true;
 					}
-				}
-				else if(param.equalsIgnoreCase("GameServer.Ip"))
-				{
-					Ancestra.IP = value;
 				}
 				else if(param.equalsIgnoreCase("GameServer.Port"))
 				{
@@ -274,27 +280,57 @@ public class Ancestra {
 				{
 					Ancestra.CONFIG_MOTD_COLOR = value;
 				}
-				else if (param.equalsIgnoreCase("PLAYER_LIMIT"))
+				else if (param.equalsIgnoreCase("General.PlayerLimit"))
 				{
 					Ancestra.CONFIG_PLAYER_LIMIT = Integer.parseInt(value);
 				}
-				else if (param.equalsIgnoreCase("LOAD_ACTION_DELAY"))
+				else if (param.equalsIgnoreCase("General.ReloadActionsInMinutes"))
 				{
 					Ancestra.CONFIG_LOAD_DELAY = (Integer.parseInt(value)*60000);
 				}
-				else if(param.equalsIgnoreCase("SAVE_TIME"))
+				else if(param.equalsIgnoreCase("General.SavePeriodInMinutes"))
 				{
 					Ancestra.CONFIG_SAVE_TIME = (Integer.parseInt(value)*60000);
 				}
-				else if (param.equalsIgnoreCase("ALLOW_MULTI_ACCOUNT"))
+				else if (param.equalsIgnoreCase("General.EnableSubscriberSystem"))
 				{
-					Ancestra.CONFIG_ALLOW_MULTI = value.equalsIgnoreCase("true");
+					Ancestra.USE_SUBSCRIBE = value.equalsIgnoreCase("true");
 				}
-				else if(param.equalsIgnoreCase("MAX_PERSO_PAR_COMPTE"))
+				else if(param.equalsIgnoreCase("General.CharacterLimitOnAccount"))
 				{
 					Ancestra.CONFIG_MAX_PERSOS = Integer.parseInt(value);
 				}
-				else if (param.equalsIgnoreCase("USE_MOBS"))
+				else if(param.equalsIgnoreCase("General.EnableAllZaap"))
+				{
+					if(value.equalsIgnoreCase("true"))
+					{
+						Ancestra.CONFIG_ZAAP = true;
+					}
+				}
+				else if(param.equalsIgnoreCase("General.MaxLvlDiffForPvpHonor"))
+				{
+					Ancestra.CONFIG_LVL_PVP = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("General.EnableSameIpAggress"))
+				{
+					Ancestra.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
+				}
+				else if (param.equalsIgnoreCase("General.DisplayLvlAura"))
+				{
+					Ancestra.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
+				}
+				else if (param.equalsIgnoreCase("General.IdleTimeInMinBeforeKick"))
+				{
+					Ancestra.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
+				}
+				else if (param.equalsIgnoreCase("General.BannedItemsForAuction"))
+				{
+					for(String curID : value.split(","))
+					{
+						Ancestra.NOTINHDV.add(Integer.parseInt(curID));
+					}
+				}
+				else if (param.equalsIgnoreCase("General.SpawnCityGuards"))
 				{
 					Ancestra.CONFIG_USE_MOBS = value.equalsIgnoreCase("true");
 				}
@@ -339,81 +375,59 @@ public class Ancestra {
 						Ancestra.CONFIG_START_KAMAS = 1000000000;
 					}
 				}
-				else if(param.equalsIgnoreCase("General.EnableAllZaap"))
-				{
-					if(value.equalsIgnoreCase("true"))
-					{
-						Ancestra.CONFIG_ZAAP = true;
-					}
-				}
-				else if(param.equalsIgnoreCase("General.MaxLvlDiffForPvpHonor"))
-				{
-					Ancestra.CONFIG_LVL_PVP = Integer.parseInt(value);
-				}
-				else if(param.equalsIgnoreCase("General.EnableSameIpAggress"))
-				{
-					Ancestra.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
-				}
-				else if (param.equalsIgnoreCase("General.DisplayLvlAura"))
-				{
-					Ancestra.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
-				}
-				else if (param.equalsIgnoreCase("General.IdleTimeInMinBeforeKick"))
-				{
-					Ancestra.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
-				}
-				else if (param.equalsIgnoreCase("General.BannedItemsForAuction"))
-				{
-					for(String curID : value.split(","))
-					{
-						Ancestra.NOTINHDV.add(Integer.parseInt(curID));
-					}
-				}
-				else if(param.equalsIgnoreCase("XP_PVP"))
+				else if(param.equalsIgnoreCase("Rate.PvpXp"))
 				{
 					Ancestra.RATE_PVP = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("XP_METIER"))
+				else if(param.equalsIgnoreCase("Rate.JobXp"))
 				{
 					Ancestra.RATE_METIER = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("XP_PVM"))
+				else if(param.equalsIgnoreCase("Rate.PvmXp"))
 				{
 					Ancestra.RATE_PVM = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("DROP"))
+				else if(param.equalsIgnoreCase("Rate.Drops"))
 				{
 					Ancestra.RATE_DROP = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("KAMAS"))
+				else if(param.equalsIgnoreCase("Rate.Kamas"))
 				{
 					Ancestra.RATE_KAMAS = Integer.parseInt(value);
 				}
-				else if(param.equalsIgnoreCase("HONOR"))
+				else if(param.equalsIgnoreCase("Rate.Honor"))
 				{
 					Ancestra.RATE_HONOR = Integer.parseInt(value);
 				}
-				else if (param.equalsIgnoreCase("ARENA_MAP"))
+				else if (param.equalsIgnoreCase("Arena.Maps"))
 				{
 					for(String curID : value.split(","))
 					{
 						Ancestra.arenaMap.add(Integer.parseInt(curID));
 					}
 				}
-				else if (param.equalsIgnoreCase("ARENA_TIMER"))
+				else if (param.equalsIgnoreCase("Arena.PrivateMobSpawnTimer"))
 				{
 					Ancestra.CONFIG_ARENA_TIMER = (Integer.parseInt(value)*60000);
-				}
-				else if (param.equalsIgnoreCase("USE_SUBSCRIBE"))
-				{
-					Ancestra.USE_SUBSCRIBE = value.equalsIgnoreCase("true");
 				}
 			}
 			
 			// check valid db values
-			if(REALM_IP == null || REALM_DB_HOST == null || REALM_DB_NAME == null || REALM_DB_USER == null || REALM_DB_PASS == null ||
-				AUTH_KEY == null || COM_PORT == -1 || DB_NAME == null || DB_HOST == null || DB_PASS == null || DB_USER == null)
+			if(REALM_IP == null || REALM_DB_HOST == null || REALM_DB_NAME == null || REALM_DB_USER == null || REALM_DB_PASS == null)
 			{
+				System.out.println("One or more RealmDatabase values are missing!");
+				config.close();
+				throw new Exception();
+			}
+			if(AUTH_KEY == null || COM_PORT == -1)
+			{
+				System.out.println("One or more RealmConnection values are missing!");
+				config.close();
+				throw new Exception();
+			}
+			if(DB_NAME == null || DB_HOST == null || DB_PASS == null || DB_USER == null)
+			{
+				System.out.println("One or more GameDatabase values are missing!");
 				config.close();
 				throw new Exception();
 			}
@@ -423,7 +437,6 @@ public class Ancestra {
 		catch(Exception e)
 		{
 			System.out.println(e.getMessage());
-			System.out.println("One or more database values are missing!");
 			System.out.println("Server is shutting down.");
 			System.exit(1);
 		}

@@ -89,68 +89,80 @@ public class Ancestra
 			String line = "";
 			while((line = config.readLine()) != null) 
 			{
-				if (line.split("=").length == 1)continue;
+				if (line.split("=").length == 1)
+					continue;
+				
+				// string var e.g. REALM_IP
 				String param = line.split("=")[0].trim();
+				// config value e.g. 127.0.0.1
 				String value = line.split("=")[1].trim();
 				
-			if(param.equalsIgnoreCase("REALM_DB_COMMIT")) 
-			{
-				Ancestra.REALM_DB_COMMIT = Integer.parseInt(value);
-			}else 
-			if (param.equalsIgnoreCase("CLIENT_VERSION"))
-			{
-				Ancestra.CLIENT_VERSION = value;
-			}else
-			if(param.equalsIgnoreCase("REALM_PORT")) 
-			{
-				try{
-					Ancestra.REALM_PORT = Integer.parseInt(value);
-				}catch(Exception e)
+				if(param.equalsIgnoreCase("LogonServer.ListenClientPort")) 
 				{
-					System.out.println("REALM_PORT doit etre un entier!"); System.exit(1);
+					try
+					{
+						Ancestra.REALM_PORT = Integer.parseInt(value);
+					}
+					catch(Exception e)
+					{
+						System.out.println("REALM_PORT doit etre un entier!");
+						System.exit(1);
+					}
 				}
-			}else
-			if(param.equalsIgnoreCase("REALM_DB_HOST")) 
-			{
-				Ancestra.REALM_DB_HOST = value;
-			}else
-			if(param.equalsIgnoreCase("REALM_IGNORE_VERSION"))
-			{
-				Ancestra.REALM_IGNORE_VERSION = (value.equalsIgnoreCase("true") ? true : false);
-			}else
-			if(param.equalsIgnoreCase("REALM_DB_USER")) 
-			{
-				Ancestra.REALM_DB_USER = value;
-			}else
-			if(param.equalsIgnoreCase("REALM_DB_PASSWORD")) 
-			{
-				if(value == null)
-				Ancestra.REALM_DB_PASSWORD = "";
-				else
-				Ancestra.REALM_DB_PASSWORD = value;
-			}else
-			if(param.equalsIgnoreCase("REALM_DB_NAME")) 
-			{
-				Ancestra.REALM_DB_NAME = value;
-			}else
-			if(param.equalsIgnoreCase("REALM_DEBUG"))
-			{
-				Ancestra.REALM_DEBUG = (value.equalsIgnoreCase("true") ? true : false);
-			}else
-			if(param.equalsIgnoreCase("REALM_COM_PORT"))
-			{
-				Ancestra.REALM_COM_PORT = Integer.parseInt(value);
-			}else
-			if(param.equalsIgnoreCase("USE_SUBSCRIBE"))
-			{
-				Ancestra.USE_SUBSCRIBE = (value.equalsIgnoreCase("true") ? true : false);
+				else if(param.equalsIgnoreCase("LogonServer.ListenGameServerComPort"))
+				{
+					Ancestra.REALM_COM_PORT = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("LogonServer.IgnoreClientVersion"))
+				{
+					Ancestra.REALM_IGNORE_VERSION = (value.equalsIgnoreCase("true") ? true : false);
+				}
+				else if (param.equalsIgnoreCase("LogonServer.AllowedClientVersion"))
+				{
+					Ancestra.CLIENT_VERSION = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBHost")) 
+				{
+					Ancestra.REALM_DB_HOST = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBUser")) 
+				{
+					Ancestra.REALM_DB_USER = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBPass")) 
+				{
+					if(value == null)
+						Ancestra.REALM_DB_PASSWORD = "";
+					else
+						Ancestra.REALM_DB_PASSWORD = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBName")) 
+				{
+					Ancestra.REALM_DB_NAME = value;
+				}
+				else if(param.equalsIgnoreCase("LogonServer.DBConnectionTimer")) 
+				{
+					Ancestra.REALM_DB_COMMIT = Integer.parseInt(value);
+				}
+				else if(param.equalsIgnoreCase("EnableDebug"))
+				{
+					Ancestra.REALM_DEBUG = (value.equalsIgnoreCase("true") ? true : false);
+				}
+				else if(param.equalsIgnoreCase("General.EnableSubscriberSystem"))
+				{
+					Ancestra.USE_SUBSCRIBE = (value.equalsIgnoreCase("true") ? true : false);
+				}
 			}
-			}
+			
 			if (REALM_DB_NAME == null || REALM_DB_HOST == null || REALM_DB_PASSWORD == null || REALM_DB_USER == null || REALM_PORT == -1 || REALM_COM_PORT == -1) 
 			{
+				config.close();
 				throw new Exception();
 			}
-		}catch(Exception e)
+			config.close();
+			
+		}
+		catch(Exception e)
 		{
             System.out.println(e.getMessage());
 			System.out.println("Fichier de configuration non existant ou illisible !");

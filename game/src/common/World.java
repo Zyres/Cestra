@@ -1048,30 +1048,32 @@ public class World {
 	{
 		PrintWriter _out = null;
 		if(saver != null)
-		_out = saver.get_compte().getGameThread().get_out();
+			_out = saver.get_compte().getGameThread().get_out();
 		
 		Ancestra.comServer.sendChangeState('S');
 
 		try
 		{
-			GameServer.addToLog("Lancement de la sauvegarde du Monde...");
+			GameServer.addToLog("World safeguard launched...");
 			Ancestra.isSaving = true;
 			SQLManager.commitTransacts();
 			SQLManager.TIMER(false);//Arrête le timer d'enregistrement SQL
 			
 			Thread.sleep(5000);
 			
-			GameServer.addToLog("Sauvegarde des personnages...");
+			GameServer.addToLog("Saving characters...");
 			for(Personnage perso : Persos.values())
 			{
-				if(!perso.isOnline())continue;
+				if(!perso.isOnline())
+					continue;
+				
 				Thread.sleep(100);//0.1 sec. pour 1 objets
 				SQLManager.SAVE_PERSONNAGE(perso,true);//sauvegarde des persos et de leurs items
 			}
 			
 			Thread.sleep(2000);
 			
-			GameServer.addToLog("Sauvegarde des banques...");
+			GameServer.addToLog("Saving bank data...");
 			for(Bank bk : Banks.values())
 			{
 				Thread.sleep(100);//0.1 sec. pour 1 banque
@@ -1080,7 +1082,7 @@ public class World {
 			
 			Thread.sleep(2000);
 			
-			GameServer.addToLog("Sauvegarde des guildes...");
+			GameServer.addToLog("Saving guild data...");
 			for(Guild guilde : Guildes.values())
 			{
 				Thread.sleep(100);//0.1 sec. pour 1 guilde
@@ -1092,14 +1094,16 @@ public class World {
 			GameServer.addToLog("Sauvegarde des percepteurs...");
 			for(Percepteur perco : Percepteurs.values())
 			{
-				if(perco.get_inFight()>0)continue;
+				if(perco.get_inFight()>0)
+					continue;
+				
 				Thread.sleep(100);//0.1 sec. pour 1 percepteur
 				SQLManager.UPDATE_PERCO(perco);
 			}
 			
 			Thread.sleep(2000);
 			
-			GameServer.addToLog("Sauvegarde des maisons...");
+			GameServer.addToLog("Saving houses...");
 			for(House house : Houses.values())
 			{
 				if(house.get_owner_id() > 0)
@@ -1150,6 +1154,7 @@ public class World {
 			{
 				toSave.addAll(curEntry.values());
 			}
+			
 			SQLManager.SAVE_HDVS_ITEMS(toSave);
 			
 			Thread.sleep(5000);
@@ -1158,13 +1163,15 @@ public class World {
 			
 			Ancestra.comServer.sendChangeState('O');
 			
-		}catch(ConcurrentModificationException e)
+		}
+		catch(ConcurrentModificationException e)
 		{
 			if(saveTry < 10)
 			{
 				GameServer.addToLog("Nouvelle tentative de sauvegarde");
 				if(saver != null && _out != null)
 					SocketManager.GAME_SEND_CONSOLE_MESSAGE_PACKET(_out, "Erreur. Nouvelle tentative de sauvegarde");
+				
 				saveTry++;
 				saveAll(saver);
 			}
@@ -1174,10 +1181,12 @@ public class World {
 				String mess = "Echec de la sauvegarde apres " + saveTry + " tentatives";
 				if(saver != null && _out != null)
 					SocketManager.GAME_SEND_CONSOLE_MESSAGE_PACKET(_out, mess);
+				
 				GameServer.addToLog(mess);
 			}
 				
-		}catch(Exception e)
+		}
+		catch(Exception e)
 		{
 			GameServer.addToLog("Erreur lors de la sauvegarde : " + e.getMessage());
 			e.printStackTrace();

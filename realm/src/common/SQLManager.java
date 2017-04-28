@@ -25,8 +25,8 @@ public class SQLManager
 	{
 		if(!Ancestra.isInit)
 			return null;
-		Connection DB = othCon;
 		
+		Connection DB = othCon;
 		
 		Statement stat = DB.createStatement();
 		ResultSet RS = stat.executeQuery(query);
@@ -78,7 +78,8 @@ public class SQLManager
 			
 			othCon.commit();
 			
-		}catch(SQLException e)
+		}
+		catch(SQLException e)
 		{
 			System.out.println("SQL : "+e.getMessage());
 			Ancestra.addToErrorLog("SQL : "+e.getMessage());
@@ -120,7 +121,8 @@ public class SQLManager
 			TIMER(true);
 			
 			return true;
-		}catch(SQLException e)
+		}
+		catch(SQLException e)
 		{
 			System.out.println("SQL : "+e.getMessage());
 			Ancestra.addToErrorLog("SQL : "+e.getMessage());
@@ -134,14 +136,15 @@ public class SQLManager
 		if(start)
 		{
 			timerCommit = new Timer();
-			timerCommit.schedule(new TimerTask() {
-				
-				public void run() {
-					if(!needCommit)return;
+			timerCommit.schedule(new TimerTask()
+			{
+				public void run()
+				{
+					if(!needCommit)
+						return;
 					
 					commitTransacts();
 					needCommit = false;
-					
 				}
 			}, Ancestra.REALM_DB_COMMIT, Ancestra.REALM_DB_COMMIT);
 		}

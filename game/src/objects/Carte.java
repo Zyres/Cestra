@@ -1273,7 +1273,10 @@ public class Carte {
 			String[] split = places.split("\\|");
 			this._maxTeam0 = (split[0].length()/2);
 			this._maxTeam1 = (split[1].length()/2);
-		}catch(Exception e){}
+		}
+		catch(Exception e)
+		{}
+		
 		this._maxGroup = maxGroup;
 		this._maxSize = maxSize;
 		String[] mapInfos = mapPos.split(",");
@@ -1283,8 +1286,11 @@ public class Carte {
 			this._Y = Byte.parseByte(mapInfos[1]);
 			int subArea = Integer.parseInt(mapInfos[2]);
 			_subArea = World.getSubArea(subArea);
-			if(_subArea != null)_subArea.addMap(this);
-		}catch(Exception e)
+			if(_subArea != null)
+				_subArea.addMap(this);
+			
+		}
+		catch(Exception e)
 		{
 			GameServer.addToLog("Erreur de chargement de la map "+_id+": Le champ MapPos est invalide");
 			System.exit(0);
@@ -1292,37 +1298,45 @@ public class Carte {
 		
 		if(!dData.isEmpty())
 		{
-		_cases = CryptManager.DecompileMapData(this,dData);
-		}else
+			_cases = CryptManager.DecompileMapData(this,dData);
+		}
+		else
 		{
-		String[] cellsDataArray = cellsData.split("\\|");
-		
-		for(String o : cellsDataArray)
-		{
+			String[] cellsDataArray = cellsData.split("\\|");
 			
-			boolean Walkable = true;
-			boolean LineOfSight = true;
-			int Number = -1;
-			int obj = -1;
-			String[] cellInfos = o.split(",");
-			try
+			for(String o : cellsDataArray)
 			{
-				Walkable = cellInfos[2].equals("1");
-				LineOfSight = cellInfos[1].equals("1");
-				Number = Integer.parseInt(cellInfos[0]);
-				if(!cellInfos[3].trim().equals(""))
+				
+				boolean Walkable = true;
+				boolean LineOfSight = true;
+				int Number = -1;
+				int obj = -1;
+				String[] cellInfos = o.split(",");
+				try
 				{
-					obj = Integer.parseInt(cellInfos[3]);
+					Walkable = cellInfos[2].equals("1");
+					LineOfSight = cellInfos[1].equals("1");
+					Number = Integer.parseInt(cellInfos[0]);
+					if(!cellInfos[3].trim().equals(""))
+					{
+						obj = Integer.parseInt(cellInfos[3]);
+					}
 				}
-			}catch(Exception d){};
-			if(Number == -1)continue;
-			
-            _cases.put(Number, new Case(this,Number,Walkable,LineOfSight,obj));	
+				catch(Exception d)
+				{};
+				
+				if(Number == -1)
+					continue;
+				
+	            _cases.put(Number, new Case(this,Number,Walkable,LineOfSight,obj));	
+			}
 		}
-		}
+		
 		for(String mob : monsters.split("\\|"))
 		{
-			if(mob.equals(""))continue;
+			if(mob.equals(""))
+				continue;
+			
 			int id = 0;
 			int lvl = 0;
 			
@@ -1330,17 +1344,32 @@ public class Carte {
 			{
 				id = Integer.parseInt(mob.split(",")[0]);
 				lvl = Integer.parseInt(mob.split(",")[1]);
-			}catch(NumberFormatException e){continue;};
-			if(id == 0 || lvl == 0)continue;
-			if(World.getMonstre(id) == null)continue;
-			if(World.getMonstre(id).getGradeByLevel(lvl) == null)continue;
+			}
+			catch(NumberFormatException e)
+			{
+				continue;
+			};
+			
+			if(id == 0 || lvl == 0)
+				continue;
+			
+			if(World.getMonstre(id) == null)
+				continue;
+			
+			if(World.getMonstre(id).getGradeByLevel(lvl) == null)
+				continue;
+			
 			_mobPossibles.add(World.getMonstre(id).getGradeByLevel(lvl));
 		}
-		if(_cases.isEmpty())return;
 		
-		if (Ancestra.CONFIG_USE_MOBS)
+		if(_cases.isEmpty())
+			return;
+		
+		if(Ancestra.CONFIG_USE_MOBS)
 		{
-			if(_maxGroup == 0)return;
+			if(_maxGroup == 0)
+				return;
+			
 			spawnGroup(Constants.ALIGNEMENT_NEUTRE,_maxGroup,false,-1);//Spawn des groupes d'alignement neutre 
 			spawnGroup(Constants.ALIGNEMENT_BONTARIEN,1,false,-1);//Spawn du groupe de gardes bontarien s'il y a
 			spawnGroup(Constants.ALIGNEMENT_BRAKMARIEN,1,false,-1);//Spawn du groupe de gardes brakmarien s'il y a
@@ -1349,22 +1378,31 @@ public class Carte {
 
 	public void applyEndFightAction(int type,Personnage perso)
 	{
-		if(_endFightAction.get(type) == null)return;
-		for(Action A : _endFightAction.get(type))A.apply(perso, null, -1, -1);
+		if(_endFightAction.get(type) == null)
+			return;
+		
+		for(Action A : _endFightAction.get(type))
+			A.apply(perso, null, -1, -1);
 	}
 	public void addEndFightAction(int type,Action A)
 	{
-		if(_endFightAction.get(type) == null)_endFightAction.put(type, new ArrayList<Action>());
+		if(_endFightAction.get(type) == null)
+			_endFightAction.put(type, new ArrayList<Action>());
+		
 		//On retire l'action si elle existait déjà
 		delEndFightAction(type,A.getID());
 		_endFightAction.get(type).add(A);
 	}
 	public void delEndFightAction(int type,int aType)
 	{
-		if(_endFightAction.get(type) == null)return;
+		if(_endFightAction.get(type) == null)
+			return;
+		
 		ArrayList<Action> copy = new ArrayList<Action>();
 		copy.addAll(_endFightAction.get(type));
-		for(Action A : copy)if(A.getID() == aType)_endFightAction.get(type).remove(A);
+		for(Action A : copy)
+			if(A.getID() == aType)
+				_endFightAction.get(type).remove(A);
 	}
 	public void setMountPark(MountPark mountPark)
 	{
@@ -1390,23 +1428,30 @@ public class Carte {
 		return _subArea;
 	}
 	
-	public int getX() {
+	public int getX()
+	{
 		return _X;
 	}
 
-	public int getY() {
+	public int getY()
+	{
 		return _Y;
 	}
 	
-	public Map<Integer, NPC> get_npcs() {
+	public Map<Integer, NPC> get_npcs()
+	{
 		return _npcs;
 	}
 
 	public NPC addNpc(int npcID,int cellID, int dir)
 	{
 		NPC_tmpl temp = World.getNPCTemplate(npcID);
-		if(temp == null)return null;
-		if(getCase(cellID) == null)return null;
+		if(temp == null)
+			return null;
+		
+		if(getCase(cellID) == null)
+			return null;
+		
 		NPC npc = new NPC(temp,_nextObjectID,cellID,(byte)dir);
 		_npcs.put(_nextObjectID, npc);
 		_nextObjectID--;
@@ -1415,12 +1460,18 @@ public class Carte {
 	
 	public void spawnGroup(int align, int nbr,boolean log,int cellID)
 	{
-		if(nbr<1)return;
-		if(_mobGroups.size() - _fixMobGroups.size() >= _maxGroup)return;
+		if(nbr<1)
+			return;
+		
+		if(_mobGroups.size() - _fixMobGroups.size() >= _maxGroup)
+			return;
+		
 		for(int a = 1; a<=nbr;a++)
 		{
 			MobGroup group  = new MobGroup(_nextObjectID,align,_mobPossibles,this,cellID,this._maxSize);
-			if(group.getMobs().isEmpty())continue;
+			if(group.getMobs().isEmpty())
+				continue;
+			
 			_mobGroups.put(_nextObjectID, group);
 			if(log)
 			{
@@ -1434,12 +1485,15 @@ public class Carte {
 	public void spawnNewGroup(boolean timer,int cellID,String groupData,String condition)
 	{
 		MobGroup group = new MobGroup(_nextObjectID, cellID, groupData);
-		if(group.getMobs().isEmpty())return;
+		if(group.getMobs().isEmpty())
+			return;
+		
 		_mobGroups.put(_nextObjectID, group);
 		group.setCondition(condition);
 		group.setIsFix(false);
 		
-		if(Ancestra.CONFIG_DEBUG) GameServer.addToLog("Groupe de monstres ajoutes sur la map: "+_id+" ID: "+_nextObjectID);
+		if(Ancestra.CONFIG_DEBUG)
+			GameServer.addToLog("Groupe de monstres ajoutes sur la map: "+_id+" ID: "+_nextObjectID);
 		
 		SocketManager.GAME_SEND_MAP_MOBS_GM_PACKET(this, group);
 		_nextObjectID--;
@@ -1451,11 +1505,14 @@ public class Carte {
 	public void spawnGroupOnCommand(int cellID,String groupData)
 	{
 		MobGroup group = new MobGroup(_nextObjectID, cellID, groupData);
-		if(group.getMobs().isEmpty())return;
+		if(group.getMobs().isEmpty())
+			return;
+		
 		_mobGroups.put(_nextObjectID, group);
 		group.setIsFix(false);
 
-		if(Ancestra.CONFIG_DEBUG) GameServer.addToLog("Groupe de monstres ajoutes sur la map: "+_id+" ID: "+_nextObjectID);
+		if(Ancestra.CONFIG_DEBUG)
+			GameServer.addToLog("Groupe de monstres ajoutes sur la map: "+_id+" ID: "+_nextObjectID);
 
 		SocketManager.GAME_SEND_MAP_MOBS_GM_PACKET(this, group);
 		_nextObjectID--;
@@ -1464,7 +1521,9 @@ public class Carte {
 	public void addStaticGroup(int cellID,String groupData)
 	{
 		MobGroup group = new MobGroup(_nextObjectID,cellID,groupData);
-		if(group.getMobs().isEmpty())return;
+		if(group.getMobs().isEmpty())
+			return;
+		
 		_mobGroups.put(_nextObjectID, group);
 		_nextObjectID--;
 		_fixMobGroups.put(-1000+_nextObjectID, group);
@@ -1501,27 +1560,33 @@ public class Carte {
 		for(Case c : _cases.values())for(Personnage entry : c.getPersos().values())persos.add(entry);
 		return persos;
 	}
-	public short get_id() {
+	public short get_id()
+	{
 		return _id;
 	}
 
-	public String get_date() {
+	public String get_date()
+	{
 		return _date;
 	}
 
-	public byte get_w() {
+	public byte get_w()
+	{
 		return _w;
 	}
 
-	public byte get_h() {
+	public byte get_h()
+	{
 		return _h;
 	}
 
-	public String get_key() {
+	public String get_key()
+	{
 		return _key;
 	}
 
-	public String get_placesStr() {
+	public String get_placesStr()
+	{
 		return _placesStr;
 	}
 	
@@ -1534,7 +1599,10 @@ public class Carte {
 	public String getGMsPackets()
 	{
 		StringBuilder packet = new StringBuilder();
-		for(Case cell : _cases.values())for(Personnage perso : cell.getPersos().values())packet.append("GM|+").append(perso.parseToGM()).append('\u0000');
+		for(Case cell : _cases.values())
+			for(Personnage perso : cell.getPersos().values())
+				packet.append("GM|+").append(perso.parseToGM()).append('\u0000');
+		
 		return packet.toString();
 	}
 	public String getFightersGMsPackets()
@@ -1551,7 +1619,8 @@ public class Carte {
 	}
 	public String getMobGroupGMsPackets()
 	{
-		if(_mobGroups.isEmpty())return "";
+		if(_mobGroups.isEmpty())
+			return "";
 		
 		StringBuilder packet = new StringBuilder();
 		packet.append("GM|");
@@ -1572,7 +1641,8 @@ public class Carte {
 	
 	public String getNpcsGMsPackets()
 	{
-		if(_npcs.isEmpty())return "";
+		if(_npcs.isEmpty())
+			return "";
 		
 		StringBuilder packet = new StringBuilder();
 		packet.append("GM|");
@@ -1580,7 +1650,8 @@ public class Carte {
 		for(Entry<Integer,NPC> entry : _npcs.entrySet())
 		{
 			String GM = entry.getValue().parseGM();
-			if(GM.equals(""))continue;
+			if(GM.equals(""))
+				continue;
 			
 			if(!isFirst)
 				packet.append("|");
@@ -1637,7 +1708,8 @@ public class Carte {
 		for(Entry<Integer,Case> entry : _cases.entrySet())
 		{
 			//Si la case n'est pas marchable
-			if(!entry.getValue().isWalkable(true))continue;
+			if(!entry.getValue().isWalkable(true))
+				continue;
 			//Si la case est prise par un groupe de monstre
 			boolean ok = true;
 			for(Entry<Integer,MobGroup> mgEntry : _mobGroups.entrySet())
@@ -1645,7 +1717,8 @@ public class Carte {
 				if(mgEntry.getValue().getCellID() == entry.getValue().getID())
 					ok = false;
 			}
-			if(!ok)continue;
+			if(!ok)
+				continue;
 			//Si la case est prise par un npc
 			ok = true;
 			for(Entry<Integer,NPC> npcEntry : _npcs.entrySet())
@@ -1653,9 +1726,11 @@ public class Carte {
 				if(npcEntry.getValue().get_cellID() == entry.getValue().getID())
 					ok = false;
 			}
-			if(!ok)continue;
+			if(!ok)
+				continue;
 			//Si la case est prise par un joueur
-			if(!entry.getValue().getPersos().isEmpty())continue;
+			if(!entry.getValue().getPersos().isEmpty())
+				continue;
 			//Sinon
 			freecell.add(entry.getValue().getID());
 		}
@@ -1676,7 +1751,8 @@ public class Carte {
 		}
 		_mobGroups.clear();
 		_mobGroups.putAll(_fixMobGroups);
-		for(MobGroup mg : _fixMobGroups.values())SocketManager.GAME_SEND_MAP_MOBS_GM_PACKET(this, mg);
+		for(MobGroup mg : _fixMobGroups.values())
+			SocketManager.GAME_SEND_MAP_MOBS_GM_PACKET(this, mg);
 
 		spawnGroup(Constants.ALIGNEMENT_NEUTRE,_maxGroup,true,-1);//Spawn des groupes d'alignement neutre 
 		spawnGroup(Constants.ALIGNEMENT_BONTARIEN,1,true,-1);//Spawn du groupe de gardes bontarien s'il y a
@@ -1685,21 +1761,27 @@ public class Carte {
 	
 	public void onPlayerArriveOnCell(Personnage perso,int caseID, boolean hasEndingFight)
 	{
-		if(_cases.get(caseID) == null)return;
+		if(_cases.get(caseID) == null)
+			return;
+		
 		Objet obj = _cases.get(caseID).getDroppedItem();
 		if(obj != null)
 		{
 			if(perso.addObjet(obj, true))
 				World.addObjet(obj, true);
+			
 			SocketManager.GAME_SEND_GDO_PACKET_TO_MAP(this,'-',caseID,0,0);
 			SocketManager.GAME_SEND_Ow_PACKET(perso);
 			_cases.get(caseID).clearDroppedItem();
 		}
 		_cases.get(caseID).applyOnCellStopActions(perso);
 		
-		if(_placesStr.equalsIgnoreCase("|")) return;
+		if(_placesStr.equalsIgnoreCase("|"))
+			return;
+		
 		//Si le joueur a changer de map ou ne peut etre aggro
-		if(perso.get_curCarte().get_id() != _id || !perso.canAggro())return;
+		if(perso.get_curCarte().get_id() != _id || !perso.canAggro())
+			return;
 		
 		if(!hasEndingFight)
 		{
@@ -1709,7 +1791,9 @@ public class Carte {
 				{
 					if((group.getAlignement() == -1 || ((perso.get_align() == 1 || perso.get_align() == 2) && (perso.get_align() != group.getAlignement()))) && ConditionParser.validConditions(perso, group.getCondition()))
 					{
-						if(perso.get_compte().get_subscriber() == 0 && getSubArea().get_subscribe() && Ancestra.USE_SUBSCRIBE) return;
+						if(perso.get_compte().get_subscriber() == 0 && getSubArea().get_subscribe() && Ancestra.USE_SUBSCRIBE)
+							return;
+						
 						GameServer.addToLog(perso.get_name()+" lance un combat contre le groupe "+group.getID()+" sur la map "+_id);
 						startFigthVersusMonstres(perso,group);
 						return;
@@ -1724,11 +1808,14 @@ public class Carte {
 			SocketManager.GAME_SEND_CRAFT_PUBLIC_MODE(perso);
 			SocketManager.GAME_SEND_CRAFT_PUBLIC_MODE(perso, '+', JobID);
 			perso.set_isJobActivate(JobID);
-		}else
-		if(!perso.get_isJobActivate().isEmpty())
+		}
+		else
 		{
-			SocketManager.GAME_SEND_CRAFT_PUBLIC_MODE(perso, '-', perso.get_isJobActivate());
-			perso.set_isJobActivate("");
+			if(!perso.get_isJobActivate().isEmpty())
+			{
+				SocketManager.GAME_SEND_CRAFT_PUBLIC_MODE(perso, '-', perso.get_isJobActivate());
+				perso.set_isJobActivate("");
+			}
 		}
 	}
 	
@@ -1738,8 +1825,11 @@ public class Carte {
 		if(!_fights.isEmpty())
 			id = ((Integer)(_fights.keySet().toArray()[_fights.size()-1]))+1;
 		
-		if(!group.isFix())_mobGroups.remove(group.getID());
-		else SocketManager.GAME_SEND_MAP_MOBS_GMS_PACKETS_TO_MAP(this);
+		if(!group.isFix())
+			_mobGroups.remove(group.getID());
+		else
+			SocketManager.GAME_SEND_MAP_MOBS_GMS_PACKETS_TO_MAP(this);
+		
 		_fights.put(id, new Fight(id,this,perso,group));
 		SocketManager.GAME_SEND_MAP_FIGHT_COUNT_TO_MAP(this);
 	}
@@ -1754,7 +1844,9 @@ public class Carte {
 		
 		for(Personnage z : World.getGuild(_fights.get(id).get_guildID()).getMembers())
 		{
-			if(z == null) continue;
+			if(z == null)
+				continue;
+			
 			if(z.isOnline())
 			{
 				SocketManager.GAME_SEND_gITM_PACKET(z, Percepteur.parsetoGuild(z.get_guild().get_id()));
@@ -1837,11 +1929,12 @@ public class Carte {
 		for(Case c : _cases.values())
 		{
 			if(c.getDroppedItem() != null)
-			SocketManager.GAME_SEND_GDO_PACKET(perso,'+',c.getID(),c.getDroppedItem().getTemplate().getID(),0);
+				SocketManager.GAME_SEND_GDO_PACKET(perso,'+',c.getID(),c.getDroppedItem().getTemplate().getID(),0);
 		}
 	}
 
-	public Map<Integer, Case> GetCases() {
+	public Map<Integer, Case> GetCases()
+	{
 		 return _cases;
 	}
 	
@@ -1850,11 +1943,13 @@ public class Carte {
 		return (World.getSeller(get_id()) == null?0:World.getSeller(get_id()).size());
 	}
 	
-	public int get_maxTeam1() {
+	public int get_maxTeam1()
+	{
 		return _maxTeam1;
 	}
 
-	public int get_maxTeam0() {
+	public int get_maxTeam0()
+	{
 		return _maxTeam0;
 	}
 	
@@ -1905,9 +2000,13 @@ public class Carte {
 		
 		for(Integer entry : cases)
 		{
-			if(_cases.get(entry) == null) continue;
+			if(_cases.get(entry) == null)
+				continue;
+			
 			//Si la case n'est pas marchable
-			if(!_cases.get(entry).isWalkable(true))continue;
+			if(!_cases.get(entry).isWalkable(true))
+				continue;
+			
 			//Si la case est prise par un groupe de monstre
 			boolean ok = true;
 			for(Entry<Integer,MobGroup> mgEntry : _mobGroups.entrySet())
@@ -1915,7 +2014,10 @@ public class Carte {
 				if(mgEntry.getValue().getCellID() == _cases.get(entry).getID())
 					ok = false;
 			}
-			if(!ok)continue;
+			
+			if(!ok)
+				continue;
+			
 			//Si la case est prise par un npc
 			ok = true;
 			for(Entry<Integer,NPC> npcEntry : _npcs.entrySet())
@@ -1923,9 +2025,13 @@ public class Carte {
 				if(npcEntry.getValue().get_cellID() == _cases.get(entry).getID())
 					ok = false;
 			}
-			if(!ok)continue;
+			if(!ok)
+				continue;
+			
 			//Si la case est prise par un joueur
-			if(!_cases.get(entry).getPersos().isEmpty())continue;
+			if(!_cases.get(entry).getPersos().isEmpty())
+				continue;
+			
 			//Sinon
 			freecell.add(_cases.get(entry).getID());
 		}
@@ -1940,19 +2046,31 @@ public class Carte {
 	
 	public void onMap_MonstersDisplacement()
 	{
-		if(getMobGroups().size() == 0) return;
+		if(getMobGroups().size() == 0)
+			return;
+		
 		int RandNumb = Formulas.getRandomValue(1, getMobGroups().size());
 		int i = 0;
 	    for (Entry<Integer, MobGroup> entry : getMobGroups().entrySet())
 	    {
 	    	i++;
-	    	if(i != RandNumb) continue;
+	    	if(i != RandNumb)
+	    		continue;
+	    	
 	        int cell = getRandomNearFreeCellID(entry.getValue().getCellID());
 	        String pathstr;
-	        try{
+	        try
+	        {
 	        	pathstr = Pathfinding.getShortestStringPathBetween(this, entry.getValue().getCellID(), cell, 0);
-	        }catch(Exception e){return;}
-	        if (pathstr == null) return;
+	        }
+	        catch(Exception e)
+	        {
+	        	return;
+	        }
+	        
+	        if (pathstr == null)
+	        	return;
+	        
 	        entry.getValue().setCellID(cell);
 	        for (Personnage z : getPersos())
 	        {
@@ -1964,15 +2082,25 @@ public class Carte {
 	    if(MoveOrNot == 1)
 	    {
 		    Percepteur perco = Percepteur.GetPercoByMapID(get_id());
-		    if(perco == null) return;
-		    if(perco.get_inFight() > 0) return;
+		    if(perco == null)
+		    	return;
+		    
+		    if(perco.get_inFight() > 0)
+		    	return;
 		    
 		    int cell = getRandomNearFreeCellID(perco.get_cellID());
 		    String pathstr;
-		    try{
+		    try
+		    {
 		    	pathstr = Pathfinding.getShortestStringPathBetween(this, perco.get_cellID(), cell, 0);
-		    }catch(Exception e){return;}
-		    if(pathstr == null) return;
+		    }
+		    catch(Exception e)
+		    {
+		    	return;
+		    }
+		    
+		    if(pathstr == null)
+		    	return;
 		    
 		    perco.set_cellID(cell);
 		    for(Personnage z : getPersos())

@@ -30,8 +30,8 @@ public class GameServer implements Runnable{
 	
 	public GameServer(String Ip)
 	{
-		try {
-			
+		try
+		{
 			_actionTimer = new Timer();
 			_actionTimer.schedule(new TimerTask()
 			{
@@ -40,6 +40,7 @@ public class GameServer implements Runnable{
 					_saveTimer++;
 					_loadActionTimer++;
 					_reloadMobTimer++;
+					
 					if(_saveTimer == (Ancestra.CONFIG_SAVE_TIME/60000))
 					{
 						if(!Ancestra.isSaving)
@@ -49,23 +50,25 @@ public class GameServer implements Runnable{
 						}
 						_saveTimer = 0;
 					}
+					
 					if(_loadActionTimer == (Ancestra.CONFIG_LOAD_DELAY/60000))
 					{
 						SQLManager.LOAD_ACTION();
-						GameServer.addToLog("Les live actions ont ete appliquees");
+						GameServer.addToLog("Live actions loaded from database.");
 						_loadActionTimer = 0;
 					}
+					
 					if(_reloadMobTimer == (Ancestra.CONFIG_RELOAD_MOB_DELAY/60000))
 					{
 						World.RefreshAllMob();
 						GameServer.addToLog("La recharge des mobs est finie");
 						_reloadMobTimer = 0;
 					}
+					
 					for(Personnage perso : World.getOnlinePersos()) 
 					{
 						if (perso.getLastPacketTime() + Ancestra.CONFIG_MAX_IDLE_TIME < System.currentTimeMillis())
 						{
-							
 							if(perso != null && perso.get_compte().getGameThread() != null && perso.isOnline())
 							{
 								GameServer.addToLog("Idle player : "+perso.get_name()+" from server");
@@ -81,10 +84,13 @@ public class GameServer implements Runnable{
 			_SS = new ServerSocket(Ancestra.CONFIG_GAME_PORT);
 			if(Ancestra.CONFIG_USE_IP)
 				Ancestra.GAMESERVER_IP = CryptManager.CryptIP(Ip)+CryptManager.CryptPort(Ancestra.CONFIG_GAME_PORT);
+			
 			_startTime = System.currentTimeMillis();
 			_t = new Thread(this);
 			_t.start();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			addToLog("IOException: "+e.getMessage());
 			Ancestra.closeServers();
 		}
@@ -103,7 +109,8 @@ public class GameServer implements Runnable{
 		}
 	}
 	
-	public ArrayList<GameThread> getClients() {
+	public ArrayList<GameThread> getClients()
+	{
 		return _clients;
 	}
 
@@ -128,25 +135,34 @@ public class GameServer implements Runnable{
 			try
 			{
 				_clients.add(new GameThread(_SS.accept()));
-				if(_clients.size() > _maxPlayer)_maxPlayer = _clients.size();
-			}catch(IOException e)
+				if(_clients.size() > _maxPlayer)
+					_maxPlayer = _clients.size();
+			}
+			catch(IOException e)
 			{
 				addToLog("IOException: "+e.getMessage());
 				try
 				{
-					if(!_SS.isClosed())_SS.close();
+					if(!_SS.isClosed())
+						_SS.close();
+					
 					Ancestra.closeServers();
 				}
-				catch(IOException e1){}
+				catch(IOException e1)
+				{}
 			}
 		}
 	}
 	
 	public void kickAll()
 	{
-		try {
+		try
+		{
 			_SS.close();
-		} catch (IOException e) {}
+		}
+		catch (IOException e)
+		{}
+		
 		ArrayList<GameThread> c = new ArrayList<GameThread>();
 		c.addAll(_clients);
 		for(GameThread GT : c)
@@ -154,7 +170,9 @@ public class GameServer implements Runnable{
 			try
 			{
 				GT.kick();
-			}catch(Exception e){};	
+			}
+			catch(Exception e)
+			{};	
 		}
 	}
 	

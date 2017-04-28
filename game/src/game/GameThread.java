@@ -4379,6 +4379,7 @@ public class GameThread implements Runnable
 		switch(packet.charAt(1))
 		{
 			case 'A':
+			{
 				String[] infos = packet.substring(2).split("\\|");
 				if(SQLManager.persoExist(infos[0]))
 				{
@@ -4439,31 +4440,41 @@ public class GameThread implements Runnable
 					SocketManager.GAME_SEND_NAME_ALREADY_EXIST(_out);
 					return;
 				}
+				
 				if(_compte.GET_PERSO_NUMBER() >= Ancestra.CONFIG_MAX_PERSOS)
 				{
 					SocketManager.GAME_SEND_CREATE_PERSO_FULL(_out);
 					return;
 				}
+				
 				if(_compte.createPerso(infos[0], Integer.parseInt(infos[2]), Integer.parseInt(infos[1]), Integer.parseInt(infos[3]),Integer.parseInt(infos[4]), Integer.parseInt(infos[5])))
 				{
 					SocketManager.GAME_SEND_CREATE_OK(_out);
 					SocketManager.GAME_SEND_PERSO_LIST(_out, _compte.get_persos(), _compte.get_subscriber());
-				}else
+				}
+				else
 				{
 					SocketManager.GAME_SEND_CREATE_FAILED(_out);
-				}
-				
-			break;
-			
+				}	
+				break;
+			}
 			case 'B':
+			{
 				int stat = -1;
 				try
 				{
 					stat = Integer.parseInt(packet.substring(2).split("/u000A")[0]);
 					_perso.boostStat(stat);
-				}catch(NumberFormatException e){return;};
-			break;
+				}
+				catch(NumberFormatException e)
+				{
+					return;
+				};
+				
+				break;
+			}
 			case 'D':
+			{
 				String[] split = packet.substring(2).split("\\|");
 				int GUID = Integer.parseInt(split[0]);
 				String reponse = split.length>1?split[1]:"";
@@ -4478,32 +4489,45 @@ public class GameThread implements Runnable
 					}
 					else
 						SocketManager.GAME_SEND_DELETE_PERSO_FAILED(_out);
-				}else
+				}
+				else
 					SocketManager.GAME_SEND_DELETE_PERSO_FAILED(_out);
-			break;
-			
+				
+				break;
+			}
 			case 'f':
+			{
 				int queueID = 1;
 				int position = 1;
 				SocketManager.GAME_SEND_Af_PACKET(_out,position,1,1,""+1,queueID);
-			break;
+				break;
+			}
 			case 'G':
+			{
 				String[] args = packet.substring(2).split("\\|");
 				int giftId, playerId;
 				try
 				{
 					giftId = Integer.parseInt(args[0]);
 					playerId = Integer.parseInt(args[1]);
-				}catch(NumberFormatException e){return;};
+				}
+				catch(NumberFormatException e)
+				{
+					return;
+				};
 				
 				Personnage player = World.getPersonnage(playerId);
-				if(player == null) return;
+				if(player == null)
+					return;
+				
 				Compte account = player.get_compte();
-				if(account == null) return;
+				if(account == null)
+					return;
+				
 				Gift gift = account.getGift(giftId);
 
-
-				if(gift == null) return;
+				if(gift == null)
+					return;
 
 				for(Entry<Integer, Integer> entry : gift.getItems().entrySet())
 				{
@@ -4522,23 +4546,34 @@ public class GameThread implements Runnable
 
 				SocketManager.GAME_SEND_PERSO_LIST(_out, account.get_persos(), account.get_subscriber());
 				SQLManager.SAVE_PERSONNAGE(player, true);
-			break;
 				
+				break;
+			}
 			case 'i':
+			{
 				String uniqueID = null;
 				try
 				{
 					uniqueID = packet.substring(2);
-				}catch(Exception e){}
-				if(uniqueID != null) _compte.setClientKey(uniqueID);
-				else _compte.getGameThread().kick();
-			break;
+				}
+				catch(Exception e)
+				{}
+				
+				if(uniqueID != null)
+					_compte.setClientKey(uniqueID);
+				else
+					_compte.getGameThread().kick();
+				
+				break;
+			}
 			case 'L':
+			{
 				_compte.sendListGift();
 				SocketManager.GAME_SEND_PERSO_LIST(_out, _compte.get_persos(), _compte.get_subscriber());
-			break;
-			
+				break;
+			}
 			case 'S':
+			{
 				int charID = Integer.parseInt(packet.substring(2));
 				if(_compte.get_persos().get(charID) != null)
 				{
@@ -4551,14 +4586,18 @@ public class GameThread implements Runnable
 					}
 				}
 				SocketManager.GAME_SEND_PERSO_SELECTION_FAILED(_out);
-			break;
-				
+				break;
+			}
 			case 'T':
+			{
 				int guid = -1;
 				try
 				{
 					guid = Integer.parseInt(packet.substring(2));
-				}catch (Exception e){}
+				}
+				catch (Exception e)
+				{}
+				
 				if(guid == -1)
 				{
 					kick();
@@ -4586,23 +4625,29 @@ public class GameThread implements Runnable
 					{
 						kick();
 						return;
-					}else
+					}
+					else
 					{
 						SocketManager.GAME_SEND_ATTRIBUTE_SUCCESS(_out);
 					}
-				}else
+				}
+				else
 				{
 					SocketManager.GAME_SEND_ATTRIBUTE_FAILED(_out);
 				}
-			break;
-			
+				
+				break;
+			}
 			case 'V':
+			{
 				SocketManager.GAME_SEND_AV0(_out);
-			break;
-			
+				break;
+			}
 			case 'P':
+			{
 				SocketManager.REALM_SEND_REQUIRED_APK(_out);
-			break;
+				break;
+			}
 		}
 	}
 

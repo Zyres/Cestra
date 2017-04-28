@@ -1,24 +1,26 @@
-# Fichier de configuration du serveur de connexion d'Ancestra_Remake
+//////////////////////////////////////////////////////////////////////////////////////////
+// Cestra LogonServer config
+// https://github.com/Cestra/Cestra
 
-# AR - REALM
+//////////////////////////////////////////////////////////////////////////////////////////
+// LogonServer settings
 
-# Port du serveur
-REALM_PORT = 434
-REALM_COM_PORT = 489
+LogonServer.ListenClientPort = 434
+LogonServer.ListenGameServerComPort = 489
 
-# Version 1.29.1
-CLIENT_VERSION = 1.29.1
-REALM_IGNORE_VERSION = false
+LogonServer.IgnoreClientVersion = false
+LogonServer.AllowedClientVersion = 1.29.1
 
-# Base de donnée
-REALM_DB_HOST = 127.0.0.1
-REALM_DB_USER = root
-REALM_DB_PASSWORD = root
-REALM_DB_NAME = cestra_realm
-REALM_DB_COMMIT = 3000
+LogonServer.DBHost = 127.0.0.1
+LogonServer.DBUser = root
+LogonServer.DBPass = root
+LogonServer.DBName = cestra_realm
+LogonServer.DBConnectionTimer = 3000
 
-# DEBUG (DEBUG = See on console)
-REALM_DEBUG = true
+//////////////////////////////////////////////////////////////////////////////////////////
+// Log/Debug settings
+EnableDebug = true
 
-# Abonnement
-USE_SUBSCRIBE = false
+//////////////////////////////////////////////////////////////////////////////////////////
+// Server settings
+General.EnableSubscriberSystem = false

@@ -174,7 +174,8 @@ public class Monstre
 				aggroDistance = 15;
 			
 			cellID = (cell==-1?Map.getRandomFreeCellID():cell);
-			if(cellID == 0)return;
+			if(cellID == 0)
+				return;
 			
 			orientation = (Formulas.getRandomValue(0, 3)*2)+1;
 			isFix = false;
@@ -201,12 +202,21 @@ public class Monstre
 					Monstre m = World.getMonstre(id);
 					List<MobGrade> mgs = new ArrayList<MobGrade>();
 					//on ajoute a la liste les grades possibles
-					for(MobGrade MG : m.getGrades().values())if(MG.level >=min && MG.level<=max)mgs.add(MG);
-					if(mgs.isEmpty())continue;
+					for(MobGrade MG : m.getGrades().values())
+						if(MG.level >=min && MG.level<=max)
+							mgs.add(MG);
+					
+					if(mgs.isEmpty())
+						continue;
+					
 					//On prend un grade au hasard entre 0 et size -1 parmis les mobs possibles
 					_Mobs.put(guid, mgs.get(Formulas.getRandomValue(0, mgs.size()-1)));
 					guid--;
-				}catch(Exception e){continue;};
+				}
+				catch(Exception e)
+				{
+					continue;
+				};
 			}
 			orientation = (Formulas.getRandomValue(0, 3)*2)+1;
 			creationTime = System.currentTimeMillis();
@@ -269,7 +279,8 @@ public class Monstre
 			StringBuilder toreturn = new StringBuilder();
 			
 			boolean isFirst = true;
-			if(_Mobs.isEmpty())return "";
+			if(_Mobs.isEmpty())
+				return "";
 			
 			for(Entry<Integer,MobGrade> entry : _Mobs.entrySet())
 			{
@@ -297,11 +308,14 @@ public class Monstre
 		   long actual_time = System.currentTimeMillis();
 		   int percent = 0;
 		   percent = (int) Math.floor(((actual_time-creationTime)/3600000));
-		   if(percent > 200) percent = 200;
+		   if(percent > 200)
+			   percent = 200;
+		   
 		   return percent;
 		}
 		
-		public Map<Integer, MobGrade> getMobs() {
+		public Map<Integer, MobGrade> getMobs()
+		{
 			return _Mobs;
 		}
 		public void setCondition(String cond)
@@ -319,11 +333,11 @@ public class Monstre
 		public void startCondTimer()
 		{
 			this._condTimer = new Timer();
-			_condTimer.schedule(new TimerTask() {
-				
-				public void run() {
+			_condTimer.schedule(new TimerTask()
+			{
+				public void run()
+				{
 					condition = "";
-					
 				}
 			}, Ancestra.CONFIG_ARENA_TIMER);
 		}
@@ -332,7 +346,8 @@ public class Monstre
 			try
 			{
 				this._condTimer.cancel();
-			}catch(Exception e)
+			}
+			catch(Exception e)
 			{
 				
 			}
