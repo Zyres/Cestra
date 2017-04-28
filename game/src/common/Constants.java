@@ -522,22 +522,33 @@ public class Constants
 		{
 			return Ancestra.CONFIG_START_MAP;
 		}
-		//TODO
 		switch(classID)
 		{
 			case CLASS_FECA:
+				return 10300;
 			case CLASS_OSAMODAS:
+				//TODO  Map ID 10284
+				return Ancestra.CONFIG_START_MAP;
 			case CLASS_ENUTROF:
+				return 10299;
 			case CLASS_SRAM:
+				return 10285;
 			case CLASS_XELOR:
+				return 10298;
 			case CLASS_ECAFLIP:
+				return 10276;
 			case CLASS_ENIRIPSA:
+				return 10283;
 			case CLASS_IOP:
+				return 10294;
 			case CLASS_CRA:
+				return 10292;
 			case CLASS_SADIDA:
 				return 10279;
 			case CLASS_SACRIEUR:
+				return 10296;
 			case CLASS_PANDAWA:
+				return 10289;
 			default:
 				return Ancestra.CONFIG_START_MAP;
 		}
@@ -549,22 +560,33 @@ public class Constants
 		{
 			return Ancestra.CONFIG_START_CELL;
 		}
-		//TODO
 		switch(classID)
 		{
 			case CLASS_FECA:
+				return 337;
 			case CLASS_OSAMODAS:
+				//TODO  CellID 386
+				return Ancestra.CONFIG_START_CELL;
 			case CLASS_ENUTROF:
+				return 300;
 			case CLASS_SRAM:
+				return 263;
 			case CLASS_XELOR:
+				return 315;
 			case CLASS_ECAFLIP:
+				return 311;
 			case CLASS_ENIRIPSA:
+				return 299;
 			case CLASS_IOP:
+				return 309;
 			case CLASS_CRA:
+				return 299;
 			case CLASS_SADIDA:
 				return 284;
 			case CLASS_SACRIEUR:
+				return 258;
 			case CLASS_PANDAWA:
+				return 250;
 			default:
 				return Ancestra.CONFIG_START_CELL;
 		}
