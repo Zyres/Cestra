@@ -15,7 +15,7 @@ import realm.RealmServer;
 
 public class Ancestra
 {
-	private static final String CONFIG = "Realm_Config.txt";
+	private static final String CONFIG = "logon.conf";
 	public static String REALM_VERSION = "0.3";
 	public static int REALM_PORT = -1;
 	public static int REALM_COM_PORT = -1;

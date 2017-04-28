@@ -26,7 +26,7 @@ public class Ancestra {
 	/** GameServer **/
 	public static GameServer gameServer;
 	public static String AUTH_KEY;
-	private static final String CONFIG_FILE = "Game_Config.txt";
+	private static final String CONFIG_FILE = "game.conf";
 	public static boolean CONFIG_USE_IP = false;
 	public static String IP = "127.0.0.1";
 	public static String GAMESERVER_IP;
