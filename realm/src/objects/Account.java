@@ -100,7 +100,7 @@ public class Account {
 	
 	public int get_subscriberTime()//Renvoi le temps restant
 	{
-		if(!Ancestra.USE_SUBSCRIBE) return 525600;
+		if(!Main.USE_SUBSCRIBE) return 525600;
 		if(_subscriber == 0)
 		{
 			//Si non abo ou abo dépasser

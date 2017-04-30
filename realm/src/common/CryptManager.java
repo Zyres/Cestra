@@ -122,7 +122,7 @@ public class CryptManager {
 		}catch(Exception e)
 		{
 			System.out.println ("CryptManager : Conversion en UTF-8 echoue : "+e.getMessage());
-			Ancestra.addToErrorLog("CryptManager : Conversion en UTF-8 echoue : "+e.getMessage());
+			Main.addToErrorLog("CryptManager : Conversion en UTF-8 echoue : "+e.getMessage());
 			_out = _in;
 		}
 		

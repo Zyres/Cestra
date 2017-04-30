@@ -41,7 +41,7 @@ public class Realm
 		SQLManager.RESET_CUR_IP();
 		System.out.println("OK!");
 		
-		Ancestra.isRunning = true;
+		Main.isRunning = true;
 	}
 	
 	public static void addAccount(Account acc)

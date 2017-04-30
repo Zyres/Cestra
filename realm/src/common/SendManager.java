@@ -70,12 +70,12 @@ public class SendManager {
 	        			pw.flush();
 	        		}
 	        		
-	    			Ancestra.addToRealmSockLog("Realm: Send>>"+Totaldata.toString());
-	    			if(Ancestra.REALM_DEBUG) System.out.println("Realm: Send>>"+Totaldata.toString());
+	    			Main.addToRealmSockLog("Realm: Send>>"+Totaldata.toString());
+	    			if(Main.REALM_DEBUG) System.out.println("Realm: Send>>"+Totaldata.toString());
 	        	}
 	        }
 	      };
-	    return new Timer (Ancestra.REALM_TIME_DATA, action);
+	    return new Timer (Main.REALM_TIME_DATA, action);
 	}
 	
 	public static void send(PrintWriter out, String packet)

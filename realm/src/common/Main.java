@@ -13,7 +13,7 @@ import communication.ComServer;
 
 import realm.RealmServer;
 
-public class Ancestra
+public class Main
 {
 	private static final String CONFIG = "logon.conf";
 	public static String REALM_VERSION = "0.3";
@@ -46,7 +46,7 @@ public class Ancestra
 		{
 			public void run() 
 			{
-				Ancestra.closeServers();
+				Main.closeServers();
 			}
 		});
 		
@@ -56,7 +56,7 @@ public class Ancestra
 		System.out.print("Chargement de la configuration : ");
 		loadConfiguration();
 		System.out.println("Configuration OK!");
-		Ancestra.isInit = true;
+		Main.isInit = true;
 		System.out.print("Connexion a la base de donnees : ");
 		if(SQLManager.setUpConnexion())
 		{
@@ -65,14 +65,14 @@ public class Ancestra
 		else 
 		{
 			System.out.println("Connexion echouee!");
-			Ancestra.addToErrorLog("SQL : Connexion failed");
+			Main.addToErrorLog("SQL : Connexion failed");
 			System.exit(0);
 		}
 		Realm.loadRealm();
-		System.out.print("\n\nCreation du RealmServer sur le port "+Ancestra.REALM_PORT);
+		System.out.print("\n\nCreation du RealmServer sur le port "+Main.REALM_PORT);
 		realmServer = new RealmServer();
 		System.out.println(" : RealmServer OK!");
-		System.out.print("Creation du ComServer sur le port "+Ancestra.REALM_COM_PORT);
+		System.out.print("Creation du ComServer sur le port "+Main.REALM_COM_PORT);
 		comServer = new ComServer();
 		System.out.println(" : ComServer OK!");
 		
@@ -101,7 +101,7 @@ public class Ancestra
 				{
 					try
 					{
-						Ancestra.REALM_PORT = Integer.parseInt(value);
+						Main.REALM_PORT = Integer.parseInt(value);
 					}
 					catch(Exception e)
 					{
@@ -111,46 +111,46 @@ public class Ancestra
 				}
 				else if(param.equalsIgnoreCase("LogonServer.ListenGameServerComPort"))
 				{
-					Ancestra.REALM_COM_PORT = Integer.parseInt(value);
+					Main.REALM_COM_PORT = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("LogonServer.IgnoreClientVersion"))
 				{
-					Ancestra.REALM_IGNORE_VERSION = (value.equalsIgnoreCase("true") ? true : false);
+					Main.REALM_IGNORE_VERSION = (value.equalsIgnoreCase("true") ? true : false);
 				}
 				else if (param.equalsIgnoreCase("LogonServer.AllowedClientVersion"))
 				{
-					Ancestra.CLIENT_VERSION = value;
+					Main.CLIENT_VERSION = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBHost")) 
 				{
-					Ancestra.REALM_DB_HOST = value;
+					Main.REALM_DB_HOST = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBUser")) 
 				{
-					Ancestra.REALM_DB_USER = value;
+					Main.REALM_DB_USER = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBPass")) 
 				{
 					if(value == null)
-						Ancestra.REALM_DB_PASSWORD = "";
+						Main.REALM_DB_PASSWORD = "";
 					else
-						Ancestra.REALM_DB_PASSWORD = value;
+						Main.REALM_DB_PASSWORD = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBName")) 
 				{
-					Ancestra.REALM_DB_NAME = value;
+					Main.REALM_DB_NAME = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBConnectionTimer")) 
 				{
-					Ancestra.REALM_DB_COMMIT = Integer.parseInt(value);
+					Main.REALM_DB_COMMIT = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("EnableDebug"))
 				{
-					Ancestra.REALM_DEBUG = (value.equalsIgnoreCase("true") ? true : false);
+					Main.REALM_DEBUG = (value.equalsIgnoreCase("true") ? true : false);
 				}
 				else if(param.equalsIgnoreCase("General.EnableSubscriberSystem"))
 				{
-					Ancestra.USE_SUBSCRIBE = (value.equalsIgnoreCase("true") ? true : false);
+					Main.USE_SUBSCRIBE = (value.equalsIgnoreCase("true") ? true : false);
 				}
 			}
 			
@@ -201,9 +201,9 @@ public class Ancestra
 			try
 			{
 				String date = Calendar.HOUR_OF_DAY+":"+Calendar.MINUTE+":"+Calendar.SECOND;
-				Ancestra.Log_Errors.write(date+": "+str);
-				Ancestra.Log_Errors.newLine();
-				Ancestra.Log_Errors.flush();
+				Main.Log_Errors.write(date+": "+str);
+				Main.Log_Errors.newLine();
+				Main.Log_Errors.flush();
 			}catch(Exception e)
 			{
 				System.out.println("L'ecriture des logs a echouee !");
@@ -215,9 +215,9 @@ public class Ancestra
 		try
 		{
 			String date = Calendar.HOUR_OF_DAY+":"+Calendar.MINUTE+":"+Calendar.SECOND;
-			Ancestra.Log_Realm.write(date+": "+str);
-			Ancestra.Log_Realm.newLine();
-			Ancestra.Log_Realm.flush();
+			Main.Log_Realm.write(date+": "+str);
+			Main.Log_Realm.newLine();
+			Main.Log_Realm.flush();
 		}catch(Exception e)
 		{
 			System.out.println("L'ecriture des logs a echouee !");
@@ -229,9 +229,9 @@ public class Ancestra
 		try
 		{
 			String date = Calendar.HOUR_OF_DAY+":"+Calendar.MINUTE+":"+Calendar.SECOND;
-			Ancestra.Log_Realm.write(date+": "+str);
-			Ancestra.Log_Realm.newLine();
-			Ancestra.Log_Realm.flush();
+			Main.Log_Realm.write(date+": "+str);
+			Main.Log_Realm.newLine();
+			Main.Log_Realm.flush();
 		}catch(Exception e)
 		{
 			System.out.println("L'ecriture des logs a echouee !");
@@ -243,9 +243,9 @@ public class Ancestra
 		try
 		{
 			String date = Calendar.HOUR_OF_DAY+":"+Calendar.MINUTE+":"+Calendar.SECOND;
-			Ancestra.Log_Com.write(date+": "+str);
-			Ancestra.Log_Com.newLine();
-			Ancestra.Log_Com.flush();
+			Main.Log_Com.write(date+": "+str);
+			Main.Log_Com.newLine();
+			Main.Log_Com.flush();
 		}catch(Exception e)
 		{
 			System.out.println("L'ecriture des logs a echouee !");
