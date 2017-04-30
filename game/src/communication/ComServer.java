@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 
 import objects.Compte;
-import common.Ancestra;
+import common.Main;
 import common.World;
  
 public class ComServer implements Runnable {
@@ -18,7 +18,7 @@ public class ComServer implements Runnable {
         public ComServer() {
         	try
         	{
-    			_s = new Socket(Ancestra.REALM_IP, Ancestra.COM_PORT);
+    			_s = new Socket(Main.REALM_IP, Main.COM_PORT);
     			_t = new Thread(this);
     			_t.setDaemon(true);
     			_t.start();
@@ -29,8 +29,8 @@ public class ComServer implements Runnable {
         	{
         		System.out.println("\nComServer : Connection to LogonServer failed!");
         		System.out.println(e.getMessage());
-        		Ancestra.com_Running = false;
-        		Ancestra.try_ComServer();
+        		Main.com_Running = false;
+        		Main.try_ComServer();
     		}
         }
         
@@ -40,11 +40,11 @@ public class ComServer implements Runnable {
         	{
         		String packet ="";
         		char[] charCur = new char[1];
-        		Ancestra.com_Running = true;
+        		Main.com_Running = true;
         		
         		try
         		{
-        			_out.print("GA"+Ancestra.AUTH_KEY+(char)0x00);
+        			_out.print("GA"+Main.AUTH_KEY+(char)0x00);
         			_out.flush();
         		}
         		catch (Exception e)
@@ -53,18 +53,18 @@ public class ComServer implements Runnable {
         			{
 						Thread.sleep(1000);
 						System.out.println("ComServer : Waiting for active GA packet...");
-						_out.print("GA"+Ancestra.AUTH_KEY+(char)0x00);
+						_out.print("GA"+Main.AUTH_KEY+(char)0x00);
 						_out.flush();
 					}
         			catch (Exception e1)
 					{
 						System.out.println("ComServer : Error sending GA : "+e1.getMessage());
-						Ancestra.com_Running = false;
-						Ancestra.closeServers();
+						Main.com_Running = false;
+						Main.closeServers();
 					}
         		}
         		
-        		while (_in.read(charCur, 0, 1) != -1 && Ancestra.isRunning)
+        		while (_in.read(charCur, 0, 1) != -1 && Main.isRunning)
         		{
         			if (charCur[0] != '\u0000' && charCur[0] != '\n' && charCur[0] != '\r')
         	    	{
@@ -73,7 +73,7 @@ public class ComServer implements Runnable {
         	    	}
         			else if(!packet.isEmpty())
         	    	{
-        	    		if(Ancestra.CONFIG_DEBUG) System.out.println("Exchange: Recv << "+packet);
+        	    		if(Main.CONFIG_DEBUG) System.out.println("Exchange: Recv << "+packet);
         	    		parsePacket(packet);
         	    		packet = "";
         	    	}
@@ -83,8 +83,8 @@ public class ComServer implements Runnable {
         	{
         		System.out.println("\nComServer : Serveur d'echange inlancable");
         		System.out.println(e.getMessage());
-        		Ancestra.com_Running = false;
-        		Ancestra.try_ComServer();
+        		Main.com_Running = false;
+        		Main.try_ComServer();
         	}
         }
         
@@ -155,17 +155,17 @@ public class ComServer implements Runnable {
 		        				acc = new Compte(guid, name, pass, nickname, question, response, gmlvl, subscriberTime, isBanned, lastIp, lastConnectionDate, curIp, gifts);
 		        			}
 		        			
-		        			if(acc != null && Ancestra.gameServer.getWaitingCompte(acc.get_GUID()) == null)
+		        			if(acc != null && Main.gameServer.getWaitingCompte(acc.get_GUID()) == null)
 		        			{
 		        				System.out.println("Account successful created");
-		        				Ancestra.gameServer.addWaitingCompte(acc);
+		        				Main.gameServer.addWaitingCompte(acc);
 		        			}
-		        			else if(acc != null && Ancestra.gameServer.getWaitingCompte(acc.get_GUID()) != null)
+		        			else if(acc != null && Main.gameServer.getWaitingCompte(acc.get_GUID()) != null)
 		        			{
 		        				System.out.println("Account deleted");
-		        				Ancestra.gameServer.delWaitingCompte(acc);
+		        				Main.gameServer.delWaitingCompte(acc);
 		        				System.out.println("Account createde");
-		        				Ancestra.gameServer.addWaitingCompte(acc);
+		        				Main.gameServer.addWaitingCompte(acc);
 		        			}
 		        			System.out.println("Account successfully added to GameThread.");
 		        			
@@ -203,7 +203,7 @@ public class ComServer implements Runnable {
 	        		{
 		        		case 'O'://ONLINE
 		        		{
-		        			String data = Ancestra.CONFIG_PLAYER_LIMIT+";"+World.getComptes().size();
+		        			String data = Main.CONFIG_PLAYER_LIMIT+";"+World.getComptes().size();
 		        			sendGetOnline(data);
 		        			
 		        			break;

@@ -518,9 +518,9 @@ public class Constants
 	//Methodes
 	public static short getStartMap(int classID)
 	{	
-		if(Ancestra.CONFIG_CUSTOM_STARTMAP)
+		if(Main.CONFIG_CUSTOM_STARTMAP)
 		{
-			return Ancestra.CONFIG_START_MAP;
+			return Main.CONFIG_START_MAP;
 		}
 		switch(classID)
 		{
@@ -549,15 +549,15 @@ public class Constants
 			case CLASS_PANDAWA:
 				return 10289;
 			default:
-				return Ancestra.CONFIG_START_MAP;
+				return Main.CONFIG_START_MAP;
 		}
 	}
 	
 	public static int getStartCell(int classID)
 	{
-		if(Ancestra.CONFIG_CUSTOM_STARTMAP)
+		if(Main.CONFIG_CUSTOM_STARTMAP)
 		{
-			return Ancestra.CONFIG_START_CELL;
+			return Main.CONFIG_START_CELL;
 		}
 		switch(classID)
 		{
@@ -586,7 +586,7 @@ public class Constants
 			case CLASS_PANDAWA:
 				return 250;
 			default:
-				return Ancestra.CONFIG_START_CELL;
+				return Main.CONFIG_START_CELL;
 		}
 	}
 	

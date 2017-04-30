@@ -1067,12 +1067,12 @@ public class World {
 		if(saver != null)
 			_out = saver.get_compte().getGameThread().get_out();
 		
-		Ancestra.comServer.sendChangeState('S');
+		Main.comServer.sendChangeState('S');
 
 		try
 		{
 			GameServer.addToLog("World safeguard launched...");
-			Ancestra.isSaving = true;
+			Main.isSaving = true;
 			SQLManager.commitTransacts();
 			SQLManager.TIMER(false);//Arrête le timer d'enregistrement SQL
 			
@@ -1178,7 +1178,7 @@ public class World {
 			
 			GameServer.addToLog("Sauvegarde effectuee !");
 			
-			Ancestra.comServer.sendChangeState('O');
+			Main.comServer.sendChangeState('O');
 			
 		}
 		catch(ConcurrentModificationException e)
@@ -1194,7 +1194,7 @@ public class World {
 			}
 			else
 			{
-				Ancestra.comServer.sendChangeState('O');
+				Main.comServer.sendChangeState('O');
 				String mess = "Echec de la sauvegarde apres " + saveTry + " tentatives";
 				if(saver != null && _out != null)
 					SocketManager.GAME_SEND_CONSOLE_MESSAGE_PACKET(_out, mess);
@@ -1212,18 +1212,18 @@ public class World {
 		{
 			SQLManager.commitTransacts();
 			SQLManager.TIMER(true); //Redémarre le timer d'enregistrement SQL
-			Ancestra.isSaving = false;
+			Main.isSaving = false;
 			saveTry = 1;
 		}
 	}
 	public static void RefreshAllMob()
 	{
-		SocketManager.GAME_SEND_MESSAGE_TO_ALL("Recharge des Mobs en cours, des latences peuvent survenir.", Ancestra.CONFIG_MOTD_COLOR);
+		SocketManager.GAME_SEND_MESSAGE_TO_ALL("Recharge des Mobs en cours, des latences peuvent survenir.", Main.CONFIG_MOTD_COLOR);
 		for(Carte map : Cartes.values())
 		{
 			map.refreshSpawns();
 		}
-		SocketManager.GAME_SEND_MESSAGE_TO_ALL("Recharge des Mobs finie. La prochaine recharge aura lieu dans 5heures.", Ancestra.CONFIG_MOTD_COLOR);
+		SocketManager.GAME_SEND_MESSAGE_TO_ALL("Recharge des Mobs finie. La prochaine recharge aura lieu dans 5heures.", Main.CONFIG_MOTD_COLOR);
 	}
 
 	public static ExpLevel getExpLevel(int lvl)
@@ -1426,7 +1426,7 @@ public class World {
 	
 	public static boolean isArenaMap(int mapID)
 	{
-		for(int curID : Ancestra.arenaMap)
+		for(int curID : Main.arenaMap)
 		{
 			if(curID == mapID)
 				return true;
@@ -1438,7 +1438,7 @@ public class World {
 		if(World.getObjTemplate(template) == null) 
 		{ 
 			System.out.println("ItemTemplate "+template+" inexistant, GUID dans la table `items`:"+Guid);
-			Ancestra.closeServers(); 
+			Main.closeServers(); 
 		} 
 		
 		if(World.getObjTemplate(template).getType() == 85)
@@ -1585,11 +1585,11 @@ public class World {
 		Personnage Homme = Married.get(0);
 		Personnage Femme = Married.get(1);
 		if(Homme.getWife() != 0){
-			SocketManager.GAME_SEND_MESSAGE_TO_MAP(carte, Homme.get_name()+" est deja marier!", Ancestra.CONFIG_MOTD_COLOR);
+			SocketManager.GAME_SEND_MESSAGE_TO_MAP(carte, Homme.get_name()+" est deja marier!", Main.CONFIG_MOTD_COLOR);
 			return;
 		}
 		if(Femme.getWife() != 0){
-			SocketManager.GAME_SEND_MESSAGE_TO_MAP(carte, Femme.get_name()+" est deja marier!", Ancestra.CONFIG_MOTD_COLOR);
+			SocketManager.GAME_SEND_MESSAGE_TO_MAP(carte, Femme.get_name()+" est deja marier!", Main.CONFIG_MOTD_COLOR);
 			return;
 		}
 		SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(perso.get_curCarte(), "", -1, "Prêtre", perso.get_name()+" acceptez-vous d'épouser "+getMarried((perso.get_sexe()==1?0:1)).get_name()+" ?");

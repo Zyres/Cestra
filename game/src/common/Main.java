@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 import communication.ComServer;
 
-public class Ancestra {
+public class Main {
 	
 	/** RealmServer **/
 	public static String REALM_IP;
@@ -99,7 +99,7 @@ public class Ancestra {
 		{
 			public void run()
 			{
-				Ancestra.closeServers();
+				Main.closeServers();
 			}
 		}
 		);
@@ -163,7 +163,7 @@ public class Ancestra {
 		if(CONFIG_USE_IP)
 			System.out.println("Ip du serveur "+IP+" crypt "+GAMESERVER_IP);
 		
-		System.out.print("Creation du ComServer sur le port "+Ancestra.COM_PORT);
+		System.out.print("Creation du ComServer sur le port "+Main.COM_PORT);
 		comServer = new ComServer();
 		System.out.println(" : ComServer OK!");
 		
@@ -191,23 +191,23 @@ public class Ancestra {
 				
 				if(param.equalsIgnoreCase("LogonServer.Ip"))
 				{
-					Ancestra.REALM_IP = value;
+					Main.REALM_IP = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.GameServerComPort"))
 				{
-					Ancestra.COM_PORT = Integer.parseInt(value);
+					Main.COM_PORT = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("LogonServer.Key"))
 				{
-					Ancestra.AUTH_KEY = value;
+					Main.AUTH_KEY = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBHost"))
 				{
-					Ancestra.REALM_DB_HOST = value;
+					Main.REALM_DB_HOST = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBUser"))
 				{
-					Ancestra.REALM_DB_USER = value;
+					Main.REALM_DB_USER = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBPass"))
 				{
@@ -216,17 +216,17 @@ public class Ancestra {
 						value = "";
 					}
 					
-					Ancestra.REALM_DB_PASS = value;
+					Main.REALM_DB_PASS = value;
 				}
 				else if(param.equalsIgnoreCase("LogonServer.DBName"))
 				{
-					Ancestra.REALM_DB_NAME = value;
+					Main.REALM_DB_NAME = value;
 				}
 				else if(param.equalsIgnoreCase("EnableDebug"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
-						Ancestra.CONFIG_DEBUG = true;
+						Main.CONFIG_DEBUG = true;
 					}
 				}
 				else if(param.equalsIgnoreCase("EnableLog"))
@@ -238,26 +238,26 @@ public class Ancestra {
 				}
 				else if(param.equalsIgnoreCase("GameServer.Ip"))
 				{
-					Ancestra.IP = value;
+					Main.IP = value;
 				}
 				else if(param.equalsIgnoreCase("GameServer.PrintIpHash"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
-						Ancestra.CONFIG_USE_IP = true;
+						Main.CONFIG_USE_IP = true;
 					}
 				}
 				else if(param.equalsIgnoreCase("GameServer.Port"))
 				{
-					Ancestra.CONFIG_GAME_PORT = Integer.parseInt(value);
+					Main.CONFIG_GAME_PORT = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("GameServer.DBHost"))
 				{
-					Ancestra.DB_HOST = value;
+					Main.DB_HOST = value;
 				}
 				else if(param.equalsIgnoreCase("GameServer.DBUser"))
 				{
-					Ancestra.DB_USER = value;
+					Main.DB_USER = value;
 				}
 				else if(param.equalsIgnoreCase("GameServer.DBPass"))
 				{
@@ -266,149 +266,149 @@ public class Ancestra {
 						value = "";
 					}
 					
-					Ancestra.DB_PASS = value;
+					Main.DB_PASS = value;
 				}
 				else if(param.equalsIgnoreCase("GameServer.DBName"))
 				{
-					Ancestra.DB_NAME = value;
+					Main.DB_NAME = value;
 				}
 				else if(param.equalsIgnoreCase("Motd.HtmlString "))
 				{
-					Ancestra.CONFIG_MOTD = line.split("=",2)[1];
+					Main.CONFIG_MOTD = line.split("=",2)[1];
 				}
 				else if(param.equalsIgnoreCase("Motd.HtmlColorCode"))
 				{
-					Ancestra.CONFIG_MOTD_COLOR = value;
+					Main.CONFIG_MOTD_COLOR = value;
 				}
 				else if (param.equalsIgnoreCase("General.PlayerLimit"))
 				{
-					Ancestra.CONFIG_PLAYER_LIMIT = Integer.parseInt(value);
+					Main.CONFIG_PLAYER_LIMIT = Integer.parseInt(value);
 				}
 				else if (param.equalsIgnoreCase("General.ReloadActionsInMinutes"))
 				{
-					Ancestra.CONFIG_LOAD_DELAY = (Integer.parseInt(value)*60000);
+					Main.CONFIG_LOAD_DELAY = (Integer.parseInt(value)*60000);
 				}
 				else if(param.equalsIgnoreCase("General.SavePeriodInMinutes"))
 				{
-					Ancestra.CONFIG_SAVE_TIME = (Integer.parseInt(value)*60000);
+					Main.CONFIG_SAVE_TIME = (Integer.parseInt(value)*60000);
 				}
 				else if (param.equalsIgnoreCase("General.EnableSubscriberSystem"))
 				{
-					Ancestra.USE_SUBSCRIBE = value.equalsIgnoreCase("true");
+					Main.USE_SUBSCRIBE = value.equalsIgnoreCase("true");
 				}
 				else if(param.equalsIgnoreCase("General.CharacterLimitOnAccount"))
 				{
-					Ancestra.CONFIG_MAX_PERSOS = Integer.parseInt(value);
+					Main.CONFIG_MAX_PERSOS = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("General.EnableAllZaap"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
-						Ancestra.CONFIG_ZAAP = true;
+						Main.CONFIG_ZAAP = true;
 					}
 				}
 				else if(param.equalsIgnoreCase("General.MaxLvlDiffForPvpHonor"))
 				{
-					Ancestra.CONFIG_LVL_PVP = Integer.parseInt(value);
+					Main.CONFIG_LVL_PVP = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("General.EnableSameIpAggress"))
 				{
-					Ancestra.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
+					Main.CONFIG_ALLOW_MULE_PVP = value.equalsIgnoreCase("true");
 				}
 				else if (param.equalsIgnoreCase("General.DisplayLvlAura"))
 				{
-					Ancestra.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
+					Main.CONFIG_AURA_SYSTEM = value.equalsIgnoreCase("true");
 				}
 				else if (param.equalsIgnoreCase("General.IdleTimeInMinBeforeKick"))
 				{
-					Ancestra.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
+					Main.CONFIG_MAX_IDLE_TIME = (Integer.parseInt(value)*60000);
 				}
 				else if (param.equalsIgnoreCase("General.BannedItemsForAuction"))
 				{
 					for(String curID : value.split(","))
 					{
-						Ancestra.NOTINHDV.add(Integer.parseInt(curID));
+						Main.NOTINHDV.add(Integer.parseInt(curID));
 					}
 				}
 				else if (param.equalsIgnoreCase("General.SpawnCityGuards"))
 				{
-					Ancestra.CONFIG_USE_MOBS = value.equalsIgnoreCase("true");
+					Main.CONFIG_USE_MOBS = value.equalsIgnoreCase("true");
 				}
 				else if(param.equalsIgnoreCase("PlayerStart.EnableCustom"))
 				{
 					if(value.equalsIgnoreCase("true"))
 					{
-						Ancestra.CONFIG_CUSTOM_STARTMAP = true;
+						Main.CONFIG_CUSTOM_STARTMAP = true;
 					}
 				}
 				else if(param.equalsIgnoreCase("PlayerStart.Map"))
 				{
-					Ancestra.CONFIG_START_MAP = Short.parseShort(value);
+					Main.CONFIG_START_MAP = Short.parseShort(value);
 				}
 				else if(param.equalsIgnoreCase("PlayerStart.Cell"))
 				{
-					Ancestra.CONFIG_START_CELL = Integer.parseInt(value);
+					Main.CONFIG_START_CELL = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("PlayerStart.Level"))
 				{
-					Ancestra.CONFIG_START_LEVEL = Integer.parseInt(value);
-					if(Ancestra.CONFIG_START_LEVEL < 1)
+					Main.CONFIG_START_LEVEL = Integer.parseInt(value);
+					if(Main.CONFIG_START_LEVEL < 1)
 					{
-						Ancestra.CONFIG_START_LEVEL = 1;
+						Main.CONFIG_START_LEVEL = 1;
 					}
 					
-					if(Ancestra.CONFIG_START_LEVEL > 200)
+					if(Main.CONFIG_START_LEVEL > 200)
 					{
-						Ancestra.CONFIG_START_LEVEL = 200;
+						Main.CONFIG_START_LEVEL = 200;
 					}
 				}
 				else if(param.equalsIgnoreCase("PlayerStart.Kamas"))
 				{
-					Ancestra.CONFIG_START_KAMAS = Integer.parseInt(value);
-					if(Ancestra.CONFIG_START_KAMAS < 0)
+					Main.CONFIG_START_KAMAS = Integer.parseInt(value);
+					if(Main.CONFIG_START_KAMAS < 0)
 					{
-						Ancestra.CONFIG_START_KAMAS = 0;
+						Main.CONFIG_START_KAMAS = 0;
 					}
 					
-					if(Ancestra.CONFIG_START_KAMAS > 1000000000)
+					if(Main.CONFIG_START_KAMAS > 1000000000)
 					{
-						Ancestra.CONFIG_START_KAMAS = 1000000000;
+						Main.CONFIG_START_KAMAS = 1000000000;
 					}
 				}
 				else if(param.equalsIgnoreCase("Rate.PvpXp"))
 				{
-					Ancestra.RATE_PVP = Integer.parseInt(value);
+					Main.RATE_PVP = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("Rate.JobXp"))
 				{
-					Ancestra.RATE_METIER = Integer.parseInt(value);
+					Main.RATE_METIER = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("Rate.PvmXp"))
 				{
-					Ancestra.RATE_PVM = Integer.parseInt(value);
+					Main.RATE_PVM = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("Rate.Drops"))
 				{
-					Ancestra.RATE_DROP = Integer.parseInt(value);
+					Main.RATE_DROP = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("Rate.Kamas"))
 				{
-					Ancestra.RATE_KAMAS = Integer.parseInt(value);
+					Main.RATE_KAMAS = Integer.parseInt(value);
 				}
 				else if(param.equalsIgnoreCase("Rate.Honor"))
 				{
-					Ancestra.RATE_HONOR = Integer.parseInt(value);
+					Main.RATE_HONOR = Integer.parseInt(value);
 				}
 				else if (param.equalsIgnoreCase("Arena.Maps"))
 				{
 					for(String curID : value.split(","))
 					{
-						Ancestra.arenaMap.add(Integer.parseInt(curID));
+						Main.arenaMap.add(Integer.parseInt(curID));
 					}
 				}
 				else if (param.equalsIgnoreCase("Arena.PrivateMobSpawnTimer"))
 				{
-					Ancestra.CONFIG_ARENA_TIMER = (Integer.parseInt(value)*60000);
+					Main.CONFIG_ARENA_TIMER = (Integer.parseInt(value)*60000);
 				}
 			}
 			
@@ -558,7 +558,7 @@ public class Ancestra {
 			try {
 				System.out.print("Creation d'une nouvelle connexion avec le Realm (ComServer) ... ");
 				com_Try = 1;
-				while(Ancestra.com_Running == false && isRunning)
+				while(Main.com_Running == false && isRunning)
 				{
 					comServer = new ComServer();
 					Thread.sleep(10000);
