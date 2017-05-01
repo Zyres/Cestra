@@ -38,7 +38,7 @@ public class IA {
 			{
                 if(_fighter.isDouble())
                 {
-                	apply_type5(_fighter,_fight);
+                	applyType5(_fighter,_fight);
     				try {
     					Thread.sleep(2000);
     				} catch (InterruptedException e) {};
@@ -46,7 +46,7 @@ public class IA {
                 }
                 else if(_fighter.isPerco())
 				{
-					apply_typePerco(_fighter,_fight);
+					applyTypePerco(_fighter,_fight);
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {};
@@ -68,28 +68,28 @@ public class IA {
 				switch(_fighter.getMob().getTemplate().getIAType())
 				{
 					case 0://Ne rien faire
-						apply_type0(_fighter,_fight);
+						applyType0(_fighter,_fight);
 					break;
 					case 1://Attaque, Buff sois même, Buff Alliés, Avancer vers ennemis. Si PDV < 15% Auto-Soins, Attaque, soin allié, buff allié, fuite
-						apply_type1(_fighter,_fight);
+						applyType1(_fighter,_fight);
 					break;
 					case 2://Soutien
-						apply_type2(_fighter,_fight);
+						applyType2(_fighter,_fight);
 					break;
 					case 3://Avancer vers Alliés, Buff Alliés, Buff sois même
-						apply_type3(_fighter,_fight);
+						applyType3(_fighter,_fight);
 					break;
 					case 4://Attaque, Fuite, Buff Alliés, Buff sois même
-						apply_type4(_fighter,_fight);
+						applyType4(_fighter,_fight);
 					break;
 					case 5://Avancer vers ennemis
-						apply_type5(_fighter,_fight);
+						applyType5(_fighter,_fight);
 					break;
 					case 6://IA type invocations
-						apply_type6(_fighter,_fight);
+						applyType6(_fighter,_fight);
 					break;
 					case 7://IA sac animé
-						apply_type7(_fighter,_fight);
+						applyType7(_fighter,_fight);
 					break;
 				}
 				try {
@@ -103,12 +103,12 @@ public class IA {
 			}
 		}
 		
-		private static void apply_type0(Fighter F, Fight fight)
+		private static void applyType0(Fighter F, Fight fight)
 		{
 			stop = true;
 		}
 
-		private static void apply_type1(Fighter F, Fight fight)
+		private static void applyType1(Fighter F, Fight fight)
 		{
 			while(!stop && F.canPlay())
 			{
@@ -174,7 +174,7 @@ public class IA {
 			}
 		}
 
-		private static void apply_type2(Fighter F, Fight fight)
+		private static void applyType2(Fighter F, Fight fight)
 		{
 			while(!stop && F.canPlay())
 			{
@@ -208,7 +208,7 @@ public class IA {
 			}
 		}
 		
-		private static void apply_type3(Fighter F, Fight fight)
+		private static void applyType3(Fighter F, Fight fight)
 		{
 			while(!stop && F.canPlay())
 			{
@@ -235,7 +235,7 @@ public class IA {
 			}		
 		}
 		
-		private static void apply_type4(Fighter F, Fight fight) //IA propre La Folle
+		private static void applyType4(Fighter F, Fight fight) //IA propre La Folle
 		{
 			while(!stop && F.canPlay())
 			{
@@ -268,7 +268,7 @@ public class IA {
 			}
 		}
 		
-		private static void apply_type5(Fighter F, Fight fight) //IA propre aux énus
+		private static void applyType5(Fighter F, Fight fight) //IA propre aux énus
 		{
 			while(!stop && F.canPlay())
 			{
@@ -282,7 +282,7 @@ public class IA {
 			}
 		}
 		
-		private static void apply_type6(Fighter F, Fight fight)
+		private static void applyType6(Fighter F, Fight fight)
 		{
 			while(!stop && F.canPlay())
 			{
@@ -312,7 +312,7 @@ public class IA {
 			}
 		}
 		
-		private static void apply_type7(Fighter fighter, Fight fight)
+		private static void applyType7(Fighter fighter, Fight fight)
 		{
 			while(!stop && fighter.canPlay())
 			{
@@ -328,7 +328,7 @@ public class IA {
 			}
 		}
 		
-		private static void apply_typePerco(Fighter F, Fight fight)
+		private static void applyTypePerco(Fighter F, Fight fight)
 		{
 			while(!stop && F.canPlay())
 			{
