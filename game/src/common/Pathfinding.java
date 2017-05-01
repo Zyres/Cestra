@@ -577,20 +577,35 @@ public class Pathfinding {
 	
 	public static String getShortestStringPathBetween(Carte map, int start, int dest, int distMax)
 	{
-		if (start == dest) return null;
+		if (start == dest)
+		{
+			return null;
+		}
+		
 		ArrayList<Case> path = getShortestPathBetween(map, start, dest, distMax);
-		if (path == null) return null;
+		if (path == null)
+		{
+			return null;
+		}
+		
 		String pathstr = "";
 		int curCaseID = start;
 		char curDir = '\000';
 		for (Case c : path)
 		{
 			char d = getDirBetweenTwoCase(curCaseID, c.getID(), map, true);
-			if (d == 0) return null;
+			if (d == 0)
+			{
+				return null;
+			}
+			
 			if (curDir != d)
 			{
 				if (path.indexOf(c) != 0)
+				{
 					pathstr = pathstr + CryptManager.cellID_To_Code(curCaseID);
+				}
+				
 				pathstr = pathstr + d;
 				curDir = d;
 			}
@@ -600,7 +615,12 @@ public class Pathfinding {
 		{
 			pathstr = pathstr + CryptManager.cellID_To_Code(curCaseID);
 		}
-		if (pathstr == "") return null;
+		
+		if (pathstr.isEmpty())
+		{
+			return null;
+		}
+		
 		return "a" + CryptManager.cellID_To_Code(start) + pathstr;
 	}
 	
