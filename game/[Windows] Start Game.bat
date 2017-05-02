@@ -1,5 +1,4 @@
 echo off
-title Game
-java -Xmx2048M -jar CeatraGame.jar
-pause
+java -Xmx2048M -jar game.jar -o true
+PAUSE
 
