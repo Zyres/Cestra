@@ -16,7 +16,7 @@ public class Config
     private boolean isRunning;
     private LoginServer loginServer;
     private ExchangeServer exchangeServer;
-    private String host;
+    private String host = "127.0.0.1";
     private String user;
     private String pass;
     private int port;
@@ -27,16 +27,20 @@ public class Config
     private int loginPort;
     private int exchangePort;
     
-    static {
+    static
+    {
         configFile = ConfigFactory.parseFile(new File("config.conf"));
     }
     
-    public Config() {
+    public Config() 
+    {
         this.startTime = System.currentTimeMillis();
     }
     
-    public void initialize() {
-        try {
+    public void initialize() 
+    {
+        try 
+        {
             this.host = Config.configFile.getString("database.host");
             this.user = Config.configFile.getString("database.user");
             this.pass = Config.configFile.getString("database.password");
@@ -48,29 +52,35 @@ public class Config
             this.loginPort = Config.configFile.getInt("network.loginPort");
             this.exchangePort = Config.configFile.getInt("network.exchangePort");
         }
-        catch (Exception e) {
+        catch (Exception e) 
+        {
             System.out.println(" <> Config illisible ou champs manquants: " + e.getMessage());
             System.exit(1);
         }
     }
     
-    public com.typesafe.config.Config getConfigFile() {
+    public com.typesafe.config.Config getConfigFile()
+    {
         return Config.configFile;
     }
     
-    public boolean isRunning() {
+    public boolean isRunning()
+    {
         return this.isRunning;
     }
     
-    public void setRunning(final boolean isRunning) {
+    public void setRunning(final boolean isRunning)
+    {
         this.isRunning = isRunning;
     }
     
-    public LoginServer getLoginServer() {
+    public LoginServer getLoginServer()
+    {
         return this.loginServer;
     }
     
-    public void setLoginServer(final LoginServer loginServer) {
+    public void setLoginServer(final LoginServer loginServer) 
+    {
         this.loginServer = loginServer;
     }
     
@@ -78,47 +88,58 @@ public class Config
         return this.exchangeServer;
     }
     
-    public void setExchangeServer(final ExchangeServer exchangeServer) {
+    public void setExchangeServer(final ExchangeServer exchangeServer)
+    {
         this.exchangeServer = exchangeServer;
     }
     
-    public String getHost() {
+    public String getHost()
+    {
         return this.host;
     }
     
-    public String getUser() {
+    public String getUser()
+    {
         return this.user;
     }
     
-    public String getPass() {
+    public String getPass()
+    {
         return this.pass;
     }
     
-    public int getPort() {
+    public int getPort()
+    {
         return this.port;
     }
     
-    public String getDatabaseName() {
+    public String getDatabaseName()
+    {
         return this.databaseName;
     }
     
-    public String getLoginIp() {
+    public String getLoginIp() 
+    {
         return this.loginIp;
     }
     
-    public String getExchangeIp() {
+    public String getExchangeIp()
+    {
         return this.exchangeIp;
     }
     
-    public String getVersion() {
+    public String getVersion()
+    {
         return this.version;
     }
     
-    public int getLoginPort() {
+    public int getLoginPort()
+    {
         return this.loginPort;
     }
     
-    public int getExchangePort() {
+    public int getExchangePort()
+    {
         return this.exchangePort;
     }
 }
