@@ -1,2 +1,2 @@
-java -Xmx1024M -jar game.jar -o true
+java -Xmx2048M -jar game.jar -o true
 PAUSE

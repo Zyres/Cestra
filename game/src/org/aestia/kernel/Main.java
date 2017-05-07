@@ -35,7 +35,7 @@ public class Main {
 	public static boolean mapAsBlocked = false;
 	public static boolean fightAsBlocked = false;
 	public static boolean tradeAsBlocked = false;
-	public static String key = "jivaa";
+	public static String key = "demo";
 	public static int serverId = 1;
 	public static int exchangePort = 666;
 	public static String exchangeIp = "127.0.0.1";

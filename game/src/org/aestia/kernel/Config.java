@@ -3,13 +3,18 @@
  */
 package org.aestia.kernel;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import com.typesafe.config.ConfigFactory;
+
 public class Config {
+	private static final com.typesafe.config.Config configFile;
+	
+	//TODO HEROIC
 	public static boolean HEROIC = false;
 	public static final Config singleton = new Config();
 	public static final int RAM = 600;
-
 	public boolean HALLOWEEN = false;
 	public boolean NOEL = false;
 	public final long startTime = System.currentTimeMillis();
@@ -31,34 +36,46 @@ public class Config {
 	public int rateHonor = 1;
 	public int rateJob = 1;
 	public int rateFm = 1;
-	public String PUB1 = "(Message Auto) : Si vous rencontrez un bug n'h\u00e9sitez pas \u00e0 le post\u00e9 sur le forum. Tout report de bug dans les canaux publiques peuvent \u00eatre sanctionn\u00e9 (consid\u00e9rer comme non respect des canaux).";
-	public String PUB2 = "(Message Auto) : L'\u00e9quipe est plus disponible sur le forum qu'en jeu, donc n'h\u00e9sitez pas \u00e0 la contacter par message priv\u00e9s sur le forum";
-	public String PUB3 = "(Message Auto) : Nous vous invitons \u00e0 voter afin d'\u00eatre bien class\u00e9 dans le classement Rpg-Paradize.";
-	public String PUB4 = "(Message Auto) : Les recrutements de Mod\u00e9rateurs sont ouverts. Plus d'informations sur le forum : <a href='http://forum.aestia.fr/'>cliquez ici</a>";
+	public String PUB1 = "(Message Auto) : ";
+	public String PUB2 = "(Message Auto) : ";
+	public String PUB3 = "(Message Auto) : ";
+	public String PUB4 = "(Message Auto) : ";
 	public String script = "";
 	public static ArrayList<Integer> notInHdv = new ArrayList<Integer>();
 	public static ArrayList<Integer> arenaMap = new ArrayList<Integer>();
 	public static ArrayList<Integer> itemFeedMount = new ArrayList<>();
 
+	static
+    {
+        configFile = ConfigFactory.parseFile(new File("config.properties"));
+    }
+	
 	public static Config getInstance() {
 		return singleton;
 	}
 
-	public void set() {
+	public void set()
+	{
 		Main.isRunning = true;
 		Main.exchangePort = 451;
+		
 		Main.exchangeIp = "127.0.0.1";
+		
 		Main.loginHostDB = "127.0.0.1";
 		Main.loginNameDB = "aestia_game";
 		Main.loginUserDB = "root";
-		Main.loginPassDB = "";
-		Main.gamePort = 5555;
+		Main.loginPassDB = "root";
+		
 		Main.hostDB = "127.0.0.1";
-		Main.nameDB = "aestia_login";
+		Main.nameDB = "aesti_other";
 		Main.userDB = "root";
-		Main.passDB = "";
+		Main.passDB = "root";
+		
+		Main.gamePort = 5555;
 		Main.Ip = "127.0.0.1";
+		
 		this.onlyLocal = false;
+		
 		Config.getInstance().NAME = "jiva";
 		Config.getInstance().kickIfAfk = false;
 		Config.getInstance().autoReboot = false;
@@ -66,6 +83,31 @@ public class Config {
 		Config.getInstance().PUB2 = "(Message Auto) : message 2.";
 		Config.getInstance().PUB3 = "(Message Auto) : message 3.";
 		Config.getInstance().PUB4 = "(Message Auto) : message 4.";
+		
+		try
+		{
+			Main.hostDB = Config.configFile.getString("gameDbIp");
+			Main.nameDB = Config.configFile.getString("gameDbName");
+			Main.userDB = Config.configFile.getString("gameDbUser");
+			Main.passDB = Config.configFile.getString("gameDbPass");
+			
+			Main.loginHostDB = Config.configFile.getString("dynamicDbHost");
+			Main.loginNameDB = Config.configFile.getString("dynamicDbName");
+			Main.loginUserDB = Config.configFile.getString("dynamicDbUser");
+			Main.loginPassDB = Config.configFile.getString("dynamicDbPass");
+			
+			Main.exchangePort = Config.configFile.getInt("exchangePort");
+			Main.exchangeIp = Config.configFile.getString("exchangeIp");
+			
+			Main.key = Config.configFile.getString("serverKey");
+			
+        }
+        catch (Exception e) 
+        {
+            System.out.println(" <> Config illisible ou champs manquants: " + e.getMessage());
+            System.exit(1);
+        }
+		
 	}
 
 	public void load() {
