@@ -1885,9 +1885,12 @@ public class Player {
 			this._guildMember.setLastCo(String.valueOf(annee) + "~" + mois + "~" + jour + "~" + heure + "~" + min);
 		}
 		World.showPrismes(this);
+		
 		Database.getStatique().getAccountData().updateLastConnection(this._compte);
-		if (!Config.getInstance().startMessage.equals("")) {
+		if (!Config.getInstance().startMessage.equals(""))
+		{
 			SocketManager.GAME_SEND_MESSAGE(this, Config.getInstance().startMessage);
+			SocketManager.GAME_SEND_MESSAGE(this, "Powered by <b>Cestra</b> <a href='http://github.com/Cestra/Cestra'>github.com/Cestra/Cestra</a>.");
 		}
 		synchronized (this._items) {
 			for (final org.aestia.object.Object object : this._items.values()) {

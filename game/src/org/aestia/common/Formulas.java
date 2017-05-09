@@ -1233,14 +1233,19 @@ public class Formulas {
 	}
 
 	public static int ChanceFM(final int poidItemBase, final int poidItemActual, final int poidBaseJet,
-			final int poidActualJet, final double poidRune, final int Puis, final double Coef) {
+			final int poidActualJet, final double poidRune, final int Puis, final double Coef)
+	{
 		int Chance = 0;
+		
 		final int a = poidItemBase + poidBaseJet + Puis * Config.getInstance().rateFm;
 		int b = (int) Math.sqrt(poidItemActual + poidActualJet + poidRune);
-		if (b <= 0) {
+		if (b <= 0)
+		{
 			b = 1;
 		}
+		
 		Chance = (int) Math.floor(a / b * Coef / 10.0);
+		
 		return Chance;
 	}
 

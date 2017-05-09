@@ -30,20 +30,26 @@ public class Main {
 	public static boolean modDebug = true;
 	public static boolean allowMulePvp = false;
 	public static boolean useSubscribe = false;
+	
 	public static int startLevel = 1;
 	public static int startKamas = 0;
+	
 	public static boolean mapAsBlocked = false;
 	public static boolean fightAsBlocked = false;
 	public static boolean tradeAsBlocked = false;
+	
 	public static String key = "demo";
 	public static int serverId = 1;
+	
 	public static int exchangePort = 666;
 	public static String exchangeIp = "127.0.0.1";
+	
 	public static String loginHostDB = "127.0.0.1";
 	public static String loginNameDB = "local";
 	public static String loginUserDB = "root";
 	public static String loginPassDB = "";
 	public static String loginPortDB = "3306";
+	
 	public static int gamePort = 5555;
 	public static String hostDB = "127.0.0.1";
 	public static String nameDB = "";
