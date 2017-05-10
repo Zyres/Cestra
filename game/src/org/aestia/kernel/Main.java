@@ -1,11 +1,3 @@
-/*
- * Decompiled with CFR 0_114.
- * 
- * Could not load the following classes:
- *  ch.qos.logback.classic.Level
- *  ch.qos.logback.classic.Logger
- *  org.slf4j.LoggerFactory
- */
 package org.aestia.kernel;
 
 import java.io.BufferedReader;
@@ -63,7 +55,6 @@ public class Main {
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 
-			@Override
 			public void run() {
 				if (Main.isRunning) {
 					GameServer.setState(0);
@@ -71,11 +62,10 @@ public class Main {
 					WorldSave.cast(0);
 				}
 				Main.isRunning = false;
-				System.out.println("Le serveur est fermé !");
+				System.out.println("Server Shutdown!");
 			}
 		});
-		System.out.println("Lancement du serveur : "
-				+ new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.FRANCE).format(new Date()));
+		System.out.println("Launching the Server: " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.FRANCE).format(new Date()));
 		Main.start();
 	}
 

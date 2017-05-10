@@ -1,27 +1,23 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package org.aestia.kernel;
 
 import org.fusesource.jansi.AnsiConsole;
 
 public class Console {
 	public static void initialize() {
-		setTitle("Aestia - Chargement...");
+		setTitle("Game Server - Loading...");
 	}
 
 	public static void begin() {
 		initialize();
-		println("\nLe serveur est OK ! En attente de connexion...", Color.SUCCESS);
-		println("\nHelp ou ? pour voir la liste du commande disponible dans cette console.\n", Color.INFORMATION);
+		println("\nThe server has started successfully! Waiting to connect ...", Color.SUCCESS);
+		println("\nHELP To see the list of commands available in this console.\n", Color.INFORMATION);
 	}
 
 	public static void refreshTitle() {
 		if (!Main.isRunning) {
 			return;
 		}
-		final String title = "Aestia - Port : " + Main.gamePort + " | " + Main.key + " | "
+		final String title = "Game Server - Port : " + Main.gamePort + " | " + Main.key + " | "
 				+ Main.gameServer.getPlayerNumber() + " Joueur(s)";
 		setTitle(title);
 	}

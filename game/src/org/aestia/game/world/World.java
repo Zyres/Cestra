@@ -318,148 +318,203 @@ public class World {
 
 	public static void createWorld() {
 		final long time = System.currentTimeMillis();
-		Console.println("Creation du monde :", Console.Color.YELLOW);
+		
+		Console.println("Creation of the world :", Console.Color.YELLOW);
+		
 		Database.getStatique().getCommandeData().load();
-		Console.println("- Chargement des " + Commandes.size() + " commandes d administrateurs.", Console.Color.GAME);
+		Console.println("- Loading " + Commandes.size() + " Commands of Administrators.", Console.Color.GAME);
+		
 		Database.getStatique().getGroupeData().load();
-		Console.println("- Chargement des " + Groupes.size() + " groupes d administrateurs.", Console.Color.GAME);
+		Console.println("- Loading " + Groupes.size() + " Groups of Administrators.", Console.Color.GAME);
+		
 		Database.getStatique().getFull_morphData().load();
-		Console.println("- Chargement des " + getFullmorphs().size() + " tranformations completes.",
-				Console.Color.GAME);
+		Console.println("- Loading " + getFullmorphs().size() + " Complete transformations.",Console.Color.GAME);
+		
 		Database.getStatique().getExtra_monsterData().load();
-		Console.println("- Chargement des " + getExtraMonsters().size() + " extra-monstres.", Console.Color.GAME);
+		Console.println("- Loading " + getExtraMonsters().size() + " Extra monsters.", Console.Color.GAME);
+		
 		Database.getStatique().getExperienceData().load();
-		Console.println("- Chargement des " + World.ExpLevels.size() + " niveaux.", Console.Color.GAME);
+		Console.println("- Loading " + World.ExpLevels.size() + " Levels.", Console.Color.GAME);
+		
 		Database.getStatique().getSortData().load();
-		Console.println("- Chargement des " + World.Sorts.size() + " sorts.", Console.Color.GAME);
+		Console.println("- Loading " + World.Sorts.size() + " Spells.", Console.Color.GAME);
+		
 		Database.getStatique().getMonsterData().load();
-		Console.println("- Chargement des " + World.MobTemplates.size() + " monstres.", Console.Color.GAME);
+		Console.println("- Loading " + World.MobTemplates.size() + " Monstres.", Console.Color.GAME);
+		
 		Database.getStatique().getItem_templateData().load();
-		Console.println("- Chargement des " + World.ObjTemplates.size() + " templates d'objet.", Console.Color.GAME);
-		Console.println("- Chargement des " + Boutique.items.size() + " items boutique.", Console.Color.GAME);
+		Console.println("- Loading " + World.ObjTemplates.size() + " Object templates.", Console.Color.GAME);
+		
+		Console.println("- Loading " + Boutique.items.size() + " Shop items.", Console.Color.GAME);
+		
 		Database.getStatique().getItemData().load();
-		Console.println("- Chargement des " + World.Objets.size() + " objets.", Console.Color.GAME);
+		Console.println("- Loading " + World.Objets.size() + " Objects.", Console.Color.GAME);
+		
 		Database.getStatique().getNpc_templateData().load();
-		Console.println("- Chargement des " + World.NPCTemplates.size() + " PNJs.", Console.Color.GAME);
+		Console.println("- Loading " + World.NPCTemplates.size() + " NPC Templates.", Console.Color.GAME);
+		
 		Database.getStatique().getNpc_questionData().load();
-		Console.println("- Chargement des " + getNpcQuestions().size() + " questions de PNJ.", Console.Color.GAME);
+		Console.println("- Loading " + getNpcQuestions().size() + " NPC questions.", Console.Color.GAME);
+		
 		Database.getStatique().getNpc_reponses_actionData().load();
-		Console.println("- Chargement des " + getNpcAnswer().size() + " reponses de PNJ.", Console.Color.GAME);
+		Console.println("- Loading " + getNpcAnswer().size() + " NPC responses.", Console.Color.GAME);
+		
 		Database.getStatique().getQuest_objectifData().load();
 		Database.getStatique().getQuest_etapeData().load();
-		Console.println("- Chargement des " + Quest_Etape.getQuestEtapeList().size() + " etapes de quetes.",
-				Console.Color.GAME);
+		Console.println("- Loading " + Quest_Etape.getQuestEtapeList().size() + " Quest steps.",Console.Color.GAME);
+		
 		Database.getStatique().getQuest_dataData().load();
-		Console.println("- Chargement des " + Quest.getQuestDataList().size() + " quetes.", Console.Color.GAME);
+		Console.println("- Loading " + Quest.getQuestDataList().size() + " Quest.", Console.Color.GAME);
+		
 		Database.getStatique().getNpc_templateData().loadQuest();
-		Console.println("- Ajout des quetes sur les templates de PNJ.", Console.Color.GAME);
+		Console.println("- Added quests on NPC templates.", Console.Color.GAME);
+		
 		final int numero = Database.getGame().getPrismeData().load();
-		Console.println("- Chargement des " + numero + " prismes.", Console.Color.GAME);
+		Console.println("- Loading " + numero + " Prismatic.", Console.Color.GAME);
+		
 		Database.getStatique().getArea_dataData().load();
 		Database.getGame().getArea_dataData().load();
-		Console.println("- Chargement des " + World.Areas.size() + " zones.", Console.Color.GAME);
+		Console.println("- Loading " + World.Areas.size() + " Areas.", Console.Color.GAME);
+		
 		Database.getStatique().getSubarea_dataData().load();
 		Database.getGame().getSubarea_dataData().load();
-		Console.println("- Chargement des " + getSubAreas().size() + " sous zones.", Console.Color.GAME);
+		Console.println("- Loading " + getSubAreas().size() + " Sub-areas.", Console.Color.GAME);
+		
 		Database.getStatique().getInteractive_objects_dataData().load();
-		Console.println("- Chargement des " + World.IOTemplate.size() + " templates d objet interactif.",
-				Console.Color.GAME);
+		Console.println("- Loading " + World.IOTemplate.size() + " Interactive object templates.",Console.Color.GAME);
+		
 		Database.getStatique().getCraftData().load();
-		Console.println("- Chargement des " + World.Crafts.size() + " recettes d objet.", Console.Color.GAME);
+		Console.println("- Loading " + World.Crafts.size() + " Object Recipes.", Console.Color.GAME);
+		
 		Database.getStatique().getJobs_dataData().load();
-		Console.println("- Chargement des " + World.Jobs.size() + " metiers.", Console.Color.GAME);
+		Console.println("- Loading " + World.Jobs.size() + " Jobs.", Console.Color.GAME);
+		
 		Database.getStatique().getItemsetData().load();
-		Console.println("- Chargement des " + World.ItemSets.size() + " panoplies.", Console.Color.GAME);
+		Console.println("- Loading " + World.ItemSets.size() + " Item-Sets.", Console.Color.GAME);
+		
 		Database.getStatique().getMapData().load();
-		Console.println("- Chargement des " + World.Maps.size() + " maps.", Console.Color.GAME);
+		Console.println("- Loading " + World.Maps.size() + " Maps.", Console.Color.GAME);
+		
 		Database.getStatique().getSchemafightData().load();
-		Console.println("- Chargement des " + World.SchemaFights.size() + " schemafights.", Console.Color.GAME);
+		Console.println("- Loading " + World.SchemaFights.size() + " schemafights.", Console.Color.GAME);
+		
 		int nbr = Database.getStatique().getScripted_cellData().load();
-		Console.println("- Chargement des " + nbr + " triggers.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Triggers.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getEndfight_actionData().load();
-		Console.println("- Chargement des " + nbr + " fins d action.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " endfight action.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getNpcData().load();
-		Console.println("- Chargement des " + nbr + " PNJs.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " NPCs.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getObjectsactionData().load();
-		Console.println("- Chargement des " + nbr + " actions d objet.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Object actions.", Console.Color.GAME);
+		
 		Database.getStatique().getDropData().load();
-		Console.println("- Ajout des drops.", Console.Color.GAME);
+		Console.println("- Loading drops.", Console.Color.GAME);
+		
 		Database.getStatique().getAnimationData().load();
-		Console.println("- Chargement des " + World.Animations.size() + " animations.", Console.Color.GAME);
+		Console.println("- Loading " + World.Animations.size() + " animations.", Console.Color.GAME);
+		
 		Database.getStatique().getServerData().loggedZero();
-		Console.println("- Deconnexion de tous les personnages du serveur " + Main.serverId + ".", Console.Color.GAME);
+		Console.println("- Disconnecting all characters from the server. Server-ID: " + Main.serverId + ".", Console.Color.GAME);
+		
 		Database.getStatique().getAccountData().load();
-		Console.println("- Chargement des " + World.Comptes.size() + " comptes.", Console.Color.GAME);
+		Console.println("- Loading " + World.Comptes.size() + " Accounts.", Console.Color.GAME);
+		
 		Database.getStatique().getPlayerData().load();
-		Console.println("- Chargement des " + World.Persos.size() + " personnages.", Console.Color.GAME);
+		Console.println("- Loading " + World.Persos.size() + " Characters.", Console.Color.GAME);
+		
 		Database.getGame().getGuildData().load();
-		Console.println("- Chargement des " + getGuilds().size() + " guildes.", Console.Color.GAME);
+		Console.println("- Loading " + getGuilds().size() + " Guilds.", Console.Color.GAME);
+		
 		Database.getGame().getGuild_memberData().load();
-		Console.println("- Ajouts des membres de guildes.", Console.Color.GAME);
+		Console.println("- Loading Guild Members.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getPets_dataData().load();
-		Console.println("- Chargement des " + nbr + " familiers.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Pets.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getPetData().load();
-		Console.println("- Chargement des " + nbr + " entrees de familier.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Entries of Pets.", Console.Color.GAME);
+		
 		Database.getStatique().getMounts_dataData().load();
-		Console.println("- Chargement des " + World.Dragodindes.size() + " montures.", Console.Color.GAME);
+		Console.println("- Loading " + World.Dragodindes.size() + " Mounts.", Console.Color.GAME);
+		
 		Database.getStatique().getTutorielData().load();
-		Console.println("- Chargement des " + World.Tutorial.size() + " foires.", Console.Color.GAME);
+		Console.println("- Loading " + World.Tutorial.size() + " Tutorials.", Console.Color.GAME);
+		
 		Database.getStatique().getMountpark_dataData().load();
 		nbr = Database.getGame().getMountpark_dataData().load();
-		Console.println("- Chargement des " + nbr + " enclos.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Mountpark.", Console.Color.GAME);
+		
 		nbr = Database.getGame().getPercepteurData().load();
-		Console.println("- Chargement des " + nbr + " percepteurs.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Perceptor.", Console.Color.GAME);
+		
 		Database.getStatique().getHouseData().load();
 		nbr = Database.getGame().getHouseData().load();
-		Console.println("- Chargement des " + nbr + " maisons.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Houses.", Console.Color.GAME);
+		
 		Database.getStatique().getCoffreData().load();
 		nbr = Database.getGame().getCoffreData().load();
-		Console.println("- Chargement des " + nbr + " coffres.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Chests.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getZaapData().load();
-		Console.println("- Chargement des " + nbr + " zaaps.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Zaaps.", Console.Color.GAME);
+		
 		nbr = Database.getStatique().getZaapiData().load();
-		Console.println("- Chargement des " + nbr + " zaapis.", Console.Color.GAME);
+		Console.println("- Loading " + nbr + " Zaapis.", Console.Color.GAME);
+		
 		Database.getStatique().getChallengeData().load();
-		Console.println("- Chargement des " + World.Challenges.toString().split(";").length + " challenges.",
-				Console.Color.GAME);
+		Console.println("- Loading " + World.Challenges.toString().split(";").length + " Challenges.",Console.Color.GAME);
+		
 		Database.getStatique().getHdvData().load();
-		Console.println("- Chargement des " + getHdvs().size() + " hotels de vente.", Console.Color.GAME);
+		Console.println("- Loading " + getHdvs().size() + " Auction Houses.", Console.Color.GAME);
+		
 		Database.getGame().getHdvs_itemData().load();
-		Console.println("- Ajout des items en vente.", Console.Color.GAME);
+		Console.println("- Loading items Auction Houses.", Console.Color.GAME);
+		
 		Database.getStatique().getDonjonData().load();
-		Console.println("- Chargement des " + Dopeul.getDonjons().size() + " donjons.", Console.Color.GAME);
+		Console.println("- Loading " + Dopeul.getDonjons().size() + " Dungeons.", Console.Color.GAME);
+		
 		try {
 			loadExtraMonster();
-			Console.println("- Ajout des extra-monstres sur les maps.", Console.Color.GAME);
-		} catch (Exception e) {
+			Console.println("- Added extra-monsters on maps.", Console.Color.GAME);
+		}
+		catch (Exception e) {
 			e.printStackTrace();
-			Console.println("Erreur lors de l ajout des extra-monstres sur les maps : " + e.getMessage(),
+			Console.println("Error while adding extra-monsters on maps: " + e.getMessage(),
 					Console.Color.ERROR);
 		}
 		try {
 			loadMonsterOnMap();
-			Console.println("- Ajout des monstres sur les maps.", Console.Color.GAME);
-		} catch (Exception e) {
+			Console.println("- Adding Monsters to Maps.", Console.Color.GAME);
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
-			Console.println("Erreur lors de l ajout des monstres sur les maps : " + e.getMessage(),
+			Console.println("Error adding monsters to maps: " + e.getMessage(),
 					Console.Color.ERROR);
 		}
+		
 		Database.getStatique().getRuneData().load();
-		Console.println("- Chargement des " + Rune.runes.size() + " runes.", Console.Color.GAME);
+		Console.println("- Loading " + Rune.runes.size() + " Runes.", Console.Color.GAME);
 		World.nextObjetID = Database.getStatique().getItemData().getNextObjetID();
+		
 		Console.println("- Chargement des bandits de Cania.", Console.Color.GAME);
 		Database.getGame().getBanditData().load();
-		Console.println("- Initialisation du labyrinthe du DC.", Console.Color.GAME);
+		
+		Console.println("- Initialization of the DRAGON PIG labyrinth.", Console.Color.GAME);
 		Dc.initialize();
-		Console.println("- Initialisation du labyrinthe du Toror.", Console.Color.GAME);
+		
+		Console.println("- Initialization of the MINOTOROR labyrinth.", Console.Color.GAME);
 		Toror.initialize();
+		
 		Boutique.initPacket();
 		Database.getStatique().getServerData().updateTime(time);
-		System.out.println("Le serveur a fini de charger : "
+		System.out.println("The server has finished loading : "
 				+ new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.FRANCE).format(new Date()) + "\n"
-				+ "Le serveur a \u00e9t\u00e9 charg\u00e9 en "
-				+ new SimpleDateFormat("mm", Locale.FRANCE).format(System.currentTimeMillis() - time) + " minutes et "
-				+ new SimpleDateFormat("ss", Locale.FRANCE).format(System.currentTimeMillis() - time) + " secondes.");
+				+ "The server was loaded in "
+				+ new SimpleDateFormat("mm", Locale.FRANCE).format(System.currentTimeMillis() - time) + " minutes and "
+				+ new SimpleDateFormat("ss", Locale.FRANCE).format(System.currentTimeMillis() - time) + " seconds.");
 	}
 
 	public static void addExtraMonster(final int idMob, final String superArea, final String subArea,
