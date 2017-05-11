@@ -41,16 +41,18 @@ public class Config
     {
         try 
         {
-            this.host = Config.configFile.getString("database.host");
-            this.user = Config.configFile.getString("database.user");
-            this.pass = Config.configFile.getString("database.password");
-            this.databaseName = Config.configFile.getString("database.loginName");
-            this.port = Config.configFile.getInt("database.port");
-            this.loginIp = Config.configFile.getString("network.loginIp");
-            this.exchangeIp = Config.configFile.getString("network.exchangeIp");
-            this.version = Config.configFile.getString("network.version");
-            this.loginPort = Config.configFile.getInt("network.loginPort");
-            this.exchangePort = Config.configFile.getInt("network.exchangePort");
+            this.host = Config.configFile.getString("Logon.Database.Ip");
+            this.port = Config.configFile.getInt("Logon.Database.Port");
+            this.databaseName = Config.configFile.getString("Logon.Database.Name");
+            this.user = Config.configFile.getString("Logon.Database.User");
+            this.pass = Config.configFile.getString("Logon.Database.Pass");
+
+            this.exchangeIp = Config.configFile.getString("Network.RealmList.Ip");
+            this.exchangePort = Config.configFile.getInt("Network.RealmList.Port");
+            
+            this.loginIp = Config.configFile.getString("Logon.Server.Ip");
+            this.loginPort = Config.configFile.getInt("Logon.Server.Port");
+            this.version = Config.configFile.getString("Logon.Server.Version");
         }
         catch (Exception e) 
         {
@@ -84,7 +86,8 @@ public class Config
         this.loginServer = loginServer;
     }
     
-    public ExchangeServer getExchangeServer() {
+    public ExchangeServer getExchangeServer()
+    {
         return this.exchangeServer;
     }
     

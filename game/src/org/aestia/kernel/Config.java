@@ -98,9 +98,9 @@ public class Config
 			Config.allZaap = Config.configFile.getBoolean("Game.Enable.AllZaap");
 			Config.allEmote = Config.configFile.getBoolean("Game.Enable.AllEmote");
 			
-			Main.exchangeIp = Config.configFile.getString("Logon.Connection.Ip");
-			Main.exchangePort = Config.configFile.getInt("Logon.Connection.Port");
-			Main.key = Config.configFile.getString("Logon.Connection.Key");
+			Main.exchangeIp = Config.configFile.getString("Logon.RealmList.Ip");
+			Main.exchangePort = Config.configFile.getInt("Logon.RealmList.Port");
+			Main.key = Config.configFile.getString("Logon.RealmList.Key");
 			
 			Config.PUB1 = Config.configFile.getString("Game.Broadcast.Message1");
 			Config.PUB2 = Config.configFile.getString("Game.Broadcast.Message2");
