@@ -29,7 +29,7 @@ public class Config
     
     static
     {
-        configFile = ConfigFactory.parseFile(new File("config.conf"));
+        configFile = ConfigFactory.parseFile(new File("logon.conf"));
     }
     
     public Config() 
