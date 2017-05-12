@@ -39,17 +39,17 @@ public class WorldSave extends Manageable {
 		GameServer.setState(2);
 		Label_0913: {
 			try {
-				Console.println("Lancement de la sauvegarde :", Console.Color.GAME);
+				Console.println("Starting Backup:", Console.Color.GAME);
 				SocketManager.GAME_SEND_Im_PACKET_TO_ALL("1164;");
 				Main.isSaving = true;
-				Console.println("-> des comptes.", Console.Color.GAME);
+				Console.println("-> Accounts.", Console.Color.GAME);
 				for (final Account account : World.getAccounts().values()) {
 					if (account == null) {
 						continue;
 					}
 					Database.getStatique().getAccountData().update(account);
 				}
-				Console.println("-> des personnages.", Console.Color.GAME);
+				Console.println("-> Characters.", Console.Color.GAME);
 				for (final Player player : World.getPlayers().values()) {
 					if (player == null) {
 						continue;
@@ -59,7 +59,7 @@ public class WorldSave extends Manageable {
 					}
 					Database.getStatique().getPlayerData().update(player, true);
 				}
-				Console.println("-> des prismes.", Console.Color.GAME);
+				Console.println("-> Prismatic.", Console.Color.GAME);
 				for (final Prism prism : World.getPrisms().values()) {
 					if (World.getMap(prism.getMap()).getSubArea().getPrismId() != prism.getId()) {
 						Database.getGame().getPrismeData().delete(prism.getId());
@@ -67,63 +67,63 @@ public class WorldSave extends Manageable {
 						Database.getGame().getPrismeData().update(prism);
 					}
 				}
-				Console.println("-> des dragodindes.", Console.Color.GAME);
+				Console.println("-> Mounts.", Console.Color.GAME);
 				for (final Dragodinde mount : World.getMounts().values()) {
 					if (mount.getId() > 0) {
 						Database.getStatique().getMounts_dataData().update(mount, true);
 					}
 				}
-				Console.println("-> des guildes.", Console.Color.GAME);
+				Console.println("-> Guilds.", Console.Color.GAME);
 				for (final Guild guilde : World.getGuilds().values()) {
 					Database.getGame().getGuildData().update(guilde);
 				}
-				Console.println("-> des membres de guilde.", Console.Color.GAME);
+				Console.println("-> Guild members.", Console.Color.GAME);
 				for (final Player player : World.getPlayers().values()) {
 					if (player.isOnline() && player.getGuildMember() != null) {
 						Database.getGame().getGuild_memberData().update(player);
 					}
 				}
-				Console.println("-> des percepteurs.", Console.Color.GAME);
+				Console.println("-> Perceptor.", Console.Color.GAME);
 				for (final Collector collector : World.getCollectors().values()) {
 					if (collector.getInFight() <= 0) {
 						Database.getGame().getPercepteurData().update(collector);
 					}
 				}
-				Console.println("-> des maisons.", Console.Color.GAME);
+				Console.println("-> Houses.", Console.Color.GAME);
 				for (final House house : World.getHouses().values()) {
 					if (house.getOwnerId() > 0) {
 						Database.getGame().getHouseData().update(house);
 					}
 				}
-				Console.println("-> des coffres.", Console.Color.GAME);
+				Console.println("-> Chests.", Console.Color.GAME);
 				for (final Trunk trunk : World.getTrunks().values()) {
 					Database.getGame().getCoffreData().update(trunk);
 				}
-				Console.println("-> des enclos.", Console.Color.GAME);
+				Console.println("-> Mountparks.", Console.Color.GAME);
 				for (final MountPark mp : World.getMountparks().values()) {
 					if (mp.getOwner() > 0 || mp.getOwner() == -1) {
 						Database.getGame().getMountpark_dataData().update(mp);
 					}
 				}
-				Console.println("-> des zones.", Console.Color.GAME);
+				Console.println("-> Areas.", Console.Color.GAME);
 				for (final World.Area area : World.getAreas().values()) {
 					Database.getGame().getArea_dataData().update(area);
 				}
 				for (final World.SubArea subarea : World.getSubAreas().values()) {
 					Database.getGame().getSubarea_dataData().update(subarea);
 				}
-				Console.println("Sauvegarde effectuee !", Console.Color.GAME);
+				Console.println("Saving done!", Console.Color.GAME);
 				SocketManager.GAME_SEND_Im_PACKET_TO_ALL("1165;");
 			} catch (Exception exception) {
 				exception.printStackTrace();
-				Console.println("Erreur de sauvegarde : " + exception.getMessage(), Console.Color.ERROR);
+				Console.println("Backup Error: " + exception.getMessage(), Console.Color.ERROR);
 				if (trys < 10) {
-					Console.println("Echec de la sauvegarde. Relancement numero " + (trys + 1) + ".",
+					Console.println("Failed to save. Restart number " + (trys + 1) + ".",
 							Console.Color.ERROR);
 					cast(trys + 1);
 					return;
 				}
-				Console.println("Trop d echec de sauvegarde.", Console.Color.ERROR);
+				Console.println("Too much backup failed.", Console.Color.ERROR);
 				Main.isSaving = false;
 				break Label_0913;
 			} finally {

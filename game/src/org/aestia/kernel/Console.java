@@ -17,8 +17,7 @@ public class Console {
 		if (!Main.isRunning) {
 			return;
 		}
-		final String title = "Game Server - Port : " + Main.gamePort + " | " + Main.key + " | "
-				+ Main.gameServer.getPlayerNumber() + " Joueur(s)";
+		final String title = "Game Server - Port : " + Main.gamePort + " | " + Main.key + " | " + Main.gameServer.getPlayerNumber() + " Player(s)";
 		setTitle(title);
 	}
 
