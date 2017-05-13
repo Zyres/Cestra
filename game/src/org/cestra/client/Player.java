@@ -407,8 +407,7 @@ public class Player {
 				this.curCell = this.curMap.getCase(311);
 			} else {
 				if (this.curMap == null && World.getMap((short) 7411) == null) {
-					GameServer.addToLog(
-							"Personnage mal positione, et position de d\u00e9part non valide. Fermeture du serveur.");
+					GameServer.addToLog("Character incorrectly positioned, and starting position invalid. Closing the server.");
 					Main.stop();
 					return;
 				}
@@ -432,9 +431,9 @@ public class Player {
 				}
 			}
 			if (!isNew && (this.curMap == null || this.curCell == null)) {
-				GameServer.addToLog("Map ou case de d\u00e9part du personnage " + name + " invalide.");
-				GameServer.addToLog("Map ou case par d\u00e9faut invalide.");
-				GameServer.addToLog("Le serveur ne peut se lancer.");
+				GameServer.addToLog("Map or starting point of the character " + name + " Invalide..");
+				GameServer.addToLog("Invalid Map or Invalid Box.");
+				GameServer.addToLog("The server can not start.");
 				this.getGameClient().getWaiter().addNext(new Runnable() {
 					@Override
 					public void run() {
@@ -482,7 +481,7 @@ public class Player {
 					}
 				}
 			} catch (Exception e3) {
-				Console.println("Erreur sur la colonne parcho du personnage " + this.id + ".", Console.Color.ERROR);
+				Console.println("Error on the character's parcho column " + this.id + ".", Console.Color.ERROR);
 				e3.printStackTrace();
 			}
 			if (!storeObjets.equals("")) {
@@ -535,7 +534,7 @@ public class Player {
 						SM.addXp(this, xp, false);
 					} catch (Exception e5) {
 						e5.printStackTrace();
-						Console.println("## Erreur personnage id : " + this.id, Console.Color.ERROR);
+						Console.println("## Error character ID: " + this.id, Console.Color.ERROR);
 					}
 				}
 			}
@@ -1495,14 +1494,14 @@ public class Player {
 	public boolean learnSpell(final int spellID, final int level, final boolean save, final boolean send,
 			final boolean learn) {
 		if (World.getSort(spellID).getStatsByLevel(level) == null) {
-			GameServer.addToLog("[ERROR]Sort " + spellID + " lvl " + level + " non trouve.");
+			GameServer.addToLog("[ERROR]Spell:" + spellID + " - level:" + level + " not found.");
 			return false;
 		}
 		if (spellID == 366 && this._sorts.containsKey(spellID)) {
 			return false;
 		}
 		if (this._sorts.containsKey(spellID) && learn) {
-			SocketManager.GAME_SEND_MESSAGE(this, "Tu poss\u00e8de d\u00e9j\u00e0 ce sort.");
+			SocketManager.GAME_SEND_MESSAGE(this, "You already have that spell.");
 			return false;
 		}
 		this._sorts.put(spellID, World.getSort(spellID).getStatsByLevel(level));
@@ -1518,7 +1517,7 @@ public class Player {
 
 	public boolean learnSpell(final int spellID, final int level) {
 		if (World.getSort(spellID).getStatsByLevel(level) == null) {
-			GameServer.addToLog("[ERROR]Sort " + spellID + " lvl " + level + " non trouve.");
+			GameServer.addToLog("[ERROR]Spell:" + spellID + " - level:" + level + " not found.");
 			return false;
 		}
 		if (spellID == 366 && this._saveSorts.containsKey(spellID)) {
@@ -1941,7 +1940,7 @@ public class Player {
 		}
 		if (!this.itemLost.isEmpty()) {
 			SocketManager.GAME_SEND_MESSAGE(this,
-					"Les objets " + a2 + "sont perdu, merci de contacter le staff pour les r\u00e9cup\u00e9r\u00e9s.");
+					"The " + a2 + " objects are lost, thank you to contact the staff for the recovered.");
 		}
 		final long lastConnect = this.getAccount().getLastConnectDay();
 		final long now = System.currentTimeMillis();
@@ -1949,11 +1948,11 @@ public class Player {
 			this.getAccount().setLastConnectDay(now);
 			this.getAccount().setPoints(this.getAccount().getPoints() + 20);
 			SocketManager.GAME_SEND_MESSAGE(this,
-					"Vous venez de gagner 20 points boutiques pour votre premi\u00e8re connexion de la journ\u00e9e.");
+					"You have just won 20 shopping points for your first connection of the day.");
 		}
 		this.PointsTimer();
 		this.checkVote();
-		Console.println("Le joueur " + this.getName() + " vient de se connecter.", Console.Color.GREEN);
+		Console.println("The player " + this.getName() + " has logged in", Console.Color.GREEN);
 		if (this.getCurMap().getSubArea().getId() == 319 || this.getCurMap().getSubArea().getId() == 210) {
 			this.getWaiter().addNow(new Runnable() {
 				@Override
@@ -1997,10 +1996,10 @@ public class Player {
 					}
 					this.player.getAccount().setPoints(Player.this.getAccount().getPoints() + 2);
 					SocketManager.GAME_SEND_MESSAGE(this.player.getThis(),
-							"Vous venez de gagner 2 points boutiques pour votre activit\u00e9 sur le serveur.");
+							"You have just won 2 shopping points for your activity on the server. ");
 				} catch (Exception e) {
 					e.printStackTrace();
-					Console.println("Erreur PointsTimer du joueur " + this.player.getName() + " : " + e.getMessage(),
+					Console.println("ERROR - PointsTimer by Player " + this.player.getName() + " : " + e.getMessage(),
 							Console.Color.ERROR);
 				}
 			}
@@ -2059,7 +2058,7 @@ public class Player {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					Console.println("Erreur checkVote du joueur " + this.player.getName() + " : " + e.getMessage(),
+					Console.println("ERROR - CheckVote by Player " + this.player.getName() + " : " + e.getMessage(),
 							Console.Color.ERROR);
 				}
 			}
@@ -3492,13 +3491,13 @@ public class Player {
 		if (this.curMap.getMountPark() != null && this.curMap.getMountPark().getOwner() > 0
 				&& this.curMap.getMountPark().getGuild().getId() != -1
 				&& World.getGuild(this.curMap.getMountPark().getGuild().getId()) == null) {
-			GameServer.addToLog("[MountPark] Suppression d'un MountPark a Guild invalide. GuildID : "
+			GameServer.addToLog("[MountPark] Removing an invalid MountPark from Guild. GuildID: "
 					+ this.curMap.getMountPark().getGuild().getId());
 		}
 		final Collector col = Collector.getCollectorByMapId(this.curMap.getId());
 		if (col != null && World.getGuild(col.getGuildId()) == null) {
 			GameServer
-					.addToLog("[Collector] Suppression d'un Collector a Guild invalide. GuildID : " + col.getGuildId());
+					.addToLog("[Collector] Delete an invalid Guild Collector. GuildID: " + col.getGuildId());
 			Collector.removeCollector(col.getGuildId());
 		}
 		if (this.isInAreaNotSubscribe()) {
@@ -3594,12 +3593,12 @@ public class Player {
 		if (this.curMap.getMountPark() != null && this.curMap.getMountPark().getOwner() > 0
 				&& this.curMap.getMountPark().getGuild().getId() != -1
 				&& World.getGuild(this.curMap.getMountPark().getGuild().getId()) == null) {
-			GameServer.addToLog("[MountPark] Suppression d'un MountPark a Guild invalide. GuildID : "
+			GameServer.addToLog("[MountPark] Removing an invalid MountPark from Guild. GuildID: "
 					+ this.curMap.getMountPark().getGuild().getId());
 		}
 		if (Collector.getCollectorByMapId(this.curMap.getId()) != null
 				&& World.getGuild(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId()) == null) {
-			GameServer.addToLog("[Collector] Suppression d'un Collector a Guild invalide. GuildID : "
+			GameServer.addToLog("[Collector] Delete an invalid Guild Collector. GuildID: "
 					+ Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
 			Collector.removeCollector(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
 		}
@@ -4019,7 +4018,7 @@ public class Player {
 			new JobAction(110, 2, 0, true, 100, 0).startAction(this, object, GA, cell);
 		}
 		default: {
-			SocketManager.GAME_SEND_MESSAGE(this, "Erreur stats job null.");
+			SocketManager.GAME_SEND_MESSAGE(this, "Error stats job null.");
 		}
 		}
 	}
@@ -4507,17 +4506,17 @@ public class Player {
 		final int SubAreaID = this.curMap.getSubArea().getArea().get_superArea().get_id();
 		final int cellID = World.getZaapCellIdByMapId(id);
 		if (World.getMap(id) == null) {
-			GameServer.addToLog("La map " + id + " n'est pas implantee, Zaap refuse");
+			GameServer.addToLog("Map" + id + " is not implemented, Zaap refuses");
 			SocketManager.GAME_SEND_WUE_PACKET(this);
 			return;
 		}
 		if (World.getMap(id).getCase(cellID) == null) {
-			GameServer.addToLog("La cellule associee au zaap " + id + " n'est pas implantee, Zaap refuse");
+			GameServer.addToLog("The cell associated with Zaap " + id + " is not implanted, Zaap refuses");
 			SocketManager.GAME_SEND_WUE_PACKET(this);
 			return;
 		}
 		if (!World.getMap(id).getCase(cellID).isWalkable(true)) {
-			GameServer.addToLog("La cellule associee au zaap " + id + " n'est pas 'walkable', Zaap refuse");
+			GameServer.addToLog("The cell associated with Zaap " + id + " is not 'walkable', Zaap refuses");
 			SocketManager.GAME_SEND_WUE_PACKET(this);
 			return;
 		}
@@ -4554,7 +4553,7 @@ public class Player {
 		}
 		if (this._kamas < costo) {
 			SocketManager.GAME_SEND_MESSAGE(this,
-					"Vous n'avez pas sufisamment de Kamas pour r\u00e9aliser cette action.");
+					"You do not have enough Kamas to do this.");
 			return;
 		}
 		this._kamas -= costo;
@@ -5079,7 +5078,7 @@ public class Player {
 		this.setCanAggro(true);
 		this.set_away(false);
 		this.setSpeed(0);
-		SocketManager.GAME_SEND_MESSAGE(this, "Tu as gagn\u00e9 <b>1000</b> points d'\u00e9nergie.", "009900");
+		SocketManager.GAME_SEND_MESSAGE(this, "You gained <b>1000</b> energy.", "009900");
 		SocketManager.GAME_SEND_STATS_PACKET(this);
 		SocketManager.GAME_SEND_ALTER_GM_PACKET(this.curMap, this);
 		SocketManager.send(this, "IH");
@@ -5211,7 +5210,7 @@ public class Player {
 		synchronized (this._items) {
 			if (this._items.get(ObjID) == null) {
 				GameServer.addToLog(
-						"Le joueur " + this.getName() + " a tenter d'ajouter un objet au store qu'il n'avait pas.");
+						"Player " + this.getName() + " attempted to add an object to the store he did not have.");
 				// monitorexit(this._items)
 				return;
 			}
@@ -5293,7 +5292,7 @@ public class Player {
 		synchronized (this._storeItems) {
 			if (this._storeItems.get(guid) == null) {
 				GameServer.addToLog(
-						"Le joueur " + this.getName() + " a tenter de retirer un objet du store qu'il n'avait pas.");
+						"Player " + this.getName() + " attempted to remove an object from the awning he did not have.");
 				// monitorexit(this._storeItems)
 				return;
 			}
@@ -5396,151 +5395,130 @@ public class Player {
 		case 1: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 1 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have just been released from jail after 1 minute wait.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 2: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 2 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have just been released from prison after 2 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 3: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 3 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 3 minutes d'attente.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
 			break;
 		}
 		case 4: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 4 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have just been released from prison after 4 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 5: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 5 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have just been released from prison after 5 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 6: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 6 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have just been released from prison after 6 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 7: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 7 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have been released from prison after 7 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 8: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 8 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have been released from prison after 8 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		case 9: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 9 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have been released from prison after 9 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
-			break;
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 		}
 		case 10: {
 			if (compar >= 0L) {
 				this.leaveFaction();
-				SocketManager.PACKET_POPUP_DEPART(this,
-						"Vous venez d'\u00eatre lib\u00e9r\u00e9 de prison apr\u00e8s 10 minutes d'attente.");
+				SocketManager.PACKET_POPUP_DEPART(this,"You have been released from prison after 10 minutes of waiting.");
 				break;
 			}
 			long restant = -compar;
 			if (restant <= 1000L) {
 				restant = 1000L;
 			}
-			SocketManager.PACKET_POPUP_DEPART(this,
-					"Vous devez attendre encore " + restant / 1000L + " secondes en prison.");
+			SocketManager.PACKET_POPUP_DEPART(this,"You have to wait another " + restant / 1000L + " seconds in jail.");
 			break;
 		}
 		}
@@ -5556,9 +5534,7 @@ public class Player {
 		switch (pGrade) {
 		case 1: {
 			if (curKamas < 1000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 1000;
@@ -5568,15 +5544,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 2: {
 			if (curKamas < 2000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 2000;
@@ -5586,15 +5559,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 3: {
 			if (curKamas < 3000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 3000;
@@ -5604,15 +5574,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 4: {
 			if (curKamas < 4000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 4000;
@@ -5622,15 +5589,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 5: {
 			if (curKamas < 5000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 5000;
@@ -5640,15 +5604,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 6: {
 			if (curKamas < 7000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 7000;
@@ -5658,15 +5619,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 7: {
 			if (curKamas < 9000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 9000;
@@ -5676,15 +5634,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 8: {
 			if (curKamas < 12000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 12000;
@@ -5694,15 +5649,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 9: {
 			if (curKamas < 16000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 16000;
@@ -5712,15 +5664,12 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		case 10: {
 			if (curKamas < 25000L) {
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Tu ne poss\u00e8des que " + curKamas + "Kamas. Tu n'as pas assez d'argent pour sortir !",
-						"009900");
+				SocketManager.GAME_SEND_MESSAGE(perso,"You only have " + curKamas + " Kamas. You do not have enough money to get out!","009900");
 				break;
 			}
 			final int countKamas = 25000;
@@ -5730,8 +5679,7 @@ public class Player {
 			}
 			perso.set_kamas(newKamas);
 			this.leaveFaction();
-			SocketManager.GAME_SEND_MESSAGE(perso, "Tu viens de payer " + countKamas
-					+ "Kamas pour sortir. Il te reste maintenant " + newKamas + "Kamas.", "009900");
+			SocketManager.GAME_SEND_MESSAGE(perso, "You just paid " + countKamas + " Kamas to get out. You have now" + newKamas + " Kamas.", "009900");
 			break;
 		}
 		}
@@ -5772,13 +5720,13 @@ public class Player {
 		if (this.curMap.getMountPark() != null && this.curMap.getMountPark().getOwner() > 0
 				&& this.curMap.getMountPark().getGuild().getId() != -1
 				&& World.getGuild(this.curMap.getMountPark().getGuild().getId()) == null) {
-			GameServer.addToLog("[MountPark] Suppression d'un MountPark a Guild invalide. GuildID : "
+			GameServer.addToLog("[MountPark] Removing an invalid MountPark from Guild. GuildID: "
 					+ this.curMap.getMountPark().getGuild().getId());
 			org.cestra.map.Map.removeMountPark(this.curMap.getMountPark().getGuild().getId());
 		}
 		if (Collector.getCollectorByMapId(this.curMap.getId()) != null
 				&& World.getGuild(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId()) == null) {
-			GameServer.addToLog("[Collector] Suppression d'un Collector a Guild invalide. GuildID : "
+			GameServer.addToLog("[Collector] Delete an invalid Guild Collector. GuildID: "
 					+ Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
 			Collector.removeCollector(Collector.getCollectorByMapId(this.curMap.getId()).getGuildId());
 		}
@@ -5824,8 +5772,8 @@ public class Player {
 			break;
 		}
 		}
-		SocketManager.PACKET_POPUP_DEPART(this,
-				"Vous \u00eates en prison !<br />\nVous devrez donc patientez quelques Minutes avant de pouvoir sortir.<br/>\nParlez au gardien de prison pour obtenir plus d'information.");
+		SocketManager.PACKET_POPUP_DEPART(this,"You are in jail!<br />\nSo you have to wait a few minutes before you can go out.<br/>\nTalk to the jail guard for more information.");
+		
 		if (this.getEnergy() <= 0) {
 			if (this.isOnMount()) {
 				this.toogleOnMount();
