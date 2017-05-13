@@ -2057,9 +2057,9 @@ public class Player {
 							break;
 						}
 					}
-					if (vote) {
-						SocketManager.GAME_SEND_MESSAGE(this.player,
-								"<b>Vous pouvez de nouveau voter sur le <a href='http://aestia.fr/'>site</a>.</b>");
+					if (vote)
+					{
+						SocketManager.GAME_SEND_MESSAGE(this.player,"<b>org.cestra.client - Player.java - public void checkVote()</b>");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
