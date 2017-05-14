@@ -15,7 +15,7 @@ public class CommandPlayer {
 	private static String canal;
 
 	static {
-		CommandPlayer.canal = "Taverne";
+		CommandPlayer.canal = "All";
 	}
 
 	public static boolean analyse(final Player perso, final String msg) {
@@ -25,7 +25,7 @@ public class CommandPlayer {
 		if(msg.length() > 7 && msg.substring(1, 7).equalsIgnoreCase("parcho")) {
 			int points = perso.getAccount().getPoints() - 250;
 			if(points < 0) {
-				perso.sendMessage("Il vous manque <b>" + (250 - perso.getAccount().getPoints()) + "</b> points boutique pour effectuer cet achat");
+				perso.sendMessage("You need <b>" + (250 - perso.getAccount().getPoints()) + "</b> points to complete this purchase.");
 				return true;
 			}
 			
@@ -39,7 +39,7 @@ public class CommandPlayer {
 			player.getStatsParcho().addOneStat(123, 101);
 			
 			SocketManager.GAME_SEND_STATS_PACKET(player);
-			player.sendMessage("Vous êtes maintenant parchoté 101 dans tous les éléments");
+			player.sendMessage("You are now parcho 101 in all elements.");
 			perso.getAccount().setPoints(points);
 			return true;
 		} 
@@ -47,7 +47,7 @@ public class CommandPlayer {
 		if(msg.length() > 7 && msg.substring(1, 7).equalsIgnoreCase("restat")) {
 			int points = perso.getAccount().getPoints() - 180;
 			if(points < 0) {
-				perso.sendMessage("Il vous manque <b>" + (180 - perso.getAccount().getPoints()) + "</b> points boutique pour effectuer cet achat");
+				perso.sendMessage("You need <b>" + (180 - perso.getAccount().getPoints()) + "</b> points to make this purchase.");
 				return true;
 			}
 			
@@ -67,7 +67,7 @@ public class CommandPlayer {
 		if(msg.length() > 4 && msg.substring(1, 5).equalsIgnoreCase("obvi")) {
 			int points = perso.getAccount().getPoints() - 210;
 			if(points < 0) {
-				perso.sendMessage("Il vous manque <b>" + (210 - perso.getAccount().getPoints()) + "</b> points boutique pour effectuer cet achat");
+				perso.sendMessage("You need <b>" + (210 - perso.getAccount().getPoints()) + "</b> points to complete this purchase.");
 			} else {
 				org.cestra.object.Object object = World.getObjTemplate(9233).createNewItem(1, false);
 				org.cestra.object.Object object2 = World.getObjTemplate(9234).createNewItem(1, false);
@@ -76,7 +76,7 @@ public class CommandPlayer {
 				
 				if(perso.addObjet(object2,true))
 					World.addObjet(object2, true);
-				perso.sendMessage("Vous venez de recevoir vos objets vivants avec succès");
+				perso.sendMessage("You have just received your living objects successfully.");
 				perso.getAccount().setPoints(points);
 			}
 			return true;
@@ -85,7 +85,7 @@ public class CommandPlayer {
 		
 		
 		if(msg.length() > 6 && msg.substring(1, 7).equalsIgnoreCase("points")) {
-			perso.sendMessage("Vous avez <b>" + perso.getAccount().getPoints() + "</b> points boutique");
+			perso.sendMessage("You have <b>" + perso.getAccount().getPoints() + "</b> shop points.");
 			return true;
 		} 
 		
@@ -97,7 +97,7 @@ public class CommandPlayer {
 		if (msg.length() > 3 && msg.substring(1, 4).equalsIgnoreCase("all")) {
 			if (perso.noall) {
 				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Votre canal " + CommandPlayer.canal + " est d\u00e9sactiv\u00e9.", "C35617");
+						"Your channel " + CommandPlayer.canal + " is disabled.", "C35617");
 				return true;
 			}
 			final String prefix = "[" + new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis()))
@@ -115,16 +115,16 @@ public class CommandPlayer {
 				if (perso.noall) {
 					perso.noall = false;
 					SocketManager.GAME_SEND_MESSAGE(perso,
-							"Vous avez activ\u00e9 le canal " + CommandPlayer.canal + ".", "C35617");
+							"You have activated the channel " + CommandPlayer.canal + ".", "C35617");
 				} else {
 					perso.noall = true;
 					SocketManager.GAME_SEND_MESSAGE(perso,
-							"Vous avez d\u00e9sactiv\u00e9 le canal " + CommandPlayer.canal + ".", "C35617");
+							"You have disabled the channel " + CommandPlayer.canal + ".", "C35617");
 				}
 				return true;
 			}
 			if (msg.length() > 5 && msg.substring(1, 6).equalsIgnoreCase("staff")) {
-				String message = "Liste des membres du staff connect\u00e9s :";
+				String message = "staff list :";
 				boolean vide = true;
 				for (final GameClient client : Main.gameServer.getClients().values()) {
 					final Player player = client.getPersonnage();
@@ -143,12 +143,12 @@ public class CommandPlayer {
 					vide = false;
 				}
 				if (vide) {
-					message = "Il n'y a aucun membre du staff connect\u00e9. Vous pouvez tout de m\u00eame allez voir sur notre <a href='http://aestia.fr/ts3.php'><b>TeamSpeak</b></a>.";
+					message = "No staff online";
 				}
 				SocketManager.GAME_SEND_MESSAGE(perso, message);
 				return true;
 			}
-			if (msg.length() > 5 && msg.substring(1, 6).equalsIgnoreCase("deblo")) {
+			if (msg.length() > 5 && msg.substring(1, 6).equalsIgnoreCase("debug")) {
 				if (perso.isInPrison()) {
 					return true;
 				}
@@ -157,10 +157,10 @@ public class CommandPlayer {
 				}
 				if (System.currentTimeMillis() - perso.restriction.timeDeblo < Config.getInstance().delayDeblo) {
 					SocketManager.GAME_SEND_MESSAGE(perso,
-							"Il faut que tu attendes encore "
+							"You still have to wait "
 									+ (Config.getInstance().delayDeblo / 60000L
 											- (System.currentTimeMillis() - perso.restriction.timeDeblo) / 60L / 1000L)
-									+ " minute(s).");
+									+ " minutes.");
 					return true;
 				}
 				if (perso.get_fight() != null) {
@@ -185,19 +185,18 @@ public class CommandPlayer {
 					String mess = "<b>" + Config.getInstance().NAME + "</b>\n" + "Uptime : " + jour + "j " + hour + "h "
 							+ min + "m " + sec + "s.";
 					if (nbPlayer > 0) {
-						mess = String.valueOf(mess) + "\nJoueurs en ligne : " + nbPlayer;
+						mess = String.valueOf(mess) + "\nPlayers Online: " + nbPlayer;
 					}
 					if (nbPlayerIp > 0) {
-						mess = String.valueOf(mess) + "\nJoueurs uniques en ligne : " + nbPlayerIp;
+						mess = String.valueOf(mess) + "\nUnique Players Online: " + nbPlayerIp;
 					}
 					if (maxPlayer > 0) {
-						mess = String.valueOf(mess) + "\nRecord de connexion : " + maxPlayer;
+						mess = String.valueOf(mess) + "\nRecord Connection: " + maxPlayer;
 					}
 					SocketManager.GAME_SEND_MESSAGE(perso, mess);
 					return true;
 				}
-				SocketManager.GAME_SEND_MESSAGE(perso,
-						"Les commandes disponnible sont :\n<b>.infos</b> - Permet d'obtenir des informations sur le serveur.\n<b>.deblo</b> - Permet de vous d\u00e9bloquer en vous t\u00e9l\u00e9portant au zaap d'Astrub.\n<b>.staff</b> - Permet de voir les membres du staff connect\u00e9s.\n<b>.all</b> - Permet d'envoyer un message \u00e0 tous les joueurs.\n<b>.noall</b> - Permet de ne plus recevoir les messages du canal .all.");
+				SocketManager.GAME_SEND_MESSAGE(perso,"The available commands are:\n<b>.infos</b> - Provides information about the server.\n<b>.debug</b> - Allows you to block yourself by taking you to the zaap of Astrub.\n<b>.staff</b> - Allows to see the connected staff members.\n<b>.all</b> - Sends a message to all players.\n<b>.noall</b> - Allows you to stop receiving messages from the .all channel.\n<b>.parcho</b> <b>.restat</b> <b>.obvi</b> <b>.points</b> <b>.boutique</b> <b>.boutique</b>");
 				return true;
 			}
 		}
