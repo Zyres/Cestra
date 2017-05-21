@@ -1122,14 +1122,12 @@ public class Case {
 				}
 				final org.cestra.map.Map mapHouse = World.getMap((short) h2.getHouseMapId());
 				if (mapHouse == null) {
-					SocketManager.GAME_SEND_MESSAGE(perso,
-							"La maison est cass\u00e9e.. Contactez un administrateur sur le forum.");
+					SocketManager.GAME_SEND_MESSAGE(perso,"<b>Missing house map</b>");
 					return;
 				}
 				final Case caseHouse = mapHouse.getCase(h2.getHouseCellId());
 				if (caseHouse == null || !caseHouse.isWalkable(true)) {
-					SocketManager.GAME_SEND_MESSAGE(perso,
-							"La maison est cass\u00e9e.. Contactez un administrateur sur le forum.");
+					SocketManager.GAME_SEND_MESSAGE(perso,"<b>Missing house case</b>");
 					return;
 				}
 				perso.setInHouse(h2);
